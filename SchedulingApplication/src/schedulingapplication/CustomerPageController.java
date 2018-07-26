@@ -12,54 +12,81 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-public class CustomerPageController extends AnchorPane implements Initializable {
+public class CustomerPageController implements Initializable  {
     
     @FXML
-    private TableView<String> customerTableView;
+    private TableView customerTableView;
+//    @FXML
+//    private TableColumn<String, String> nameColumn = new TableColumn<>("Name");
+//    @FXML
+//    private TableColumn<String, String> addressColumn = new TableColumn<>("Address");
+    final String key = "name";
     @FXML
-    private TableColumn<String, String> nameColumn;
+    private TableColumn<Map, String> customerIDColumn = new TableColumn("Customer ID");
     @FXML
-    private TableColumn<String, String> addressColumn;
+    private TableColumn nameColumn;
+    @FXML
+    private Map customerList;
+    @FXML
+    private ObservableList nameList = FXCollections.observableArrayList();
     
-            
-
-            
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        Map customerMap = null;
-        try {
-            customerMap = tableViewSet();
-        } catch (SQLException ex) {
-            Logger.getLogger(CustomerPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        customerTableView.setItems((ObservableList<String>) customerMap);
-        //tableView.setItems(Inventory.getAllParts());
 
-    }    
-    
-    public Map tableViewSet() throws SQLException{
-        Connection conn = null;
-        Statement stmt = null;
+            
+   @Override
+    public void initialize(URL url, ResourceBundle rb) {
+//        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameColumn"));
+//        addressColumn.setCellValueFactory(new PropertyValueFactory<>("addressColumn"));
+//        
+//        Map customerMap = null;
+//        try {
+//            customerMap = tableViewSet();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CustomerPageController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        nameList.set(1, "");
+//        customerTableView.setItems((ObservableList<String>) customerMap);
+            try{
+                customerList = tableViewSet();    
+            }
+            catch (SQLException ex){
+                System.out.println(ex);
+            }
+
+
+            //TableColumn<Map, String> customerIDColumn = new TableColumn("Customer ID");
+            customerIDColumn.setCellValueFactory(new MapValueFactory<>("customerID"));
+            
+            nameColumn.setCellValueFactory(new MapValueFactory<>("nameColumn"));
+            
+            TableView table = new TableView(nameList);
+            customerTableView.setItems(nameList);
+            customerTableView.getColumns().setAll(customerIDColumn);
+
+            }    
+        
+    private Map tableViewSet() throws SQLException{
+        Connection conn = JDBCConnection.getConnection();
+        Statement stmt = conn.createStatement();
         String query = "select * from customer";
-        stmt = conn.createStatement();
         
         Map<Integer,String> customerInfo = new HashMap<>();
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()) {
                 int customerId = rs.getInt("customerId");
                 String customerName = rs.getString("customerName");
-                customerInfo.put(customerId, query);
+                customerInfo.put(customerId, customerName);
             }
             System.out.println(customerInfo);
             return customerInfo;

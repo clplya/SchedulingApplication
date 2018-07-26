@@ -21,7 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-    public class LoginPageFXMLController extends AnchorPane implements Initializable {
+    public class LoginPageFXMLController implements Initializable {
 
     @FXML
     private TextField username;
@@ -51,8 +51,8 @@ import javafx.scene.Scene;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        username.setText("Username");
-        password.setText("Password");   
+        username.setText("admin");
+        password.setText("123456");   
         
     }    
        
@@ -99,11 +99,15 @@ import javafx.scene.Scene;
             
         } else if(loginSuccessful & !loginFailed){
             System.out.println("Login Successful");
-            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Stage stage = new Stage();
+            
             Parent root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            
+            currentStage.hide();
             stage.show();
         }
     }

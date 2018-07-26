@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.CustomerPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.CustomerPageController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Customer Records">
          <font>
@@ -15,8 +19,8 @@
       </Label>
       <TableView fx:id="customerTableView" layoutX="14.0" layoutY="51.0" prefHeight="291.0" prefWidth="354.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Name" />
-          <TableColumn prefWidth="75.0" text="Address" />
+          <TableColumn fx:id="customerIDColumn" prefWidth="75.0" text="Customer ID" />
+          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
         </columns>
       </TableView>
    </children>
