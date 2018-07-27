@@ -3,25 +3,19 @@ package schedulingapplication;
 import java.net.URL;
 import java.sql.Connection;
 import java.lang.String;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class CustomerPageController implements Initializable  {
@@ -42,13 +36,16 @@ public class CustomerPageController implements Initializable  {
     @FXML
     private TableColumn<?, String> phoneNumberColumn = new TableColumn("Phone Number");
     @FXML
-    private ArrayList customerFinalList;
-    @FXML
-    private ArrayList customerList;
+
+    private ArrayList customerInfo = new ArrayList<>();
+    private ObservableList customerFinalList = FXCollections.observableArrayList();
+    private ArrayList customerList = new ArrayList<>();
     @FXML
     private ObservableList<String> nameList = FXCollections.observableArrayList();
     @FXML
     private javafx.scene.control.Button exitButton;
+    private Connection con;
+
 
                
    @Override
@@ -65,17 +62,20 @@ public class CustomerPageController implements Initializable  {
 //        
 //        nameList.set(1, "");
 //        customerTableView.setItems((ObservableList<String>) customerMap);
+            customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            addressColumn.setCellValueFactory(new PropertyValueFactory<>("addressID"));
+          //  phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+            
             try{
-                customerList = tableViewSet();    
+                //customerList = tableViewSet();    
+         //       customerList.addAll(tableViewSet());
+            viewCustomerTable(con);
             }
             catch (SQLException ex){
                 System.out.println(ex);
             }
             
-            customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-            nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameColumn"));
-            addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-            phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("Phone Number"));
             
             customerFinalList.addAll(customerList);
            // TableView table = new TableView(nameList);
@@ -84,30 +84,59 @@ public class CustomerPageController implements Initializable  {
 
             }    
         
-    private ArrayList tableViewSet() throws SQLException{
-        Connection conn = JDBCConnection.getConnection();
-        Statement stmt = conn.createStatement();
-        String query = "select * from customer";
+////    private ArrayList tableViewSet() throws SQLException{
+//        Connection conn = JDBCConnection.getConnection();
+//        Statement stmt = conn.createStatement();
+//        //String query = "select * from customer";
+//        
+//        
+//            ResultSet rs = stmt.executeQuery("SELECT * FROM customer");
+//            
+//            ResultSetMetaData resultMData = rs.getMetaData();
+//            int columnCount = resultMData.getColumnCount();
+//            
+//            while(rs.next()) {
+//                int i = 1;
+//                while(i <= columnCount){
+//                    customerInfo.add(rs.getArray(i++));
+//                }
+////                while(rs.next()){
+////                int customerId = rs.getInt("customerId");
+////                String customerName = rs.getString("customerName");
+////                String address = rs.getString("addressId");
+////                //String phoneNumber = rs.getString("phoneNumber");
+////                customerInfo.set(1,customerId);
+////                customerInfo.set(2,customerName);
+////                customerInfo.set(3,address);
+//               // customerInfo.add(4,phoneNumber);
+//            }
+//            System.out.println(customerInfo);
+//            return customerInfo;
+//        //conn = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U03xBv");
+//        //System.out.println(conn);
+//        
+//        
+//        
+//    }
+    
+    public static void viewCustomerTable(Connection con) throws SQLException{
+        Statement stmt = null;
         
-        ArrayList customerInfo = new ArrayList<>();
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                int customerId = rs.getInt("customerId");
-                String customerName = rs.getString("customerName");
-                String address = rs.getString("address");
-                String phoneNumber = rs.getString("phoneNumber");
-                customerInfo.add(1,customerId);
-                customerInfo.add(2,customerName);
-                customerInfo.add(3,address);
-                customerInfo.add(4,phoneNumber);
+        try{
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT customerID, customerName, addressId FROM customer");
+            while (rs.next()){
+                Integer customerId = rs.getInt(1);
+                String customerName = rs.getString(2);
+                Integer addressId = rs.getInt(3);
+            System.out.println(customerId + " " + customerName +" "+ addressId);
+            
             }
-            System.out.println(customerInfo);
-            return customerInfo;
-        //conn = DriverManager.getConnection("jdbc:mysql://52.206.157.109:3306/U03xBv");
-        //System.out.println(conn);
-        
-        
-        
+        }
+    
+        catch(SQLException ex){
+             if (stmt != null) { stmt.close(); }
+        }
     }
     
     @FXML
