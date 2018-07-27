@@ -57,7 +57,7 @@ import javafx.scene.Scene;
     }    
        
     @FXML
-    public void exitButtonHandler() {
+    private void exitButtonHandler() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }

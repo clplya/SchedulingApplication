@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class CustomerPageController implements Initializable  {
     
@@ -32,17 +34,23 @@ public class CustomerPageController implements Initializable  {
 //    private TableColumn<String, String> addressColumn = new TableColumn<>("Address");
     final String key = "name";
     @FXML
-    private TableColumn<Map, String> customerIDColumn = new TableColumn("Customer ID");
+    private TableColumn<?, Integer> customerIDColumn = new TableColumn("Customer ID");
     @FXML
-    private TableColumn nameColumn;
+    private TableColumn<?, String> nameColumn = new TableColumn("Name");
     @FXML
-    private Map customerList;
+    private TableColumn<?, String> addressColumn = new TableColumn("Address");
     @FXML
-    private ObservableList nameList = FXCollections.observableArrayList();
-    
-        
+    private TableColumn<?, String> phoneNumberColumn = new TableColumn("Phone Number");
+    @FXML
+    private ArrayList customerFinalList;
+    @FXML
+    private ArrayList customerList;
+    @FXML
+    private ObservableList<String> nameList = FXCollections.observableArrayList();
+    @FXML
+    private javafx.scene.control.Button exitButton;
 
-            
+               
    @Override
     public void initialize(URL url, ResourceBundle rb) {
 //        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameColumn"));
@@ -63,30 +71,35 @@ public class CustomerPageController implements Initializable  {
             catch (SQLException ex){
                 System.out.println(ex);
             }
-
-
-            //TableColumn<Map, String> customerIDColumn = new TableColumn("Customer ID");
-            customerIDColumn.setCellValueFactory(new MapValueFactory<>("customerID"));
             
-            nameColumn.setCellValueFactory(new MapValueFactory<>("nameColumn"));
+            customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameColumn"));
+            addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+            phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("Phone Number"));
             
-            TableView table = new TableView(nameList);
-            customerTableView.setItems(nameList);
-            customerTableView.getColumns().setAll(customerIDColumn);
+            customerFinalList.addAll(customerList);
+           // TableView table = new TableView(nameList);
+         //   customerTableView.setItems(nameList);
+            customerTableView.getColumns().setAll(customerFinalList);
 
             }    
         
-    private Map tableViewSet() throws SQLException{
+    private ArrayList tableViewSet() throws SQLException{
         Connection conn = JDBCConnection.getConnection();
         Statement stmt = conn.createStatement();
         String query = "select * from customer";
         
-        Map<Integer,String> customerInfo = new HashMap<>();
+        ArrayList customerInfo = new ArrayList<>();
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()) {
                 int customerId = rs.getInt("customerId");
                 String customerName = rs.getString("customerName");
-                customerInfo.put(customerId, customerName);
+                String address = rs.getString("address");
+                String phoneNumber = rs.getString("phoneNumber");
+                customerInfo.add(1,customerId);
+                customerInfo.add(2,customerName);
+                customerInfo.add(3,address);
+                customerInfo.add(4,phoneNumber);
             }
             System.out.println(customerInfo);
             return customerInfo;
@@ -96,6 +109,12 @@ public class CustomerPageController implements Initializable  {
         
         
     }
+    
+    @FXML
+    private void exitButtonHandler(){
+    Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
+}
     
    
 }
