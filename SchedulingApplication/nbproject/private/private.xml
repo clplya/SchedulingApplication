@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/LoginPageFXMLController.java</file>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/nbproject/jfx-impl.xml</file>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPageController.java</file>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/JDBCConnection.java</file>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Customer.java</file>
-            <file>file:/C:/Users/clply_000/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/CustomerDAO.java</file>
+            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/LoginPageFXMLController.java</file>
+            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AddCustomerController.java</file>
+            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Customer.java</file>
+            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPageController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -68,7 +68,7 @@ public class LoginPageFXMLController implements Initializable {
             String userNameValue = rs.getString("userName");
             String passwordValue = rs.getString("password");
             usernamePasswordMap.put(userNameValue, passwordValue);
-            //line below needs to grab the password from the page 
+
             String passwordReturned = usernamePasswordMap.get(passwordValue);
 
             String passwordText = password.getText();
@@ -80,30 +80,18 @@ public class LoginPageFXMLController implements Initializable {
             Stage stage;
             FXMLLoader loader = new FXMLLoader();
 
-
             stage = (Stage) loginButton.getScene().getWindow();
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
             loader.setLocation(getClass().getResource("CustomerPage.fxml"));
 
             Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(tableViewParent);
-            CustomerPageController controller = loader.getController();
-            controller.initialize();
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(tableViewScene);
             window.show();
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);           
-//            
-//            CustomerPageController controller = loader.getController();
-//            controller.initializeData();
-          //  currentStage.hide();
-           // stage.show();
-            
+          
         } else {
             loginFailed = true;
         }
-       // loginResult();
     }
 
     @FXML
