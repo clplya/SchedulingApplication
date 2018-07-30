@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -16,10 +17,26 @@
       </Label>
       <TableView fx:id="customerTableView" layoutX="14.0" layoutY="51.0" prefHeight="475.0" prefWidth="582.0">
         <columns>
-          <TableColumn fx:id="customerIDColumn" prefWidth="89.0" text="Customer ID" />
-          <TableColumn fx:id="nameColumn" prefWidth="152.0" text="Name" />
-            <TableColumn fx:id="addressColumn" prefWidth="198.0" text="Address" />
-            <TableColumn fx:id="phoneNumberColumn" prefWidth="142.0" text="Phone Number" />
+            <TableColumn fx:id="CustomerIDColumn" prefWidth="89.0" text="Customer ID">
+                <cellValueFactory>
+                    <PropertyValueFactory property="customerId" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="NameColumn" prefWidth="152.0" text="Name">
+                <cellValueFactory>
+                    <PropertyValueFactory property="customerName" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="AddressColumn" prefWidth="198.0" text="Address">
+                <cellValueFactory>
+                    <PropertyValueFactory property="address" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="PhoneNumberColumn" prefWidth="142.0" text="Phone Number">
+                <cellValueFactory>
+                    <PropertyValueFactory property="phone" />
+                </cellValueFactory>
+            </TableColumn>
         </columns>
       </TableView>
       <Button fx:id="exitButton" layoutX="621.0" layoutY="500.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="76.0" text="Exit" />

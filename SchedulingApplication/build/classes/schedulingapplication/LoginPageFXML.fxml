@@ -15,8 +15,8 @@
             <TextField fx:id="username" layoutX="90.0" layoutY="156.0" />
             <Label layoutX="22.0" layoutY="160.0" text="Username" />
             <Label layoutX="22.0" layoutY="204.0" text="Password" />
-            <Button fx:id="loginButton" defaultButton="true" layoutX="90.0" layoutY="276.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="25.0" prefWidth="103.0" text="Login" />
-            <Button fx:id="exitButton" defaultButton="true" layoutX="90.0" layoutY="317.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="103.0" text="Exit" />
+            <Button fx:id="loginButton" layoutX="90.0" layoutY="276.0" mnemonicParsing="false" onAction="#loginButtonHandler" prefHeight="25.0" prefWidth="103.0" text="Login" />
+            <Button fx:id="exitButton" layoutX="90.0" layoutY="317.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="103.0" text="Exit" />
          </children>
       </AnchorPane>
    </children>

@@ -16,10 +16,9 @@ public class JDBCConnection {
     private static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     private static String user = "U03xBv";
     private static String password = "53688111925";
-    private static Connection conn;
-    private static String urlString;
+    private static Connection conn = null;
    
-    public static Connection getConnection(){  
+    public static Connection getConnection() throws SQLException {  
         try{
             Class.forName(jdbcDriver);
             try{
@@ -31,5 +30,19 @@ public class JDBCConnection {
                 System.out.println("Driver not found");
             }
         return conn;
+    }
+
+    public static ResultSet dbQuery(String stmtQuery) {
+        Statement stmt;
+        ResultSet rs = null;
+        try {
+            getConnection();
+            
+            stmt = conn.createStatement();
+            
+            rs = stmt.executeQuery(stmtQuery);
+        } catch (SQLException ex){
+    }
+        return rs;
     }
 }

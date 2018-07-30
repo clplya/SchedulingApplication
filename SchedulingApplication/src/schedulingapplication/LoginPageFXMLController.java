@@ -2,22 +2,18 @@ package schedulingapplication;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.lang.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -41,9 +37,7 @@ public class LoginPageFXMLController implements Initializable {
 
     private boolean passwordMatch = false;
 
-    private String sql = "select * from address";
-
-    public void setApp(Main application) throws SQLException {
+    public void setApp(Main application) {
         this.application = application;
         //JDBCConnection.getConnection();
     }
@@ -56,7 +50,7 @@ public class LoginPageFXMLController implements Initializable {
     }
 
     @FXML
-    private void exitButtonHandler() {
+    public void exitButtonHandler() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
@@ -82,13 +76,38 @@ public class LoginPageFXMLController implements Initializable {
         }
         if (passwordMatch) {
             loginSuccessful = true;
+            System.out.println("Login Successful");
+            Stage stage;
+            FXMLLoader loader = new FXMLLoader();
+
+
+            stage = (Stage) loginButton.getScene().getWindow();
+            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
+
+            Parent tableViewParent = loader.load();
+            Scene tableViewScene = new Scene(tableViewParent);
+            CustomerPageController controller = loader.getController();
+            controller.initialize();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(tableViewScene);
+            window.show();
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);           
+//            
+//            CustomerPageController controller = loader.getController();
+//            controller.initializeData();
+          //  currentStage.hide();
+           // stage.show();
+            
         } else {
             loginFailed = true;
         }
-        loginResult();
+       // loginResult();
     }
 
-    private void loginResult() throws IOException {
+    @FXML
+    public void loginResult()throws SQLException, IOException {
         if (!loginSuccessful) {
             System.out.println("Login Failed");
         } else if (loginSuccessful & loginFailed) {
@@ -96,16 +115,22 @@ public class LoginPageFXMLController implements Initializable {
 
         } else if (loginSuccessful & !loginFailed) {
             System.out.println("Login Successful");
-            Stage stage = new Stage();
+            Stage stage;
+            Parent root;
 
-            Parent root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
+            stage = (Stage) loginButton.getScene().getWindow();
+            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
             Scene scene = new Scene(root);
-            stage.setScene(scene);
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-
-            currentStage.hide();
+            stage.setScene(scene);           
+            
+            FXMLLoader loader = new FXMLLoader();
+            CustomerPageController controller = loader.getController();
+            controller.initialize();
+          //  currentStage.hide();
             stage.show();
+            
         }
     }
 }

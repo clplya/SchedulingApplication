@@ -1,6 +1,5 @@
 package schedulingapplication;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.lang.String;
 import java.sql.DriverManager;
@@ -9,58 +8,45 @@ import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
-import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import schedulingapplication.DomainObjects.CustomerDAO;
 
-public class CustomerPageController extends Application {
+public class CustomerPageController {
 
     @FXML
     private TableView customerTableView;
     @FXML
-    private TableColumn customerIDColumn;
+    private TableColumn CustomerIDColumn;
     @FXML
-    private TableColumn nameColumn;
+    private TableColumn NameColumn;
     @FXML
-    private TableColumn addressColumn;
+    private TableColumn AddressColumn;
     @FXML
-    private TableColumn phoneNumberColumn;
+    private TableColumn PhoneNumberColumn;
     @FXML
     private ObservableList<ObservableList> customerFinalList = FXCollections.observableArrayList();
     @FXML
     private javafx.scene.control.Button exitButton;
-    
-    private String[] propertyName = {"addressId", "address", "address2"
-            + "cityId, zip, phone, customerId, customerName, active, userId, userName, password"
-    };
-    
-    private String query = "select c.customerId,c.customerName,a.address ,a.phone from address a "
-                           + "join customer c on c.addressId = a.addressId";
 
+    private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+
+    private CustomerDAO customer;
     private Connection conn;
     private Statement stmt;
-    private Integer customerId;
-    private String customerName;
-    private Integer addressId;
 
-    @Override
-    public void start(Stage stage) throws Exception {
+
+    public void initialize() {
         // customerFinalList = FXCollections.observableArrayList();
         try {
             Class.forName(jdbcDriver);
             try {
-                conn = DriverManager.getConnection(this.url, user, password);
+                conn = DriverManager.getConnection(DAO.DB_URL, DAO.USER, DAO.PASS);
                 stmt = conn.createStatement();
                 viewCustomerTable(conn);
             } catch (SQLException ex) {
@@ -73,7 +59,38 @@ public class CustomerPageController extends Application {
 
     @FXML
     private void viewCustomerTable(Connection con) throws SQLException {
+        try {
+            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+            ResultSet rs = stmt.executeQuery(DAO.sql);
 
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+
+                customerTableView.getColumns().addAll(col);
+              //  System.out.println("Column [" + i + "] ");
+            }
+
+            while (rs.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println(row);
+                customerFinalList.add(row);
+            }
+        } catch (SQLException ex) {
+
+        }
+        System.out.println(customerFinalList);
+        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        
+        
+        customerTableView.setItems(customerFinalList); 
     }
 
     @FXML
