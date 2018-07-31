@@ -44,7 +44,8 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="exitButton" layoutX="611.0" layoutY="501.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Exit" />
-      <Button fx:id="addCustomerButton" layoutX="611.0" layoutY="442.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Add Customer" />
+      <Button fx:id="exitButton" layoutX="611.0" layoutY="501.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Exit" textAlignment="CENTER" />
+      <Button fx:id="customerAppointmentButton" layoutX="611.0" layoutY="431.0" mnemonicParsing="false" onAction="#customerAppointmentButtonHandler" prefHeight="49.0" prefWidth="105.0" text="Customer Appointment" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="addCustomerButton" layoutX="611.0" layoutY="386.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Add Customer" textAlignment="CENTER" />
    </children>
 </AnchorPane>
