@@ -32,7 +32,7 @@ import schedulingapplication.DomainObjects.CustomerManager;
 public class AddCustomerController {
 
     @FXML
-    private Button saveButton;
+    private Button exitButton;
     @FXML
     private Button cancelButton;
     @FXML
@@ -102,7 +102,15 @@ public class AddCustomerController {
         customerTableView.setItems(customerManager.getAllCustomers());
     }
 
-    public void saveButtonHandler(ActionEvent event) throws IOException {
+    public void exitButtonHandler(ActionEvent event) throws IOException {
+        Stage stage;
+        Parent root;
+        
+        stage = (Stage) exitButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

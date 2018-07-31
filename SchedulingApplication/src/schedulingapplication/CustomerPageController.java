@@ -35,37 +35,37 @@ public class CustomerPageController {
     private TableColumn AddressColumn;
     @FXML
     private TableColumn PhoneNumberColumn;
-    @FXML
-    private ObservableList<ObservableList> customerFinalList = FXCollections.observableArrayList();
+//    @FXML
+//    private final ObservableList<ObservableList> customerFinalList = FXCollections.observableArrayList();
     @FXML
     private javafx.scene.control.Button exitButton;
     @FXML
     private javafx.scene.control.Button addCustomerButton;
 
-
     private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 
     private CustomerManager customerManager = new CustomerManager();
-    private CustomerDAO customer;
+    private Customer customer;
     private Connection conn;
     private Statement stmt;
 
     public void initialize() {
         // customerFinalList = FXCollections.observableArrayList();
-        try {
-            Class.forName(jdbcDriver);
             try {
-                conn = DriverManager.getConnection(DAO.DB_URL, DAO.USER, DAO.PASS);
-                stmt = conn.createStatement();
-                viewCustomerTable(conn);
-            } catch (SQLException ex) {
-                System.out.println("Failed to create the DB connection.");
+                Class.forName(jdbcDriver);
+                try {
+                    conn = DriverManager.getConnection(DAO.DB_URL, DAO.USER, DAO.PASS);
+                    stmt = conn.createStatement();
+                    viewCustomerTable(conn);
+                } catch (SQLException ex) {
+                    System.out.println("Failed to create the DB connection.");
+                }
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Driver not found");
             }
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
+      
         }
-    }
-
+    
     @FXML
     private void viewCustomerTable(Connection con) throws SQLException {
         CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -73,25 +73,30 @@ public class CustomerPageController {
         AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
-        try {
-            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-            ResultSet rs = stmt.executeQuery(DAO.sql);
+        if (customerManager.getAllCustomers().isEmpty()) {
 
-            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                customerTableView.getColumns().addAll(col);
+             try {
+                stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+                ResultSet rs = stmt.executeQuery(DAO.sql);
+
+                for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                    TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                    customerTableView.getColumns().addAll(col);
+                }
+                while (rs.next()) {
+                    customerManager.addCustomer(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+                }
+                customerTableView.setItems(customerManager.getAllCustomers());
+            } catch (SQLException ex) {
+                System.out.println(ex);
             }
-            while (rs.next()) {
-                customerManager.addCustomer(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
-            }
+             } else {
             customerTableView.setItems(customerManager.getAllCustomers());
-        } catch (SQLException ex) {
-            System.out.println(ex);
         }
     }
-    
+
     @FXML
-    private void addCustomerButtonHandler() throws IOException{
+    private void addCustomerButtonHandler() throws IOException {
         Stage stage;
         Parent root;
 
