@@ -41,5 +41,6 @@
       <TextField layoutX="445.0" layoutY="152.0" prefHeight="27.0" prefWidth="240.0" />
       <TextField layoutX="445.0" layoutY="202.0" prefHeight="27.0" prefWidth="240.0" />
       <TextField layoutX="445.0" layoutY="253.0" prefHeight="27.0" prefWidth="240.0" />
+      <ComboBox fx:id="selectedAppointmentComboBox" layoutX="445.0" layoutY="49.0" prefHeight="25.0" prefWidth="240.0" />
    </children>
 </AnchorPane>

@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.CustomerManager;
 
@@ -121,9 +122,10 @@ public class CustomerPageController {
             Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(tableViewParent);
         selectedCustomer = (Customer) customerTableView.getSelectionModel().getSelectedItem();
+       Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(),0,null,null,null,null,null,null,null);
 
         AppointmentPageController controller = loader.getController();
-            controller.initialize(selectedCustomer);
+            controller.initialize(selectedCustomer, selectedAppointment);
             
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(tableViewScene);
