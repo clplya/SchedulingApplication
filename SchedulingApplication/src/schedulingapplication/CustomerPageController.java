@@ -74,7 +74,8 @@ public class CustomerPageController {
         AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
-        if (customerManager.getAllCustomers().isEmpty()) {
+            customerManager.clear();
+            customerTableView.setItems(null);
 
             try {
                 stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
@@ -91,10 +92,10 @@ public class CustomerPageController {
             } catch (SQLException ex) {
                 System.out.println(ex);
             }
-        } else {
-            customerTableView.setItems(customerManager.getAllCustomers());
+        
         }
-    }
+    
+
 
     @FXML
     public void addCustomerButtonHandler() throws IOException {
@@ -125,7 +126,7 @@ public class CustomerPageController {
        Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(),0,null,null,null,null,null,null,null);
 
         AppointmentPageController controller = loader.getController();
-            controller.initialize(selectedCustomer, selectedAppointment);
+            controller.initialize(selectedCustomer);
             
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(tableViewScene);

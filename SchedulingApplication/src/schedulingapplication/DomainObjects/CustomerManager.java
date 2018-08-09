@@ -23,4 +23,8 @@ public class CustomerManager {
     public void addCustomer(Customer customer){
         customerList.add(customer);
     }
+    
+    public void clear(){
+        customerList.clear();
+    }
 }

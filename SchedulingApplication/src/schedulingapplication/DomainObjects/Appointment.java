@@ -1,19 +1,16 @@
 
 package schedulingapplication.DomainObjects;
 
-import java.text.SimpleDateFormat;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
 import java.util.Date;
-import java.util.Calendar;
-import java.time.*;
 
 public class Appointment {
 
-    private final SimpleIntegerProperty appointmentId;
+    private static int COUNT = 0;
+    private int appointmentId;
     private final SimpleIntegerProperty customerId;
     private final SimpleStringProperty title;
     private final SimpleStringProperty description;
@@ -22,33 +19,26 @@ public class Appointment {
     private final SimpleStringProperty URL;
     private final Date startDate;
     private final Date endDate;
-    Calendar cal = Calendar.getInstance();
-   SimpleDateFormat date;
     
     public Appointment(int appointmentId, int customerId, String title, String description, String location,
         String contact, String URL, Date startDate, Date endDate){
-        this.appointmentId = new SimpleIntegerProperty(appointmentId);
+        appointmentId = ++COUNT;
         this.customerId = new SimpleIntegerProperty(customerId);
         this.title = new SimpleStringProperty(title);
         this.description = new SimpleStringProperty(description);
         this.location = new SimpleStringProperty(location);
         this.contact = new SimpleStringProperty(contact);
         this.URL = new SimpleStringProperty(URL);
-        cal.getTime();
-        this.startDate = cal.getTime();
+        this.startDate = new Date();
         this.endDate = new Date();
     }
 
     public int getAppointmentId() {
-        return appointmentId.get();
+        return appointmentId;
     }
-
+    
     public void setAppointmentId(int appointmentId) {
-        this.appointmentId.set(appointmentId);
-    }
-
-    public IntegerProperty appointmentId() {
-        return this.appointmentId;
+        this.appointmentId = appointmentId;
     }
 
     public int getCustomerId() {
@@ -124,7 +114,19 @@ public class Appointment {
     }
  
     public Date getStartDate() {
-        return startDate.getTime();
+        return startDate;
+    }
+    
+    public void setStartDate(Date sDate){
+        this.startDate.setTime(sDate.getTime());
+    }
+    
+    public Date getEndDate() {
+        return endDate;
+    }
+    
+    public void setEndDate(Date eDate){
+        this.endDate.setTime(eDate.getTime());
     }
     
   
