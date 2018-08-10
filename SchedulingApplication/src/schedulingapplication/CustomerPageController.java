@@ -117,7 +117,7 @@ public class CustomerPageController {
     }
 
     @FXML
-    public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
+    public void customerAppointmentButtonHandler(ActionEvent event) throws IOException, SQLException, Exception {
         FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
             Parent tableViewParent = loader.load();
