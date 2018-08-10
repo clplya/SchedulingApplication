@@ -44,6 +44,7 @@ public class CustomerPageController {
 
     private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 
+    private Main application;
     private CustomerManager customerManager = new CustomerManager();
     private Customer customer;
     private Connection conn;
@@ -95,7 +96,9 @@ public class CustomerPageController {
         
         }
     
-
+    public void setApp(Main application) {
+        this.application = application;
+    }
 
     @FXML
     public void addCustomerButtonHandler() throws IOException {

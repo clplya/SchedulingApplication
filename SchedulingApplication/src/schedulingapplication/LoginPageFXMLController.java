@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import schedulingapplication.Main;
 
 public class LoginPageFXMLController implements Initializable {
 
@@ -39,7 +40,6 @@ public class LoginPageFXMLController implements Initializable {
 
     public void setApp(Main application) {
         this.application = application;
-        //JDBCConnection.getConnection();
     }
 
     @Override
@@ -82,7 +82,6 @@ public class LoginPageFXMLController implements Initializable {
 
             stage = (Stage) loginButton.getScene().getWindow();
             loader.setLocation(getClass().getResource("CustomerPage.fxml"));
-
             Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(tableViewParent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
