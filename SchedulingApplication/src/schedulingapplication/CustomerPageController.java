@@ -9,6 +9,7 @@ import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +20,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.CustomerManager;
 
 public class CustomerPageController {
 
@@ -44,12 +45,10 @@ public class CustomerPageController {
 
     private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
 
-    private CustomerManager customerManager = new CustomerManager();
     private Customer customer;
     private Connection conn;
     private Statement stmt;
     private static Customer selectedCustomer;
-    
 
     public void initialize() {
         try {
@@ -73,29 +72,36 @@ public class CustomerPageController {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-            customerManager.clear();
-            customerTableView.setItems(null);
-
-            try {
-                stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-                ResultSet rs = stmt.executeQuery(DAO.sql);
-
-                for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                    TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-                    customerTableView.getColumns().addAll(col);
-                }
-                while (rs.next()) {
-                    customerManager.addCustomer(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
-                }
-                customerTableView.setItems(customerManager.getAllCustomers());
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            }
         
-        }
-    
+        DBCustomerDao dbCustomer = new DBCustomerDao();
+        customerTableView.getItems().clear();
+        //customerTableView.setItems(null);
+        
+        customerTableView.getItems().addAll(dbCustomer.getAllCustomers());
+        System.out.println("Getting & Adding all Customers:"+customerTableView);
+        
+        customerTableView.getItems().clear();
+        
+        customerTableView.setItems((ObservableList)dbCustomer.getAllCustomers());
+        System.out.println("Setting & Adding all Customers"+customerTableView);
 
+//        try {
+//            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
+//            ResultSet rs = stmt.executeQuery();
+//
+//            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+//                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+//                customerTableView.getColumns().addAll(col);
+//            }
+//            while (rs.next()) {
+//                customerManager.addCustomer(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+//            }
+//            customerTableView.setItems(customerManager.getAllCustomers());
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+
+    }
 
     @FXML
     public void addCustomerButtonHandler() throws IOException {
@@ -119,18 +125,18 @@ public class CustomerPageController {
     @FXML
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
+        loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
+        Parent tableViewParent = loader.load();
+        Scene tableViewScene = new Scene(tableViewParent);
         selectedCustomer = (Customer) customerTableView.getSelectionModel().getSelectedItem();
-       Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(),0,null,null,null,null,null,null,null);
+        Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(), 0, null, null, null, null, null, null, null);
 
         AppointmentPageController controller = loader.getController();
-            controller.initialize(selectedCustomer);
-            
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(tableViewScene);
-            window.show();
+        controller.initialize(selectedCustomer);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();
 
 //        Stage stage;
 //        Parent root;
@@ -142,5 +148,5 @@ public class CustomerPageController {
 //        stage.setScene(scene);
 //        stage.show();
 //    }
-}
+    }
 }

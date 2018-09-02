@@ -1,80 +1,48 @@
 package schedulingapplication.DomainObjects;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-/**
- *
- * @author Mark Pilkington
- */
 public class Customer {
 
-    private final SimpleIntegerProperty customerId;
-    private final SimpleStringProperty customerName;
-    private final SimpleStringProperty address;
-    private final SimpleStringProperty phone;
+    private int customerId;
+    private String customerName;
+    private int addressId;
+    private int active;
 
-    public Customer(int customerId, String customerName, String address, String phone) {
-        this.customerId = new SimpleIntegerProperty(customerId);
-        this.customerName = new SimpleStringProperty(customerName);
-        this.address = new SimpleStringProperty(address);
-        this.phone = new SimpleStringProperty(phone);
+    public Customer(int customerId, String customerName, int addressId, int active) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.addressId = addressId;
+        this.active = active;
     }
 
     public int getCustomerId() {
-        return customerId.get();
+        return customerId;
     }
 
     public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
-    }
-
-    public IntegerProperty customerId() {
-        return this.customerId;
+        this.customerId = customerId;
     }
 
     public String getCustomerName() {
-        return customerName.get();
+        return customerName;
     }
 
     public void setCustomerName(String customerName) {
-        this.customerName.set(customerName);
+        this.customerName = customerName;
     }
 
-    public StringProperty customerNameProperty() {
-        return this.customerName;
+    public int getAddressId() {
+        return addressId;
     }
 
-    public String getAddress() {
-        return address.get();
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
-    public void setAddress(String address) {
-        this.address.set(address);
+    public int getActive() {
+        return active;
     }
 
-    public StringProperty addressProperty() {
-        return this.address;
-    }
-
-//    public int getActive() {
-//        return active;
-//    }
-//
-//    public void setActive(int active) {
-//        this.active = active;
-//    }    
-    public String getPhone() {
-        return phone.get();
-    }
-
-    public void setPhone(String phone) {
-        this.phone.set(phone);
-    }
-
-    public StringProperty phoneProperty() {
-        return this.phone;
+    public void setActive(int active) {
+        this.active = active;
     }
 }

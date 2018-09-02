@@ -1,133 +1,102 @@
-
 package schedulingapplication.DomainObjects;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import java.util.Date;
 
 public class Appointment {
 
-    private static int COUNT = 0;
     private int appointmentId;
-    private final SimpleIntegerProperty customerId;
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty contact;
-    private final SimpleStringProperty URL;
-    private final Date startDate;
-    private final Date endDate;
-    
+    private int customerId;
+    private String title;
+    private String description;
+    private String location;
+    private String contact;
+    private String URL;
+    private Date startDate;
+    private Date endDate;
+
     public Appointment(int appointmentId, int customerId, String title, String description, String location,
-        String contact, String URL, Date startDate, Date endDate){
-        appointmentId = ++COUNT;
-        this.customerId = new SimpleIntegerProperty(customerId);
-        this.title = new SimpleStringProperty(title);
-        this.description = new SimpleStringProperty(description);
-        this.location = new SimpleStringProperty(location);
-        this.contact = new SimpleStringProperty(contact);
-        this.URL = new SimpleStringProperty(URL);
-        this.startDate = new Date();
-        this.endDate = new Date();
+            String contact, String URL, Date startDate, Date endDate) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.contact = contact;
+        this.URL = URL;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public int getAppointmentId() {
         return appointmentId;
     }
-    
+
     public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
     }
 
     public int getCustomerId() {
-        return customerId.get();
+        return customerId;
     }
 
     public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
-    }
-
-    public IntegerProperty customerIdProperty() {
-        return this.customerId;
+        this.customerId = customerId;
     }
 
     public String getTitle() {
-        return title.get();
+        return title;
     }
 
     public void setTitle(String title) {
-        this.title.set(title);
-    }
-
-    public StringProperty titleProperty() {
-        return this.title;
+        this.title = title;
     }
 
     public String getDescription() {
-        return description.get();
+        return description;
     }
 
     public void setDescription(String description) {
-        this.description.set(description);
+        this.description = description;
     }
 
-    public StringProperty descriptionProperty() {
-        return this.description;
-    }
-    
     public String getLocation() {
-        return location.get();
+        return location;
     }
 
     public void setLocation(String location) {
-        this.location.set(location);
+        this.location = location;
     }
 
-    public StringProperty locationProperty() {
-        return this.location;
-    }
-    
     public String getContact() {
-        return contact.get();
+        return contact;
     }
 
     public void setContact(String contact) {
-        this.contact.set(contact);
+        this.contact = contact;
     }
 
-    public StringProperty contactProperty() {
-        return this.contact;
-    }
-    
     public String getURL() {
-        return URL.get();
+        return URL;
     }
 
     public void setURL(String URL) {
-        this.URL.set(URL);
+        this.URL = URL;
     }
 
-    public StringProperty URLProperty() {
-        return this.URL;
-    }
- 
     public Date getStartDate() {
         return startDate;
     }
-    
-    public void setStartDate(Date sDate){
-        this.startDate.setTime(sDate.getTime());
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
-    
+
     public Date getEndDate() {
         return endDate;
     }
-    
-    public void setEndDate(Date eDate){
-        this.endDate.setTime(eDate.getTime());
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
-    
-  
+
 }

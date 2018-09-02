@@ -19,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.CustomerManager;
 
 /**
  * FXML Controller class
@@ -51,7 +50,6 @@ public class AddCustomerController {
     @FXML
     private TableColumn PhoneNumberColumn;
     private static final AtomicInteger GENERATEDCUSTOMERID = new AtomicInteger(2);
-    private CustomerManager customerManager = new CustomerManager();
 
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -94,9 +92,9 @@ public class AddCustomerController {
         int newCustomerID;
         newCustomerID = Integer.parseInt(customerID);
 
-        customerManager.addCustomer(new Customer(newCustomerID, customerName, address, phone));
+       // customerManager.addCustomer(new Customer(newCustomerID, customerName, address, phone));
         
-        customerTableView.setItems(customerManager.getAllCustomers());
+       // customerTableView.setItems(customerManager.getAllCustomers());
     }
 
     public void exitButtonHandler(ActionEvent event) throws IOException {

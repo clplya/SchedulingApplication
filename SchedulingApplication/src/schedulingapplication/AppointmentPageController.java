@@ -16,9 +16,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.AppointmentManager;
-
-
 
 public class AppointmentPageController {
 
@@ -27,7 +24,6 @@ public class AppointmentPageController {
    private DatePicker datePicker;
    private javafx.scene.control.ComboBox selectedAppointmentComboBox;
    private Appointment selectedAppointment;
-   private final AppointmentManager appointmentManager = new AppointmentManager();
    private Connection conn;
    private Statement stmt;
    private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
@@ -49,7 +45,7 @@ public class AppointmentPageController {
 
         selectedCustomer = customer;
         getAllAppointments();
-        appointmentList = appointmentManager.getCustomerAppointment(customer.getCustomerId());
+      //  appointmentList = appointmentManager.getCustomerAppointment(customer.getCustomerId());
         selectedAppointmentComboBox.setItems(appointmentList);
         
         if(appointmentList.size() > 0){
@@ -65,8 +61,8 @@ public class AppointmentPageController {
     }
     
     public void getAllAppointments() {
-        appointmentManager.clear();
-        appointmentManager.getAllAppointments();
+      //  appointmentManager.clear();
+      //  appointmentManager.getAllAppointments();
                 
         java.util.Date date = new Date();
        

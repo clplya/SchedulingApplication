@@ -1,16 +1,17 @@
 package schedulingapplication.DomainObjects;
 
-/**
- *
- * @author clply_000
- */
 public class User {
+
     private int userId;
     private String userName;
     private String password;
     private int active;
-    
-    public User(){        
+
+    public User(int userId, String userName, String password, int active) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
     }
 
     public int getUserId() {
@@ -44,6 +45,5 @@ public class User {
     public void setActive(int active) {
         this.active = active;
     }
-
 
 }

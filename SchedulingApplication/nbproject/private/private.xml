@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/AppointmentTimeSlot.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/JDBCConnection.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Appointment.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AppointmentPageController.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/CustomerManager.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Customer.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/AppointmentManager.java</file>
-            <file>file:/C:/git-personal/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPageController.java</file>
+            <file>file:/C:/Users/clply_000/Documents/NetBeansProjects/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AppointmentPageController.java</file>
+            <file>file:/C:/Users/clply_000/Documents/NetBeansProjects/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AddCustomerController.java</file>
+            <file>file:/C:/Users/clply_000/Documents/NetBeansProjects/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DAO/DBCustomerDao.java</file>
+            <file>file:/C:/Users/clply_000/Documents/NetBeansProjects/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DAO.java</file>
+            <file>file:/C:/Users/clply_000/Documents/NetBeansProjects/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPageController.java</file>
         </group>
     </open-files>
 </project-private>
