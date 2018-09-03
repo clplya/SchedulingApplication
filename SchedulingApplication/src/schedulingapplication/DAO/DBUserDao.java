@@ -111,6 +111,30 @@ public class DBUserDao implements IUserDao {
     }
 
     @Override
+    public User getUserByUserName(String username) {
+        Statement stmt = null;
+
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            ResultSet rs = stmt.executeQuery("select userId,userName,password,active from user where userId =(select userId from user where username = '" + username + "')");
+
+            while (rs.next()) {
+                int userID = rs.getInt(1);
+                String userName = rs.getString(2);
+                String password = rs.getString(3);
+                int active = rs.getInt(4);
+
+                user = new User(userID, userName, password, active);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return user;
+    }
+
+    @Override
     public void updateUserName(int upUserId, String upUserName) {
         Statement stmt = null;
 

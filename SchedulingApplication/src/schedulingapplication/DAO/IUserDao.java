@@ -13,5 +13,7 @@ public interface IUserDao {
 
     public User getUser(int userId);
 
+    public User getUserByUserName(String username);
+
     public void updateUserName(int upUserId, String upUserName);
 }

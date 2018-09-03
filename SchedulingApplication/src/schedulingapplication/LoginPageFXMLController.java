@@ -1,21 +1,23 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.lang.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import java.lang.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import schedulingapplication.Dao.DBUserDao;
+import schedulingapplication.DomainObjects.User;
 
 public class LoginPageFXMLController implements Initializable {
 
@@ -35,7 +37,8 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginSuccessful = false;
     private boolean loginFailed = false;
 
-    private boolean passwordMatch = false;
+    // private boolean passwordMatch = false;
+    DBUserDao dbUser = new DBUserDao();
 
     public void setApp(Main application) {
         this.application = application;
@@ -46,7 +49,7 @@ public class LoginPageFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         username.setText("admin");
         password.setText("123456");
-
+        DBUserDao dbUser = new DBUserDao();
     }
 
     @FXML
@@ -56,23 +59,24 @@ public class LoginPageFXMLController implements Initializable {
     }
 
     @FXML
-    public void loginButtonHandler(ActionEvent event) throws SQLException, IOException {
-        System.out.println("Logging in");
-
-        connection = JDBCConnection.getConnection();
-        statement = connection.createStatement();
-
+    public void loginButtonHandlerDao(ActionEvent event) throws SQLException, IOException {
+        boolean passwordMatch = false;
         Map<String, String> usernamePasswordMap = new HashMap<>();
-        rs = statement.executeQuery("select * from user");
-        while (rs.next()) {
-            String userNameValue = rs.getString("userName");
-            String passwordValue = rs.getString("password");
-            usernamePasswordMap.put(userNameValue, passwordValue);
+        String userNameValue = username.getText();
+        String passwordValue = password.getText();
 
-            String passwordReturned = usernamePasswordMap.get(passwordValue);
+//        usernamePasswordMap.put(userNameValue, passwordValue);
+//
+//        String usernameMapped = usernamePasswordMap.get(userNameValue);
+//        String passwordMapped = usernamePasswordMap.get(passwordValue);
+        User mappedUser = dbUser.getUserByUserName(userNameValue);
 
-            String passwordText = password.getText();
-            passwordMatch = passwordValue.equals(passwordText);
+        if (!mappedUser.getPassword().equals(passwordValue)) {
+            throw new RuntimeException("Password is incorrect");
+        } else {
+            if (mappedUser.getPassword().equals(passwordValue)) {
+                passwordMatch = true;
+            }
         }
         if (passwordMatch) {
             loginSuccessful = true;
@@ -88,14 +92,52 @@ public class LoginPageFXMLController implements Initializable {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(tableViewScene);
             window.show();
-          
+
         } else {
             loginFailed = true;
         }
     }
 
+//    @FXML
+//    public void loginButtonHandler(ActionEvent event) throws SQLException, IOException {
+//        System.out.println("Logging in");
+//
+//        connection = JDBCConnection.getConnection();
+//        statement = connection.createStatement();
+//
+//        Map<String, String> usernamePasswordMap = new HashMap<>();
+//        rs = statement.executeQuery("select * from user");
+//        while (rs.next()) {
+//            String userNameValue = rs.getString("userName");
+//            String passwordValue = rs.getString("password");
+//            usernamePasswordMap.put(userNameValue, passwordValue);
+//
+//            String passwordReturned = usernamePasswordMap.get(passwordValue);
+//
+//            String passwordText = password.getText();
+//            passwordMatch = passwordValue.equals(passwordText);
+//        }
+//        if (passwordMatch) {
+//            loginSuccessful = true;
+//            System.out.println("Login Successful");
+//            Stage stage;
+//            FXMLLoader loader = new FXMLLoader();
+//
+//            stage = (Stage) loginButton.getScene().getWindow();
+//            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
+//
+//            Parent tableViewParent = loader.load();
+//            Scene tableViewScene = new Scene(tableViewParent);
+//            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            window.setScene(tableViewScene);
+//            window.show();
+//
+//        } else {
+//            loginFailed = true;
+//        }
+//    }
     @FXML
-    public void loginResult()throws SQLException, IOException {
+    public void loginResult() throws SQLException, IOException {
         if (!loginSuccessful) {
             System.out.println("Login Failed");
         } else if (loginSuccessful & loginFailed) {
@@ -111,14 +153,14 @@ public class LoginPageFXMLController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
             Scene scene = new Scene(root);
-            stage.setScene(scene);           
-            
+            stage.setScene(scene);
+
             FXMLLoader loader = new FXMLLoader();
             CustomerPageController controller = loader.getController();
             controller.initialize();
-          //  currentStage.hide();
+            //  currentStage.hide();
             stage.show();
-            
+
         }
     }
 }

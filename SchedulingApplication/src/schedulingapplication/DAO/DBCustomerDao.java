@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Customer;
 
 public class DBCustomerDao implements ICustomerDao {
 
     private Customer customer;
-    private ArrayList<Customer> customerList;
+    private ObservableList<Customer> customerList;
 
     public DBCustomerDao() {
-        customerList = new ArrayList<>();
+        //customerList = (ObservableList<Customer>) new ArrayList<Customer>();
         customer = null;
     }
 
@@ -52,7 +52,7 @@ public class DBCustomerDao implements ICustomerDao {
     }
 
     @Override
-    public ArrayList<Customer> getAllCustomers() {
+    public ObservableList<Customer> getAllCustomers() {
         Statement stmt = null;
 
         try {
