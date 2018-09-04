@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,7 +36,7 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginFailed = false;
 
     // private boolean passwordMatch = false;
-    DBUserDao dbUser = new DBUserDao();
+    private DBUserDao dbUser = new DBUserDao();
 
     public void setApp(Main application) {
         this.application = application;
@@ -49,7 +47,7 @@ public class LoginPageFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         username.setText("admin");
         password.setText("123456");
-        DBUserDao dbUser = new DBUserDao();
+
     }
 
     @FXML
@@ -61,14 +59,9 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     public void loginButtonHandlerDao(ActionEvent event) throws SQLException, IOException {
         boolean passwordMatch = false;
-        Map<String, String> usernamePasswordMap = new HashMap<>();
         String userNameValue = username.getText();
         String passwordValue = password.getText();
 
-//        usernamePasswordMap.put(userNameValue, passwordValue);
-//
-//        String usernameMapped = usernamePasswordMap.get(userNameValue);
-//        String passwordMapped = usernamePasswordMap.get(passwordValue);
         User mappedUser = dbUser.getUserByUserName(userNameValue);
 
         if (!mappedUser.getPassword().equals(passwordValue)) {
@@ -157,7 +150,7 @@ public class LoginPageFXMLController implements Initializable {
 
             FXMLLoader loader = new FXMLLoader();
             CustomerPageController controller = loader.getController();
-            controller.initialize();
+            // controller.initialize();
             //  currentStage.hide();
             stage.show();
 

@@ -14,10 +14,10 @@ import schedulingapplication.DomainObjects.Appointment;
 public class DBAppointmentDao implements IAppointmentDao {
 
     private Appointment appointment;
-    private final ArrayList<Appointment> appointmentList;
+    private ArrayList<Appointment> appointmentList;
 
     public DBAppointmentDao() {
-        appointmentList = new ArrayList<>();
+        this.appointmentList = new ArrayList<>();
         appointment = null;
     }
 

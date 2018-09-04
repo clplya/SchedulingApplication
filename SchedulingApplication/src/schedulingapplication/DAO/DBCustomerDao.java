@@ -2,18 +2,22 @@ package schedulingapplication.Dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Customer;
+import schedulingapplication.DomainObjects.CustomerData;
 
 public class DBCustomerDao implements ICustomerDao {
 
     private Customer customer;
     private ObservableList<Customer> customerList;
+    private CustomerData customerData;
 
     public DBCustomerDao() {
-        //customerList = (ObservableList<Customer>) new ArrayList<Customer>();
+        customerList = (ObservableList<Customer>) new ArrayList<Customer>();
         customer = null;
     }
 
@@ -144,5 +148,40 @@ public class DBCustomerDao implements ICustomerDao {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
+    }
+
+    public CustomerData getCustomerData() throws SQLException {
+        Statement stmt = null;
+
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            String dataSql = null;
+            dataSql = "select c.customerId, c.customerName, ad.address, ad.phone\n"
+                    + "from customer c\n"
+                    + "join address ad on c.addressId = ad.addressId";
+
+            ResultSet rs = stmt.executeQuery(dataSql);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                int i = 1;
+                while (i <= columnCount) {
+
+                    int customerID = rs.getInt(1);
+                    String customerName = rs.getString(2);
+                    String address = rs.getString(3);
+                    String phone = rs.getString(4);
+
+                    customerData = new CustomerData(customerID, customerName, address, phone);
+                }
+            }
+        } catch (SQLException ex) {
+
+        }
+        return customerData;
     }
 }

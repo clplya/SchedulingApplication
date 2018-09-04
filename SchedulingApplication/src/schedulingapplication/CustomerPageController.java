@@ -1,18 +1,17 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
-import java.lang.String;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import static java.sql.ResultSet.CONCUR_READ_ONLY;
-import static java.sql.ResultSet.TYPE_FORWARD_ONLY;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,8 +22,10 @@ import javafx.stage.Stage;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
+import schedulingapplication.DomainObjects.CustomerData;
+import schedulingapplication.DomainObjects.User;
 
-public class CustomerPageController {
+public class CustomerPageController implements Initializable {
 
     @FXML
     private TableView customerTableView;
@@ -42,48 +43,48 @@ public class CustomerPageController {
     private javafx.scene.control.Button addCustomerButton;
     @FXML
     private javafx.scene.control.Button customerAppointmentButton;
-
-    private final static String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+    @FXML
+    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     private Customer customer;
     private Connection conn;
     private Statement stmt;
     private static Customer selectedCustomer;
+    private DBCustomerDao dbCustomer = new DBCustomerDao();
+    private CustomerData customerData;
+    private User loggedUser;
+    Stage stage;
 
-    public void initialize() {
-        try {
-            Class.forName(jdbcDriver);
-            try {
-                conn = DriverManager.getConnection(DAO.DB_URL, DAO.USER, DAO.PASS);
-                stmt = conn.createStatement();
-                viewCustomerTable(conn);
-            } catch (SQLException ex) {
-                System.out.println("Failed to create the DB connection.");
-            }
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
-        }
-
-    }
-
-    @FXML
-    private void viewCustomerTable(Connection con) throws SQLException {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        
-        DBCustomerDao dbCustomer = new DBCustomerDao();
+        System.out.println("Setting & Adding all Customers");
+
+        allCustomers.add(dbCustomer.getAllCustomers());
+//        allCustomers.addAll(dbCustomer.getAllCustomers());
+//        customerTableView.setItems(allCustomers);
+        //viewCustomerTable();
+    }
+
+    @FXML
+    private void viewCustomerTable() throws SQLException {
+        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
         customerTableView.getItems().clear();
+
         //customerTableView.setItems(null);
-        
-        customerTableView.getItems().addAll(dbCustomer.getAllCustomers());
-        System.out.println("Getting & Adding all Customers:"+customerTableView);
-        
-        customerTableView.getItems().clear();
-        
-        customerTableView.setItems((ObservableList)dbCustomer.getAllCustomers());
-        System.out.println("Setting & Adding all Customers"+customerTableView);
+//        customerTableView.getItems().addAll(dbCustomer.getAllCustomers());
+//        System.out.println("Getting & Adding all Customers:" + customerTableView);
+//
+//        customerTableView.getItems().clear();
+        customerTableView.setItems(allCustomers);
+        System.out.println("Setting & Adding all Customers" + customerTableView);
 
 //        try {
 //            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
@@ -100,7 +101,6 @@ public class CustomerPageController {
 //        } catch (SQLException ex) {
 //            System.out.println(ex);
 //        }
-
     }
 
     @FXML
