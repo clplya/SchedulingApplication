@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.CustomerData;
 import schedulingapplication.DomainObjects.User;
 
 public class CustomerPageController implements Initializable {
@@ -51,7 +50,6 @@ public class CustomerPageController implements Initializable {
     private Statement stmt;
     private static Customer selectedCustomer;
     private DBCustomerDao dbCustomer = new DBCustomerDao();
-    private CustomerData customerData;
     private User loggedUser;
     Stage stage;
 
@@ -63,10 +61,16 @@ public class CustomerPageController implements Initializable {
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         System.out.println("Setting & Adding all Customers");
 
-        allCustomers.add(dbCustomer.getAllCustomers());
+        //  allCustomers.add(dbCustomer.getAllCustomers());
 //        allCustomers.addAll(dbCustomer.getAllCustomers());
-//        customerTableView.setItems(allCustomers);
-        //viewCustomerTable();
+        // customerTableView.setItems(dbCustomer.getAllCustomers());
+        try {
+            customerTableView.setItems(dbCustomer.getCustomerData());
+
+            viewCustomerTable();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
 
     @FXML
@@ -83,9 +87,8 @@ public class CustomerPageController implements Initializable {
 //        System.out.println("Getting & Adding all Customers:" + customerTableView);
 //
 //        customerTableView.getItems().clear();
-        customerTableView.setItems(allCustomers);
-        System.out.println("Setting & Adding all Customers" + customerTableView);
-
+        //customerTableView.setItems(allCustomers);
+        //System.out.println("Setting & Adding all Customers" + customerTableView);
 //        try {
 //            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
 //            ResultSet rs = stmt.executeQuery();
@@ -149,4 +152,5 @@ public class CustomerPageController implements Initializable {
 //        stage.show();
 //    }
     }
+
 }

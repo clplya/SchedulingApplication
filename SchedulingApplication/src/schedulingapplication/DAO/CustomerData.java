@@ -1,4 +1,4 @@
-package schedulingapplication.DomainObjects;
+package schedulingapplication.DAO;
 
 public class CustomerData {
 

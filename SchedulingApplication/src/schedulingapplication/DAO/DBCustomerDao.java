@@ -6,18 +6,24 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import schedulingapplication.DomainObjects.Address;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.CustomerData;
 
 public class DBCustomerDao implements ICustomerDao {
 
     private Customer customer;
     private ObservableList<Customer> customerList;
-    private CustomerData customerData;
+    private ObservableList<Map> customerData;
+    private Customer[] array = new Customer[3];
+    private ArrayList<String> customerArray = new ArrayList<>();
+    private ArrayList<String> addressArray = new ArrayList<>();
 
     public DBCustomerDao() {
-        customerList = (ObservableList<Customer>) new ArrayList<Customer>();
+        customerList = FXCollections.observableArrayList();
         customer = null;
     }
 
@@ -150,7 +156,7 @@ public class DBCustomerDao implements ICustomerDao {
         }
     }
 
-    public CustomerData getCustomerData() throws SQLException {
+    public ObservableList<Map> getCustomerData() throws SQLException {
         Statement stmt = null;
 
         try {
@@ -158,7 +164,7 @@ public class DBCustomerDao implements ICustomerDao {
             stmt = conn.createStatement();
 
             String dataSql = null;
-            dataSql = "select c.customerId, c.customerName, ad.address, ad.phone\n"
+            dataSql = "select *\n"
                     + "from customer c\n"
                     + "join address ad on c.addressId = ad.addressId";
 
@@ -170,13 +176,29 @@ public class DBCustomerDao implements ICustomerDao {
             while (rs.next()) {
                 int i = 1;
                 while (i <= columnCount) {
-
-                    int customerID = rs.getInt(1);
+                    //Data needed
+                    int customerId = rs.getInt(1);
                     String customerName = rs.getString(2);
-                    String address = rs.getString(3);
-                    String phone = rs.getString(4);
+                    int addressId = rs.getInt(3);
+                    int active = rs.getInt(4);
 
-                    customerData = new CustomerData(customerID, customerName, address, phone);
+                    String address = rs.getString(10);
+                    String address2 = rs.getString(11);
+                    int cityId = rs.getInt(12);
+                    String postalCode = rs.getString(13);
+                    String phone = rs.getString(14);
+
+                    Customer customerWithData = new Customer(customerId,
+                            customerName, addressId, active);
+
+                    Address customerAddress = new Address(addressId, address, address2,
+                            cityId, postalCode, phone);
+
+                    customerData = FXCollections.observableArrayList();
+                    Map<Customer, Address> dataRow = new HashMap<>();
+                    dataRow.put(customerWithData, customerAddress);
+
+                    customerData.add(dataRow);
                 }
             }
         } catch (SQLException ex) {

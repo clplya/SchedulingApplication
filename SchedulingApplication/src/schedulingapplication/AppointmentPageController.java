@@ -33,7 +33,7 @@ public class AppointmentPageController {
         try {
             Class.forName(jdbcDriver);
             try {
-                conn = DriverManager.getConnection(DAO.DB_URL, DAO.USER, DAO.PASS);
+                conn = DriverManager.getConnection(DAO_old.DB_URL, DAO_old.USER, DAO_old.PASS);
                 stmt = conn.createStatement();
                 
             } catch (SQLException ex) {
