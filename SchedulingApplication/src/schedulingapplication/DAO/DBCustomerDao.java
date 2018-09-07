@@ -2,25 +2,16 @@ package schedulingapplication.Dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import schedulingapplication.DomainObjects.Address;
 import schedulingapplication.DomainObjects.Customer;
 
 public class DBCustomerDao implements ICustomerDao {
 
     private Customer customer;
     private ObservableList<Customer> customerList;
-    private ObservableList<Map> customerData;
-    private Customer[] array = new Customer[3];
-    private ArrayList<String> customerArray = new ArrayList<>();
-    private ArrayList<String> addressArray = new ArrayList<>();
 
     public DBCustomerDao() {
         customerList = FXCollections.observableArrayList();
@@ -116,6 +107,14 @@ public class DBCustomerDao implements ICustomerDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
         return customer;
 
@@ -153,57 +152,14 @@ public class DBCustomerDao implements ICustomerDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
-        }
-    }
-
-    public ObservableList<Map> getCustomerData() throws SQLException {
-        Statement stmt = null;
-
-        try {
-            Connection conn = DataSource.getConnection();
-            stmt = conn.createStatement();
-
-            String dataSql = null;
-            dataSql = "select *\n"
-                    + "from customer c\n"
-                    + "join address ad on c.addressId = ad.addressId";
-
-            ResultSet rs = stmt.executeQuery(dataSql);
-
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-
-            while (rs.next()) {
-                int i = 1;
-                while (i <= columnCount) {
-                    //Data needed
-                    int customerId = rs.getInt(1);
-                    String customerName = rs.getString(2);
-                    int addressId = rs.getInt(3);
-                    int active = rs.getInt(4);
-
-                    String address = rs.getString(10);
-                    String address2 = rs.getString(11);
-                    int cityId = rs.getInt(12);
-                    String postalCode = rs.getString(13);
-                    String phone = rs.getString(14);
-
-                    Customer customerWithData = new Customer(customerId,
-                            customerName, addressId, active);
-
-                    Address customerAddress = new Address(addressId, address, address2,
-                            cityId, postalCode, phone);
-
-                    customerData = FXCollections.observableArrayList();
-                    Map<Customer, Address> dataRow = new HashMap<>();
-                    dataRow.put(customerWithData, customerAddress);
-
-                    customerData.add(dataRow);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
                 }
             }
-        } catch (SQLException ex) {
-
         }
-        return customerData;
     }
 }

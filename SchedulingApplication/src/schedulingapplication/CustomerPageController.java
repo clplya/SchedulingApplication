@@ -2,9 +2,6 @@ package schedulingapplication;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,23 +16,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import schedulingapplication.Dao.DBAddressDao;
 import schedulingapplication.Dao.DBCustomerDao;
+import schedulingapplication.DomainObjects.Address;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
-import schedulingapplication.DomainObjects.User;
 
 public class CustomerPageController implements Initializable {
 
-    @FXML
-    private TableView customerTableView;
-    @FXML
-    private TableColumn CustomerIDColumn;
-    @FXML
-    private TableColumn NameColumn;
-    @FXML
-    private TableColumn AddressColumn;
-    @FXML
-    private TableColumn PhoneNumberColumn;
     @FXML
     private javafx.scene.control.Button exitButton;
     @FXML
@@ -43,73 +31,47 @@ public class CustomerPageController implements Initializable {
     @FXML
     private javafx.scene.control.Button customerAppointmentButton;
     @FXML
-    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Address> addressList = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Customer> customerFiltered = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Address> addressFiltered = FXCollections.observableArrayList();
+    @FXML
+    private TableView<Customer> customerTableView;
+    @FXML
+    private TableView<Address> addressTableView;
+    @FXML
+    private TableColumn<Customer, String> NameColumn;
+    @FXML
+    private TableColumn<Address, String> AddressColumn;
+    @FXML
+    private TableColumn<Address, String> PhoneNumberColumn;
 
-    private Customer customer;
-    private Connection conn;
-    private Statement stmt;
     private static Customer selectedCustomer;
     private DBCustomerDao dbCustomer = new DBCustomerDao();
-    private User loggedUser;
-    Stage stage;
+    private DBAddressDao dbAddress = new DBAddressDao();
+    private Stage stage;
+    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         System.out.println("Setting & Adding all Customers");
 
-        //  allCustomers.add(dbCustomer.getAllCustomers());
-//        allCustomers.addAll(dbCustomer.getAllCustomers());
-        // customerTableView.setItems(dbCustomer.getAllCustomers());
-        try {
-            customerTableView.setItems(dbCustomer.getCustomerData());
+        customerTableView.setItems(null);
+        customerTableView.setItems(dbCustomer.getAllCustomers());
+        addressTableView.setItems(dbAddress.getAllAddresses());
 
-            viewCustomerTable();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
-    @FXML
-    private void viewCustomerTable() throws SQLException {
-        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-        customerTableView.getItems().clear();
-
-        //customerTableView.setItems(null);
-//        customerTableView.getItems().addAll(dbCustomer.getAllCustomers());
-//        System.out.println("Getting & Adding all Customers:" + customerTableView);
-//
-//        customerTableView.getItems().clear();
-        //customerTableView.setItems(allCustomers);
-        //System.out.println("Setting & Adding all Customers" + customerTableView);
-//        try {
-//            stmt = con.createStatement(TYPE_FORWARD_ONLY, CONCUR_READ_ONLY);
-//            ResultSet rs = stmt.executeQuery();
-//
-//            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-//                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
-//                customerTableView.getColumns().addAll(col);
-//            }
-//            while (rs.next()) {
-//                customerManager.addCustomer(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
-//            }
-//            customerTableView.setItems(customerManager.getAllCustomers());
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//        }
+        customerList = customerTableView.getItems();
+        addressList = addressTableView.getItems();
     }
 
     @FXML
     public void addCustomerButtonHandler() throws IOException {
-        Stage stage;
-        Parent root;
 
         stage = (Stage) addCustomerButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
@@ -121,7 +83,7 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void exitButtonHandler() {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
@@ -131,7 +93,7 @@ public class CustomerPageController implements Initializable {
         loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
         Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
-        selectedCustomer = (Customer) customerTableView.getSelectionModel().getSelectedItem();
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(), 0, null, null, null, null, null, null, null);
 
         AppointmentPageController controller = loader.getController();
@@ -141,16 +103,31 @@ public class CustomerPageController implements Initializable {
         window.setScene(tableViewScene);
         window.show();
 
-//        Stage stage;
-//        Parent root;
-//
-//        stage = (Stage) addCustomerButton.getScene().getWindow();
-//        root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
-//
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
+        stage = (Stage) addCustomerButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
+    @FXML
+    public void customerSelectionFilter(ActionEvent event) throws IOException {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+
+        customerTableView.setItems(null);
+
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
+        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        //final int customerId = selectedCustomer.getCustomerId();
+        final int addressId = selectedCustomer.getAddressId();
+
+        customerFiltered.add(selectedCustomer);
+        addressFiltered.add(dbAddress.getAddress(addressId));
+
+        customerTableView.setItems(customerFiltered);
+        addressTableView.setItems(addressFiltered);
+    }
 }

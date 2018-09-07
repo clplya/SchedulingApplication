@@ -4,16 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Address;
 
 public class DBAddressDao implements IAddressDao {
 
     private Address address;
-    private final ArrayList<Address> addressList;
+    private final ObservableList<Address> addressList;
 
     public DBAddressDao() {
-        addressList = new ArrayList<>();
+        addressList = FXCollections.observableArrayList();
         address = null;
     }
 
@@ -52,7 +53,7 @@ public class DBAddressDao implements IAddressDao {
     }
 
     @Override
-    public ArrayList<Address> getAllAddresses() {
+    public ObservableList<Address> getAllAddresses() {
         Statement stmt = null;
 
         try {
@@ -110,6 +111,14 @@ public class DBAddressDao implements IAddressDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
         return address;
     }
@@ -142,6 +151,14 @@ public class DBAddressDao implements IAddressDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
     }
 }

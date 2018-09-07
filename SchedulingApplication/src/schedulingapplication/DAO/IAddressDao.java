@@ -1,6 +1,6 @@
 package schedulingapplication.Dao;
 
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Address;
 
 public interface IAddressDao {
@@ -9,7 +9,7 @@ public interface IAddressDao {
 
     public void deleteAddress(int addressId);
 
-    public ArrayList<Address> getAllAddresses();
+    public ObservableList<Address> getAllAddresses();
 
     public Address getAddress(int addressId);
 
