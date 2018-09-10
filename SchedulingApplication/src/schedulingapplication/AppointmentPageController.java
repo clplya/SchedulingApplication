@@ -2,46 +2,59 @@ package schedulingapplication;
 
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
-import java.util.Date;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 
 public class AppointmentPageController {
 
-    @FXML
     private Customer selectedCustomer;
-    private DatePicker datePicker;
-    private javafx.scene.control.ComboBox selectedAppointmentComboBox;
-    DBAppointmentDao dbAppointment = new DBAppointmentDao();
     private Appointment selectedAppointment;
-    private ObservableList<Appointment> appointmentList;
+    private DBAppointmentDao dbAppointment = new DBAppointmentDao();
+
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextField apptTitleField;
+    @FXML
+    private TextField apptDescriptionField;
+    @FXML
+    private TextField apptLocationField;
+    @FXML
+    private TextField apptContactField;
+    @FXML
+    private javafx.scene.control.ComboBox selectedAppointmentComboBox;
+    @FXML
+    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
     public void initialize(Customer customer) {
         selectedCustomer = customer;
         appointmentList.addAll(dbAppointment.getAppointment(customer.getCustomerId()));
 
-        selectedAppointmentComboBox.setItems(appointmentList);
-
-//        if (appointmentList.size() > 0) {
-//            selectedAppointment = (Appointment) selectedAppointmentComboBox.getItems().get(0);
-//        }
+        for (int i = 0; i < appointmentList.size(); i++) {
+            //selectedAppointmentComboBox.setItems(appointmentList.get(i).getTitle());
+            selectedAppointmentComboBox.itemsProperty().setValue(i);
+        }
     }
 
+    @FXML
     public void datePickerButtonHandler() {
         LocalDate currentDate = datePicker.getValue();
         ChronoLocalDate chronDate = datePicker.getChronology().date(currentDate);
         System.out.println("Today's Date is: " + chronDate);
     }
 
-    public void getAllAppointments() {
-        //  appointmentManager.clear();
-        //  appointmentManager.getAllAppointments();
-
-        java.util.Date date = new Date();
+    public void selectedAppointmentController() {
 
     }
 }

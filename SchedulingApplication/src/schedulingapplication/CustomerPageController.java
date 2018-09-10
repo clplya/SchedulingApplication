@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import schedulingapplication.Dao.DBAddressDao;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Address;
-import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 
 public class CustomerPageController implements Initializable {
@@ -89,13 +88,13 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
         Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
-        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-        Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(), 0, null, null, null, null, null, null, null);
 
+        //Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(), 0, null, null, null, null, null, null, null);
         AppointmentPageController controller = loader.getController();
         controller.initialize(selectedCustomer);
 
@@ -103,12 +102,12 @@ public class CustomerPageController implements Initializable {
         window.setScene(tableViewScene);
         window.show();
 
-        stage = (Stage) addCustomerButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+//        stage = (Stage) addCustomerButton.getScene().getWindow();
+//        root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
+//
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     @FXML
