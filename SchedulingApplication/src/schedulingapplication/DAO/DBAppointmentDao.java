@@ -14,7 +14,7 @@ import schedulingapplication.DomainObjects.Appointment;
 public class DBAppointmentDao implements IAppointmentDao {
 
     private Appointment appointment;
-    private ArrayList<Appointment> appointmentList;
+    private final ArrayList<Appointment> appointmentList;
 
     public DBAppointmentDao() {
         this.appointmentList = new ArrayList<>();
@@ -105,6 +105,35 @@ public class DBAppointmentDao implements IAppointmentDao {
             stmt = conn.createStatement();
 
             ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointmentId =" + appointmentId);
+
+            while (result.next()) {
+                int apptId = result.getInt(1);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                Date startDate = result.getDate(8);
+                Date endDate = result.getDate(9);
+
+                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, startDate, endDate);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return appointment;
+    }
+
+    @Override
+    public Appointment getAppointmentByCustomer(int selectedCustomerId) {
+        Statement stmt = null;
+
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where customerId =" + selectedCustomerId);
 
             while (result.next()) {
                 int apptId = result.getInt(1);

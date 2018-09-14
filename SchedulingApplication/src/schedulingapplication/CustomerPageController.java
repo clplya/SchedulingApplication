@@ -94,39 +94,31 @@ public class CustomerPageController implements Initializable {
         Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
 
-        //Appointment selectedAppointment = new Appointment(selectedCustomer.getCustomerId(), 0, null, null, null, null, null, null, null);
         AppointmentPageController controller = loader.getController();
         controller.initialize(selectedCustomer);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();
+    }
 
-//        stage = (Stage) addCustomerButton.getScene().getWindow();
-//        root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
+//    @FXML
+//    public void customerSelectionFilter(ActionEvent event) throws IOException {
+//        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
 //
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-    }
-
-    @FXML
-    public void customerSelectionFilter(ActionEvent event) throws IOException {
-        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-
-        customerTableView.setItems(null);
-
-        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
-        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-        //final int customerId = selectedCustomer.getCustomerId();
-        final int addressId = selectedCustomer.getAddressId();
-
-        customerFiltered.add(selectedCustomer);
-        addressFiltered.add(dbAddress.getAddress(addressId));
-
-        customerTableView.setItems(customerFiltered);
-        addressTableView.setItems(addressFiltered);
-    }
+//        customerTableView.setItems();
+//
+//        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+//        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
+//        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+//
+//        //final int customerId = selectedCustomer.getCustomerId();
+//        final int addressId = selectedCustomer.getAddressId();
+//
+//        customerFiltered.add(selectedCustomer);
+//        addressFiltered.add(dbAddress.getAddress(addressId));
+//
+//        customerTableView.setItems(customerFiltered);
+//        addressTableView.setItems(addressFiltered);
+//    }
 }

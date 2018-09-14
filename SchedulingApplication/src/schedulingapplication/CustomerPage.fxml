@@ -34,14 +34,14 @@
         <Button fx:id="addCustomerButton" layoutX="73.0" layoutY="495.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Add Customer" textAlignment="CENTER" />
         <TableView fx:id="addressTableView" layoutX="14.0" layoutY="330.0" prefHeight="81.0" prefWidth="483.0">
             <columns>
-                <TableColumn fx:id="AddressColumn" prefWidth="325.0" text="Address">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="address1" />
-                    </cellValueFactory>
-                </TableColumn>
                 <TableColumn fx:id="PhoneNumberColumn" prefWidth="156.0" text="Phone Number">
                     <cellValueFactory>
                         <PropertyValueFactory property="phone" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="AddressColumn" prefWidth="325.0" text="Address">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="address1" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>

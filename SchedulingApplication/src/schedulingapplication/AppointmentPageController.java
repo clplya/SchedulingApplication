@@ -1,24 +1,28 @@
 package schedulingapplication;
 
-import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
+import java.io.IOException;
+import java.time.*;
 import java.time.chrono.ChronoLocalDate;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import schedulingapplication.Dao.DBAppointmentDao;
+import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 
 public class AppointmentPageController {
 
-    private Customer selectedCustomer;
     private Appointment selectedAppointment;
-    private DBAppointmentDao dbAppointment = new DBAppointmentDao();
+    private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
+    private final DBCustomerDao dbCustomer = new DBCustomerDao();
 
     @FXML
     private Button cancelButton;
@@ -35,19 +39,31 @@ public class AppointmentPageController {
     @FXML
     private TextField apptContactField;
     @FXML
-    private ComboBox<String> selectedAppointmentComboBox = new ComboBox<String>();
+    private final ComboBox selectedAppointmentComboBox = new ComboBox();
     @FXML
-    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    @FXML
+    private final ObservableList<Appointment> allAppointmentList = FXCollections.observableArrayList();
 
-    public void initialize(Customer customer) throws InvocationTargetException {
+    private Customer selectedCustomer;
+
+    public void initialize(Customer customer) {
 
         selectedCustomer = customer;
-        appointmentList.addAll(dbAppointment.getAppointment(customer.getCustomerId()));
+        allAppointmentList.addAll((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId())));
 
-        for (int i = 0; i < appointmentList.size(); i++) {
-            selectedAppointmentComboBox.setItems(appointmentList);
-            //selectedAppointmentComboBox.itemsProperty().setValue(i);
-        }
+        for (int i = 0; i < allAppointmentList.size(); i++) {
+            appointmentList.addAll((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId())));
+            selectedAppointmentComboBox.getItems().setAll(appointmentList.get(i));
+            selectedAppointmentComboBox.setValue(i);
+        };
+
+        apptTitleField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getTitle()));
+        apptDescriptionField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getDescription()));
+        apptLocationField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getLocation()));
+        apptContactField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getContact()));
+        // appointmentList.addAll(dbAppointment.getAllAppointments());
+        //appointmentList.forEach((_item) -> {}
     }
 
     @FXML
@@ -57,7 +73,36 @@ public class AppointmentPageController {
         System.out.println("Today's Date is: " + chronDate);
     }
 
+    @FXML
     public void selectedAppointmentController() {
 
+    }
+
+    @FXML
+    public void saveButtonHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cancelButtonHandler(ActionEvent event) throws IOException {
+        Stage stage;
+        Parent root;
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel");
+        alert.setHeaderText("You will lose all progress on this screen");
+        alert.setContentText("Are you sure you want to cancel?");
+
+        Optional<ButtonType> window = alert.showAndWait();
+        if (window.get() == ButtonType.OK) {
+            stage = (Stage) cancelButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (window.get() == ButtonType.CANCEL) {
+            alert.close();
+        }
     }
 }
