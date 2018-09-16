@@ -8,6 +8,8 @@ public interface IAppointmentDao {
 
     public void addAppointment(int appointmentId, int customerId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end);
 
+    public void addNewAppointment(Appointment appointment);
+
     public void deleteAppointment(int deletedAppointmentId);
 
     public ArrayList<Appointment> getAllAppointments();

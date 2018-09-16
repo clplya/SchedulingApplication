@@ -1,6 +1,7 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.*;
 import java.time.chrono.ChronoLocalDate;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import schedulingapplication.DAO.ICreateNewAppointment;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
@@ -41,27 +43,40 @@ public class AppointmentPageController {
     @FXML
     private final ComboBox selectedAppointmentComboBox = new ComboBox();
     @FXML
-    private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> appointmentList
+            = FXCollections.observableArrayList();
     @FXML
-    private final ObservableList<Appointment> allAppointmentList = FXCollections.observableArrayList();
+    private final ObservableList<Appointment> allAppointmentList
+            = FXCollections.observableArrayList();
 
     private Customer selectedCustomer;
 
     public void initialize(Customer customer) {
 
         selectedCustomer = customer;
-        allAppointmentList.addAll((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId())));
+        allAppointmentList.addAll((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId())));
 
         for (int i = 0; i < allAppointmentList.size(); i++) {
-            appointmentList.addAll((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId())));
-            selectedAppointmentComboBox.getItems().setAll(appointmentList.get(i));
-            selectedAppointmentComboBox.setValue(i);
-        };
+            appointmentList.addAll((dbAppointment.getAppointmentByCustomer(
+                    selectedCustomer.getCustomerId())));
+            selectedAppointmentComboBox.getItems().
+                    setAll(appointmentList.get(i));
+            //  selectedAppointmentComboBox.setValue(i);
+        }
 
-        apptTitleField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getTitle()));
-        apptDescriptionField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getDescription()));
-        apptLocationField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getLocation()));
-        apptContactField.setText((dbAppointment.getAppointmentByCustomer(selectedCustomer.getCustomerId()).getContact()));
+        apptTitleField.setText((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId()).
+                getTitle()));
+        apptDescriptionField.setText((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId()).
+                getDescription()));
+        apptLocationField.setText((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId()).
+                getLocation()));
+        apptContactField.setText((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId()).
+                getContact()));
         // appointmentList.addAll(dbAppointment.getAllAppointments());
         //appointmentList.forEach((_item) -> {}
     }
@@ -80,7 +95,11 @@ public class AppointmentPageController {
 
     @FXML
     public void saveButtonHandler(ActionEvent event) {
-
+        Appointment newAppointment = new Appointment(
+                10, 2, "Xray Procedure", "This is for an Xray", "Doctors Office", "Nurse", "none",
+                Date.valueOf("March 12 2019"), Date.valueOf("March 12 2019"));
+        ICreateNewAppointment createNewAppointment = i -> newAppointment;
+        dbAppointment.addNewAppointment(newAppointment);
     }
 
     @FXML

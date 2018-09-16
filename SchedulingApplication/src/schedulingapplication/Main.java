@@ -59,6 +59,3 @@ public class Main extends Application {
     }
 
 }
-
-
-/////IM STUCK ON CUstomerpagecontroller and getting the data to save off to a new object , customerdata, so that it can be returned to the table as a new object. this is a dumb idea but I have tried Arrays, ArrayLists and any other container and they do not hold the data.

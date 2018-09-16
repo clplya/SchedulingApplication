@@ -29,7 +29,34 @@ public class DBAppointmentDao implements IAppointmentDao {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "insert into appointment(appointmentId,customerId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values (" + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + start + "','" + end + "','" + now() + "',1,1)";
+            String sql = "insert into appointment(appointmentId,customerId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values ("
+                    + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + start + "','" + end + "','" + now() + "',1,1)";
+            int result = stmt.executeUpdate(sql);
+            System.out.println("Inserting number of records: " + result);
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    @Override
+    public void addNewAppointment(Appointment appointment) {
+        Statement stmt = null;
+        int appointmentId = appointment.getAppointmentId();
+        int customerId = appointment.getCustomerId();
+        String title = appointment.getTitle();;
+        String description = appointment.getDescription();
+        String location = appointment.getLocation();
+        String contact = appointment.getContact();
+        String url = appointment.getURL();
+        Date startDate = appointment.getStartDate();
+        Date endDate = appointment.getEndDate();
+
+        try {
+            Connection conn = DataSource.getConnection();
+
+            stmt = conn.createStatement();
+            String sql = "insert into appointment(appointmentId,customerId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values (" + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + startDate + "','" + endDate + "','" + now() + "',1,1)";
             int result = stmt.executeUpdate(sql);
             System.out.println("Inserting number of records: " + result);
 
