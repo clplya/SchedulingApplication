@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import schedulingapplication.DAO.ICreateNewAppointment;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
@@ -41,7 +40,7 @@ public class AppointmentPageController {
     @FXML
     private TextField apptContactField;
     @FXML
-    private final ComboBox selectedAppointmentComboBox = new ComboBox();
+    private ComboBox selectedAppointmentComboBox = new ComboBox();
     @FXML
     private final ObservableList<Appointment> appointmentList
             = FXCollections.observableArrayList();
@@ -56,13 +55,14 @@ public class AppointmentPageController {
         selectedCustomer = customer;
         allAppointmentList.addAll((dbAppointment.getAppointmentByCustomer(
                 selectedCustomer.getCustomerId())));
+        appointmentList.addAll((dbAppointment.getAppointmentByCustomer(
+                selectedCustomer.getCustomerId())));
 
         for (int i = 0; i < allAppointmentList.size(); i++) {
-            appointmentList.addAll((dbAppointment.getAppointmentByCustomer(
-                    selectedCustomer.getCustomerId())));
-            selectedAppointmentComboBox.getItems().
-                    setAll(appointmentList.get(i));
-            //  selectedAppointmentComboBox.setValue(i);
+            selectedAppointmentComboBox.getItems().add(dbAppointment.getAppointmentByCustomer(
+                    selectedCustomer.getCustomerId()).getTitle());
+
+//  FIgure out how to get multiple lines returned to the box
         }
 
         apptTitleField.setText((dbAppointment.getAppointmentByCustomer(
@@ -97,8 +97,7 @@ public class AppointmentPageController {
     public void saveButtonHandler(ActionEvent event) {
         Appointment newAppointment = new Appointment(
                 10, 2, "Xray Procedure", "This is for an Xray", "Doctors Office", "Nurse", "none",
-                Date.valueOf("March 12 2019"), Date.valueOf("March 12 2019"));
-        ICreateNewAppointment createNewAppointment = i -> newAppointment;
+                Date.valueOf("2019-03-12"), Date.valueOf("2019-03-12"));
         dbAppointment.addNewAppointment(newAppointment);
     }
 
