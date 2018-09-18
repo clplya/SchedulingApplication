@@ -58,8 +58,8 @@ public class AppointmentPageController {
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
             selectedAppointmentComboBox.getItems().add(titleText);
-
         }
+
     }
 //
 //    @Override
@@ -99,21 +99,6 @@ public class AppointmentPageController {
 //    titleLabel.setText(TreatmentRoom.treat[i].getPatient().getTitle());
 //    firstNameLabel.setText(TreatmentRoom.treat[i].getPatient().getFirstName());
 //    lastNameLabel.setText(TreatmentRoom.treat[i].getPatient().getLastName());
-//}
-//
-//@FXML
-//private void btnLogout(ActionEvent event) throws Exception {
-//    FXMLLoader loader = new FXMLLoader();
-//    loader.setLocation(getClass().getResource("/views/FXMLLoginPage.FXML"));
-//    loader.load();
-//    Parent p = loader.getRoot();
-//    Stage stage = new Stage();
-//    stage.setScene(new Scene(p));
-//    stage.show();
-//    stage.centerOnScreen();
-//    // hides current page
-//    ((Node) (event.getSource())).getScene().getWindow().hide();
-//}
 //}
 
     @FXML
