@@ -44,42 +44,77 @@ public class AppointmentPageController {
     @FXML
     private final ObservableList<Appointment> appointmentList
             = FXCollections.observableArrayList();
-    @FXML
-    private final ObservableList<Appointment> allAppointmentList
-            = FXCollections.observableArrayList();
 
     private Customer selectedCustomer;
+    private String titleText;
 
     public void initialize(Customer customer) {
 
         selectedCustomer = customer;
-        allAppointmentList.addAll((dbAppointment.getAppointmentByCustomer(
-                selectedCustomer.getCustomerId())));
-        appointmentList.addAll((dbAppointment.getAppointmentByCustomer(
+
+        appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
 
-        for (int i = 0; i < allAppointmentList.size(); i++) {
-            selectedAppointmentComboBox.getItems().add(dbAppointment.getAppointmentByCustomer(
-                    selectedCustomer.getCustomerId()).getTitle());
+        for (int i = 0; i < appointmentList.size(); i++) {
+            titleText = appointmentList.get(i).getTitle();
+            selectedAppointmentComboBox.getItems().add(titleText);
 
-//  FIgure out how to get multiple lines returned to the box
         }
-
-        apptTitleField.setText((dbAppointment.getAppointmentByCustomer(
-                selectedCustomer.getCustomerId()).
-                getTitle()));
-        apptDescriptionField.setText((dbAppointment.getAppointmentByCustomer(
-                selectedCustomer.getCustomerId()).
-                getDescription()));
-        apptLocationField.setText((dbAppointment.getAppointmentByCustomer(
-                selectedCustomer.getCustomerId()).
-                getLocation()));
-        apptContactField.setText((dbAppointment.getAppointmentByCustomer(
-                selectedCustomer.getCustomerId()).
-                getContact()));
-        // appointmentList.addAll(dbAppointment.getAllAppointments());
-        //appointmentList.forEach((_item) -> {}
     }
+//
+//    @Override
+//public void initialize(URL location, ResourceBundle resources) {
+//     /* ******* Here is the Trick *********
+//    listens to the value property of the comboBox.
+//    calls the updateLabels function when the value changes. */
+//    comboBox.valueProperty().addListener(new ChangeListener<String>() {
+//
+//        @Override
+//        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//            updateLabels(newValue);
+//        }
+//    });
+//    comboBox.setItems(list);
+//}
+//
+//private void updateLabels(String newValue) {
+//    switch (newValue) {
+//        case ("Treatment Room 1"):
+//            setPatientInfo(0);
+//            break;
+//        case ("Treatment Room 2"):
+//            setPatientInfo(1);
+//            break;
+//        case ("Treatment Room 3"):
+//            setPatientInfo(2);
+//            break;
+//        default:
+//            System.out.println("treatment room not recognised");
+//    }
+//
+//}
+//
+//public void setPatientInfo(int i) {
+//    nhsNumberLabel.setText(TreatmentRoom.treat[i].getPatient().getNhsNumber());
+//    titleLabel.setText(TreatmentRoom.treat[i].getPatient().getTitle());
+//    firstNameLabel.setText(TreatmentRoom.treat[i].getPatient().getFirstName());
+//    lastNameLabel.setText(TreatmentRoom.treat[i].getPatient().getLastName());
+//}
+//
+//@FXML
+//private void btnLogout(ActionEvent event) throws Exception {
+//    FXMLLoader loader = new FXMLLoader();
+//    loader.setLocation(getClass().getResource("/views/FXMLLoginPage.FXML"));
+//    loader.load();
+//    Parent p = loader.getRoot();
+//    Stage stage = new Stage();
+//    stage.setScene(new Scene(p));
+//    stage.show();
+//    stage.centerOnScreen();
+//    // hides current page
+//    ((Node) (event.getSource())).getScene().getWindow().hide();
+//}
+//}
 
     @FXML
     public void datePickerButtonHandler() {
@@ -90,7 +125,21 @@ public class AppointmentPageController {
 
     @FXML
     public void selectedAppointmentController() {
+        selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
+        //FIGURE OUT how to tell what Appointment is selected in the combobox to pull it's values
 
+        //appointmentList.contains(title);
+//        apptTitleField.setText(appointmentList.
+//                getTitle()));
+//        apptDescriptionField.setText((dbAppointment.getAppointmentsByCustomer(
+//                selectedCustomer.getCustomerId()).
+//                getDescription()));
+//        apptLocationField.setText((dbAppointment.getAppointmentsByCustomer(
+//                selectedCustomer.getCustomerId()).
+//                getLocation()));
+//        apptContactField.setText((dbAppointment.getAppointmentsByCustomer(
+//                selectedCustomer.getCustomerId()).
+//                getContact()));
     }
 
     @FXML

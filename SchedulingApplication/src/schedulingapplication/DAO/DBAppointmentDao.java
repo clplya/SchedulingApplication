@@ -148,12 +148,20 @@ public class DBAppointmentDao implements IAppointmentDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
         return appointment;
     }
 
     @Override
-    public Appointment getAppointmentByCustomer(int selectedCustomerId) {
+    public ArrayList getAppointmentsByCustomer(int selectedCustomerId) {
         Statement stmt = null;
 
         try {
@@ -174,11 +182,20 @@ public class DBAppointmentDao implements IAppointmentDao {
                 Date endDate = result.getDate(9);
 
                 appointment = new Appointment(apptId, customerId, title, description, location, contact, url, startDate, endDate);
+                appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
-        return appointment;
+        return appointmentList;
     }
 
     @Override
@@ -212,7 +229,14 @@ public class DBAppointmentDao implements IAppointmentDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
         }
     }
-
 }

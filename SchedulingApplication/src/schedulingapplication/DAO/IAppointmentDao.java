@@ -16,7 +16,7 @@ public interface IAppointmentDao {
 
     public Appointment getAppointment(int appointmentId);
 
-    public Appointment getAppointmentByCustomer(int customerId);
+    public ArrayList getAppointmentsByCustomer(int customerId);
 
     public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle);
 }
