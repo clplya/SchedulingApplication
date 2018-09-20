@@ -7,17 +7,18 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
-import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Appointment;
 
 public class DBAppointmentDao implements IAppointmentDao {
 
     private Appointment appointment;
-    private final ArrayList<Appointment> appointmentList;
+    private ObservableList appointmentList = FXCollections.observableArrayList();
 
     public DBAppointmentDao() {
-        this.appointmentList = new ArrayList<>();
+        appointmentList = null;
         appointment = null;
     }
 
@@ -41,7 +42,7 @@ public class DBAppointmentDao implements IAppointmentDao {
 
     @Override
     public void addNewAppointment(Appointment appointment) {
-        Statement stmt = null;
+        Statement stmt;
         int appointmentId = appointment.getAppointmentId();
         int customerId = appointment.getCustomerId();
         String title = appointment.getTitle();;
@@ -83,7 +84,7 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public ArrayList<Appointment> getAllAppointments() {
+    public ObservableList getAllAppointments() {
         Statement stmt = null;
         Timestamp ts;
 
@@ -161,7 +162,7 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public ArrayList getAppointmentsByCustomer(int selectedCustomerId) {
+    public ObservableList getAppointmentsByCustomer(int selectedCustomerId) {
         Statement stmt = null;
 
         try {

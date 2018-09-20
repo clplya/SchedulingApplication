@@ -1,7 +1,7 @@
 package schedulingapplication.Dao;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Appointment;
 
 public interface IAppointmentDao {
@@ -12,11 +12,11 @@ public interface IAppointmentDao {
 
     public void deleteAppointment(int deletedAppointmentId);
 
-    public ArrayList<Appointment> getAllAppointments();
+    public ObservableList getAllAppointments();
 
     public Appointment getAppointment(int appointmentId);
 
-    public ArrayList getAppointmentsByCustomer(int customerId);
+    public ObservableList getAppointmentsByCustomer(int customerId);
 
     public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle);
 }
