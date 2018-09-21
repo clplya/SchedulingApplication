@@ -55,20 +55,17 @@ public class AppointmentPageController {
 
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
+        selectedAppointment = appointmentList.get(1);
 
         // appointmentTableView.setItems(null);
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
 
             //  appointmentTableView.setItems(dbAppointment.getAppointmentsByCustomer(i));
-            apptTitleField.setText(dbAppointment.getAppointmentsByCustomer(selectedCustomer.getCustomerId()))
-            );
-            apptDescriptionField.setText((dbAppointment.getAppointmentsByCustomer(
-                    selectedCustomer.getCustomerId()))).getDescription();
-            apptLocationField.setText((dbAppointment.getAppointmentsByCustomer(
-                    selectedCustomer.getCustomerId()))).getLocation();
-            apptContactField.setText((dbAppointment.getAppointmentsByCustomer(
-                    selectedCustomer.getCustomerId()))).getContact();
+            apptTitleField.setText(selectedAppointment.getTitle());
+            apptDescriptionField.setText(selectedAppointment.getDescription());
+            apptLocationField.setText(selectedAppointment.getLocation());
+            apptContactField.setText(selectedAppointment.getContact());
         }
 
 //            selectedAppointmentComboBox.getItems().clear();
