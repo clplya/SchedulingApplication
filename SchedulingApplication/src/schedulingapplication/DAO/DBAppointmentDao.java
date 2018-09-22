@@ -18,8 +18,7 @@ public class DBAppointmentDao implements IAppointmentDao {
     private ObservableList appointmentList = FXCollections.observableArrayList();
 
     public DBAppointmentDao() {
-        appointmentList = null;
-        appointment = null;
+
     }
 
     @Override
@@ -164,12 +163,16 @@ public class DBAppointmentDao implements IAppointmentDao {
     @Override
     public ObservableList getAppointmentsByCustomer(int selectedCustomerId) {
         Statement stmt = null;
+        if(appointmentList.size() >0){
+            appointmentList.clear();
+        }
 
         try {
             Connection conn = DataSource.getConnection();
             stmt = conn.createStatement();
 
-            ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where customerId =" + selectedCustomerId);
+            String sql = "select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where customerId =";
+            ResultSet result = stmt.executeQuery(sql + selectedCustomerId);
 
             while (result.next()) {
                 int apptId = result.getInt(1);

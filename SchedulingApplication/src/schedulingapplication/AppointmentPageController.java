@@ -41,35 +41,30 @@ public class AppointmentPageController {
     @FXML
     private ComboBox selectedAppointmentComboBox = new ComboBox();
     @FXML
-    private TableView<Appointment> appointmentTableView;
-    @FXML
-    private TableColumn<Appointment, String> AppointmentColumn;
-    @FXML
     private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private Customer selectedCustomer;
     private String titleText;// = FXCollections.observableArrayList();
 
     public void initialize(Customer customer) {
-        AppointmentColumn.setCellValueFactory(new PropertyValueFactory<>("appointment"));
-        selectedCustomer = customer;
+       selectedCustomer = customer;
 
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
+        
+        selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
 
-        // appointmentTableView.setItems(null);
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-
-            //  appointmentTableView.setItems(dbAppointment.getAppointmentsByCustomer(i));
+            
             apptTitleField.setText(selectedAppointment.getTitle());
             apptDescriptionField.setText(selectedAppointment.getDescription());
             apptLocationField.setText(selectedAppointment.getLocation());
             apptContactField.setText(selectedAppointment.getContact());
         }
 
-//            selectedAppointmentComboBox.getItems().clear();
-//            selectedAppointmentComboBox.getItems().add(titleText);
+          selectedAppointmentComboBox.getItems().clear();
+          selectedAppointmentComboBox.getItems().add(titleText);
     }
 
     @FXML
@@ -81,7 +76,7 @@ public class AppointmentPageController {
 
     @FXML
     public void selectedAppointmentController() {
-        selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
+       // selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
 
     }
 
