@@ -1,7 +1,9 @@
 package schedulingapplication;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.time.*;
+import java.time.chrono.Chronology;
+import java.util.Locale;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.Dao.DBCustomerDao;
@@ -29,7 +30,7 @@ public class AppointmentPageController {
     @FXML
     private Button saveButton;
     @FXML
-    private DatePicker datePicker;
+    private DatePicker datePicker = new DatePicker();
     @FXML
     private TextField apptTitleField;
     @FXML
@@ -46,45 +47,51 @@ public class AppointmentPageController {
     private String titleText;// = FXCollections.observableArrayList();
 
     public void initialize(Customer customer) {
-       selectedCustomer = customer;
+        selectedCustomer = customer;
 
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
-                selectedCustomer.getCustomerId())));
+                                selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
-        
+
         selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
+        selectedAppointmentComboBox.getItems().clear();
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-            
+
             apptTitleField.setText(selectedAppointment.getTitle());
             apptDescriptionField.setText(selectedAppointment.getDescription());
             apptLocationField.setText(selectedAppointment.getLocation());
             apptContactField.setText(selectedAppointment.getContact());
+
+            selectedAppointmentComboBox.getItems().add(titleText);
         }
 
-          selectedAppointmentComboBox.getItems().clear();
-          selectedAppointmentComboBox.getItems().add(titleText);
+        selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
+
+        //Implementing Calendar with Chronology- probably not how it works
+        Chronology test = Chronology.ofLocale(Locale.getDefault(Locale.Category.FORMAT));
+        System.out.println(test);
     }
 
     @FXML
     public void datePickerButtonHandler() {
-//        LocalDate currentDate = datePicker.getValue();
-//        ChronoLocalDate chronDate = datePicker.getChronology().date(currentDate);
-//        System.out.println("Today's Date is: " + chronDate);
+        LocalDate date = datePicker.getValue();
+        datePicker.setValue(selectedAppointment.getStartDate());
+
     }
 
     @FXML
     public void selectedAppointmentController() {
-       // selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
+        // selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
 
     }
 
     @FXML
     public void saveButtonHandler(ActionEvent event) {
         Appointment newAppointment = new Appointment(
-                10, 2, "Xray Procedure", "This is for an Xray", "Doctors Office", "Nurse", "none",
-                Date.valueOf("2019-03-12"), Date.valueOf("2019-03-12"));
+            10, 2, "Xray Procedure", "This is for an Xray", "Doctors Office", "Nurse", "none",
+            LocalDate.of(2019, 03, 12), LocalDate.of(2019, 03, 12));
         dbAppointment.addNewAppointment(newAppointment);
     }
 

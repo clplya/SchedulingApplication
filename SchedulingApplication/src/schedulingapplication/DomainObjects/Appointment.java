@@ -1,6 +1,6 @@
 package schedulingapplication.DomainObjects;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -13,10 +13,10 @@ public class Appointment {
     private final SimpleStringProperty location;
     private final SimpleStringProperty contact;
     private final SimpleStringProperty URL;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public Appointment(int appointmentId, int customerId, String title, String description, String location, String contact, String URL, Date startDate, Date endDate) {
+    public Appointment(int appointmentId, int customerId, String title, String description, String location, String contact, String URL, LocalDate startDate, LocalDate endDate) {
         this.appointmentId = new SimpleIntegerProperty(appointmentId);
         this.customerId = new SimpleIntegerProperty(customerId);
         this.title = new SimpleStringProperty(title);
@@ -84,19 +84,19 @@ public class Appointment {
         this.URL.set(URL);
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
