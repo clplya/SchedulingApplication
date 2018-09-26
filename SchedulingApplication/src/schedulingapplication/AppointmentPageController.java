@@ -68,9 +68,10 @@ public class AppointmentPageController {
         selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
 
         String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
-        int year = selectedAppointmentTime.substring(0, 3);
-        String month = selectedAppointmentTime.substring(6, 7);
-        String day = selectedAppointmentTime.substring(9, 10);
+        
+        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 3));        
+        int month = Integer.parseInt(selectedAppointmentTime.substring(6, 7));
+        int day = Integer.parseInt(selectedAppointmentTime.substring(9, 10));
 
         datePicker = new DatePicker(LocalDate.of(year, month, day));
 
