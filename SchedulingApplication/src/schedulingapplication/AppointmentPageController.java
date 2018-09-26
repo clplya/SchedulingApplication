@@ -52,42 +52,68 @@ public class AppointmentPageController {
         selectedAppointment = appointmentList.get(1);
 
         selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
-        selectedAppointmentComboBox.getItems().clear();
+       // selectedAppointmentComboBox.getItems().clear();
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
 
-            apptTitleField.setText(selectedAppointment.getTitle());
+            updateAppointmentDetails();
+
+           selectedAppointmentComboBox.getItems().add(titleText);
+        }
+
+       selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
+
+        updateAppointmentDate();
+    } 
+
+    private void changeSelectedAppointment(){
+        ObservableList newAppointment = FXCollections.observableArrayList();
+        newAppointment.addAll(selectedAppointmentComboBox.getItems());
+        String title = (String)selectedAppointmentComboBox.getValue();
+        appointmentList.forEach((appointments) -> {
+            if(title.equals(appointments.getTitle())){
+                selectedAppointment = appointments;
+            } 
+//            else {
+//                System.out.println("No appointment existing");
+// }
+        });
+        
+    }
+    
+    private void updateAppointmentDate(){
+        String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
+        
+        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 4));        
+        int month = Integer.parseInt(selectedAppointmentTime.substring(5, 7));
+        int day = Integer.parseInt(selectedAppointmentTime.substring(8, 10));
+
+        datePicker = new DatePicker();
+        datePicker.setValue(LocalDate.of(year, month, day));
+    }
+    
+    private void updateAppointmentDetails(){
+        apptTitleField.setText(selectedAppointment.getTitle());
             apptDescriptionField.setText(selectedAppointment.getDescription());
             apptLocationField.setText(selectedAppointment.getLocation());
             apptContactField.setText(selectedAppointment.getContact());
-
-            selectedAppointmentComboBox.getItems().add(titleText);
-        }
-
-        selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
-
-        String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
-        
-        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 3));        
-        int month = Integer.parseInt(selectedAppointmentTime.substring(6, 7));
-        int day = Integer.parseInt(selectedAppointmentTime.substring(9, 10));
-
-        datePicker = new DatePicker(LocalDate.of(year, month, day));
-
     }
-
+    
     @FXML
-    public void datePickerButtonHandler() {
+    void datePickerButtonHandler(ActionEvent event) throws IOException {
         LocalDate date = datePicker.getValue();
-        datePicker.setValue(selectedAppointment.getStartDate());
-
+        System.err.println("Selected date: " + date);
+     
+        //datePicker.setValue(selectedAppointment.getStartDate();
     }
 
     @FXML
     public void selectedAppointmentController() {
-        // selectedAppointment = (Appointment) selectedAppointmentComboBox.getValue();
-
+        changeSelectedAppointment();
+           updateAppointmentDate();
+           updateAppointmentDetails();
+        
     }
 
     @FXML
