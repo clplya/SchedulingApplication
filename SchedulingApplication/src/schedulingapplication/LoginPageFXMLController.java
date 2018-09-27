@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,10 +29,6 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     private javafx.scene.control.Button exitButton;
 
-    private Main application;
-    private Connection connection = null;
-    private Statement statement = null;
-    private ResultSet rs = null;
     private boolean loginSuccessful = false;
     private boolean loginFailed = false;
 
@@ -40,11 +37,15 @@ public class LoginPageFXMLController implements Initializable {
 
     public void setApp(Main application) {
         this.application = application;
-        //JDBCConnection.getConnection();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        ArrayList userNameList = dbUser.getAllUsers();
+        String inputUserName = username.getText();
+        User inputUser = dbUser.getUserByUserName(inputUserName);
+        
         username.setText("admin");
         password.setText("123456");
 
