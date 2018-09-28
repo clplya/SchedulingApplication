@@ -2,6 +2,7 @@ package schedulingapplication;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -17,6 +18,9 @@ public class Main extends Application {
     private Stage stage;
 
     public static void main(String[] args) throws SQLException {
+        Locale us = new Locale("en", "US");
+        Locale sp = new Locale("sp", "SP");
+
         Application.launch(Main.class, (java.lang.String[]) null);
     }
 

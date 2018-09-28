@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import schedulingapplication.Dao.DBUserDao;
@@ -20,6 +22,7 @@ import schedulingapplication.DomainObjects.User;
 
 public class LoginPageFXMLController implements Initializable {
 
+    private Application application;
     @FXML
     private TextField username;
     @FXML
@@ -32,8 +35,7 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginSuccessful = false;
     private boolean loginFailed = false;
 
-    // private boolean passwordMatch = false;
-    private DBUserDao dbUser = new DBUserDao();
+    private final DBUserDao dbUser = new DBUserDao();
 
     public void setApp(Main application) {
         this.application = application;
@@ -41,13 +43,11 @@ public class LoginPageFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        ArrayList userNameList = dbUser.getAllUsers();
-        String inputUserName = username.getText();
-        User inputUser = dbUser.getUserByUserName(inputUserName);
-        
+        //remove
         username.setText("admin");
         password.setText("123456");
+
+        Locale.getDefault();
 
     }
 
@@ -60,25 +60,31 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     public void loginButtonHandlerDao(ActionEvent event) throws SQLException, IOException {
         boolean passwordMatch = false;
-        String userNameValue = username.getText();
-        String passwordValue = password.getText();
 
-        User mappedUser = dbUser.getUserByUserName(userNameValue);
+        String inputUserName = username.getText();
+        String inputPassword = password.getText();
 
-        if (!mappedUser.getPassword().equals(passwordValue)) {
-            throw new RuntimeException("Password is incorrect");
+        //if ((dbUser.getUserByUserName(inputUserName)) > 1) {
+//fix
+        //}
+        User mappedUser = dbUser.getUserByUserName(inputUserName);
+
+        if (!mappedUser.getPassword().equals(inputPassword)) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Password Incorrect");
+            alert.setHeaderText("Password is Incorrect");
+            alert.setContentText("Please Try again");
         } else {
-            if (mappedUser.getPassword().equals(passwordValue)) {
+            if (mappedUser.getPassword().equals(inputPassword)) {
                 passwordMatch = true;
             }
         }
         if (passwordMatch) {
             loginSuccessful = true;
             System.out.println("Login Successful");
-            Stage stage;
             FXMLLoader loader = new FXMLLoader();
 
-            stage = (Stage) loginButton.getScene().getWindow();
+            Stage stage = (Stage) loginButton.getScene().getWindow();
             loader.setLocation(getClass().getResource("CustomerPage.fxml"));
 
             Parent tableViewParent = loader.load();
