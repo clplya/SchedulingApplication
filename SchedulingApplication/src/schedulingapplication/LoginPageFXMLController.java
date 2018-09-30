@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -37,6 +36,8 @@ public class LoginPageFXMLController implements Initializable {
 
     private final DBUserDao dbUser = new DBUserDao();
 
+    private User loginUser;
+
     public void setApp(Main application) {
         this.application = application;
     }
@@ -44,7 +45,7 @@ public class LoginPageFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //remove
-        username.setText("admin");
+        username.setText("Edgar");
         password.setText("123456");
 
         Locale.getDefault();
@@ -64,16 +65,11 @@ public class LoginPageFXMLController implements Initializable {
         String inputUserName = username.getText();
         String inputPassword = password.getText();
 
-        //if ((dbUser.getUserByUserName(inputUserName)) > 1) {
-//fix
-        //}
         User mappedUser = dbUser.getUserByUserName(inputUserName);
+        loginUser = mappedUser;
 
         if (!mappedUser.getPassword().equals(inputPassword)) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Password Incorrect");
-            alert.setHeaderText("Password is Incorrect");
-            alert.setContentText("Please Try again");
+            loginResult();
         } else {
             if (mappedUser.getPassword().equals(inputPassword)) {
                 passwordMatch = true;
@@ -81,86 +77,90 @@ public class LoginPageFXMLController implements Initializable {
         }
         if (passwordMatch) {
             loginSuccessful = true;
-            System.out.println("Login Successful");
-            FXMLLoader loader = new FXMLLoader();
-
-            Stage stage = (Stage) loginButton.getScene().getWindow();
-            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
-
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(tableViewScene);
-            window.show();
-
+            loginResult();
         } else {
             loginFailed = true;
         }
     }
-
+//original
 //    @FXML
-//    public void loginButtonHandler(ActionEvent event) throws SQLException, IOException {
-//        System.out.println("Logging in");
-//
-//        connection = JDBCConnection.getConnection();
-//        statement = connection.createStatement();
-//
-//        Map<String, String> usernamePasswordMap = new HashMap<>();
-//        rs = statement.executeQuery("select * from user");
-//        while (rs.next()) {
-//            String userNameValue = rs.getString("userName");
-//            String passwordValue = rs.getString("password");
-//            usernamePasswordMap.put(userNameValue, passwordValue);
-//
-//            String passwordReturned = usernamePasswordMap.get(passwordValue);
-//
-//            String passwordText = password.getText();
-//            passwordMatch = passwordValue.equals(passwordText);
-//        }
-//        if (passwordMatch) {
-//            loginSuccessful = true;
+//    public void loginResult() throws SQLException, IOException {
+//        if (!loginSuccessful) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Login Unsuccessful");
+//            alert.setHeaderText("Password is Incorrect");
+//            alert.setContentText("Please Try Again");
+//            alert.showAndWait();
+//        } else if (loginSuccessful & loginFailed) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Login Unsuccessful");
+//            alert.setHeaderText("Please Try Again");
+//            alert.setContentText("Please Try Again");
+//            alert.showAndWait();
+//        } else if (loginSuccessful & !loginFailed) {
 //            System.out.println("Login Successful");
 //            Stage stage;
-//            FXMLLoader loader = new FXMLLoader();
+//            Parent root;
 //
 //            stage = (Stage) loginButton.getScene().getWindow();
-//            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
+//            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 //
-//            Parent tableViewParent = loader.load();
-//            Scene tableViewScene = new Scene(tableViewParent);
-//            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//            window.setScene(tableViewScene);
-//            window.show();
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
 //
-//        } else {
-//            loginFailed = true;
+//            FXMLLoader loader = new FXMLLoader();
+//            CustomerPageController controller = loader.getController();
+//            stage.show();
 //        }
 //    }
+
     @FXML
     public void loginResult() throws SQLException, IOException {
-        if (!loginSuccessful) {
-            System.out.println("Login Failed");
-        } else if (loginSuccessful & loginFailed) {
-            System.out.println("Login not Determined");
+        String usernameValue = loginUser.getUserName();
+        if (usernameValue.equals("Edgar")) {
+            //ResourceBundle default = ResourceBundle.getBundle("fdsa");
+            ResourceBundle rb = ResourceBundle.
+                    getBundle("Scheduler");
 
-        } else if (loginSuccessful & !loginFailed) {
-            System.out.println("Login Successful");
-            Stage stage;
-            Parent root;
+            if (!loginSuccessful) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(rb.getString("Login Unsuccessful"));
+                alert.setHeaderText("Password is Incorrect");
+                alert.setContentText("Please Try Again");
+                alert.showAndWait();
+                rb.getString("Login Unsuccessful");
+            } else {
 
-            stage = (Stage) loginButton.getScene().getWindow();
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
+                if (!loginSuccessful) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Login Unsuccessful");
+                    alert.setHeaderText("Password is Incorrect");
+                    alert.setContentText("Please Try Again");
+                    alert.showAndWait();
+                } else if (loginSuccessful & loginFailed) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Login Unsuccessful");
+                    alert.setHeaderText("Please Try Again");
+                    alert.setContentText("Please Try Again");
+                    alert.showAndWait();
+                } else if (loginSuccessful & !loginFailed) {
+                    System.out.println("Login Successful");
+                    Stage stage;
+                    Parent root;
 
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                    stage = (Stage) loginButton.getScene().getWindow();
+                    Stage currentStage = (Stage) loginButton.getScene().getWindow();
+                    root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
-            FXMLLoader loader = new FXMLLoader();
-            CustomerPageController controller = loader.getController();
-            // controller.initialize();
-            //  currentStage.hide();
-            stage.show();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
 
+                    FXMLLoader loader = new FXMLLoader();
+                    CustomerPageController controller = loader.getController();
+                    stage.show();
+                }
+            }
         }
     }
 }
