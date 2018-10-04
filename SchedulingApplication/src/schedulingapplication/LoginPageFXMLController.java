@@ -30,10 +30,16 @@ public class LoginPageFXMLController implements Initializable {
     private javafx.scene.control.Button loginButton;
     @FXML
     private javafx.scene.control.Button exitButton;
+    @FXML
+    private javafx.scene.control.Button germanLocaleBtn;
+    @FXML
+    private javafx.scene.control.Button spanishLocaleBtn;
+    @FXML
+    private javafx.scene.control.Button englishLocaleBtn;
 
     private boolean loginSuccessful = false;
     private boolean loginFailed = false;
-
+    private Locale defaultLocale;
     private final DBUserDao dbUser = new DBUserDao();
 
     private User loginUser;
@@ -48,8 +54,34 @@ public class LoginPageFXMLController implements Initializable {
         username.setText("Edgar");
         password.setText("123456");
 
-        Locale.getDefault();
+        defaultLocale = Locale.getDefault();
+    }
 
+    @FXML
+    public void germanButtonHandler() {
+        String language = "ge";
+        String country = "GE";
+        Locale locale = new Locale(language, country);
+        Locale.setDefault(locale);
+        System.out.println("Locale is now " + locale);
+    }
+
+    @FXML
+    public void spanishButtonHandler() {
+        String language = "sp";
+        String country = "SP";
+        Locale locale = new Locale(language, country);
+        Locale.setDefault(locale);
+        System.out.println("Locale is now " + locale);
+    }
+
+    @FXML
+    public void englishButtonHandler() {
+        String language = "en";
+        String country = "US";
+        Locale locale = new Locale(language, country);
+        Locale.setDefault(locale);
+        System.out.println("Locale is now " + locale);
     }
 
     @FXML
@@ -68,6 +100,9 @@ public class LoginPageFXMLController implements Initializable {
         User mappedUser = dbUser.getUserByUserName(inputUserName);
         loginUser = mappedUser;
 
+        Locale locale = localeTracker();
+        Locale.setDefault(locale);
+
         if (!mappedUser.getPassword().equals(inputPassword)) {
             loginResult();
         } else {
@@ -82,85 +117,71 @@ public class LoginPageFXMLController implements Initializable {
             loginFailed = true;
         }
     }
-//original
-//    @FXML
-//    public void loginResult() throws SQLException, IOException {
-//        if (!loginSuccessful) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Login Unsuccessful");
-//            alert.setHeaderText("Password is Incorrect");
-//            alert.setContentText("Please Try Again");
-//            alert.showAndWait();
-//        } else if (loginSuccessful & loginFailed) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Login Unsuccessful");
-//            alert.setHeaderText("Please Try Again");
-//            alert.setContentText("Please Try Again");
-//            alert.showAndWait();
-//        } else if (loginSuccessful & !loginFailed) {
-//            System.out.println("Login Successful");
-//            Stage stage;
-//            Parent root;
-//
-//            stage = (Stage) loginButton.getScene().getWindow();
-//            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-//            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
-//
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-//
-//            FXMLLoader loader = new FXMLLoader();
-//            CustomerPageController controller = loader.getController();
-//            stage.show();
-//        }
-//    }
 
     @FXML
     public void loginResult() throws SQLException, IOException {
-        String usernameValue = loginUser.getUserName();
-        if (usernameValue.equals("Edgar")) {
-            //ResourceBundle default = ResourceBundle.getBundle("fdsa");
-            ResourceBundle rb = ResourceBundle.
-                    getBundle("Scheduler");
+        Locale locale = localeTracker();
+        Locale.setDefault(locale);
+
+        ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
+
+        if (!loginSuccessful) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(rb.getString("LoginUnsuccessful"));
+            alert.setHeaderText(rb.getString("PasswordIsIncorrect"));
+            alert.setContentText(rb.getString("PleaseTryAgain"));
+            alert.showAndWait();
+            rb.getString(rb.getString("LoginUnsuccessful"));
+        } else {
 
             if (!loginSuccessful) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(rb.getString("Login Unsuccessful"));
-                alert.setHeaderText("Password is Incorrect");
-                alert.setContentText("Please Try Again");
+                alert.setTitle(rb.getString("LoginUnsuccessful"));
+                alert.setHeaderText(rb.getString("PasswordIsIncorrect"));
+                alert.setContentText(rb.getString("PleaseTryAgain"));
                 alert.showAndWait();
-                rb.getString("Login Unsuccessful");
-            } else {
+            } else if (loginSuccessful & loginFailed) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(rb.getString("LoginUnsuccessful"));
+                alert.setHeaderText(rb.getString("PleaseTryAgain"));
+                alert.setContentText(rb.getString("PleaseTryAgain"));
+                alert.showAndWait();
+            } else if (loginSuccessful & !loginFailed) {
+                System.out.println(rb.getString("LoginUnsuccessful"));
+                Stage stage;
+                Parent root;
 
-                if (!loginSuccessful) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Login Unsuccessful");
-                    alert.setHeaderText("Password is Incorrect");
-                    alert.setContentText("Please Try Again");
-                    alert.showAndWait();
-                } else if (loginSuccessful & loginFailed) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Login Unsuccessful");
-                    alert.setHeaderText("Please Try Again");
-                    alert.setContentText("Please Try Again");
-                    alert.showAndWait();
-                } else if (loginSuccessful & !loginFailed) {
-                    System.out.println("Login Successful");
-                    Stage stage;
-                    Parent root;
+                stage = (Stage) loginButton.getScene().getWindow();
+                Stage currentStage = (Stage) loginButton.getScene().getWindow();
+                root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
-                    stage = (Stage) loginButton.getScene().getWindow();
-                    Stage currentStage = (Stage) loginButton.getScene().getWindow();
-                    root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
 
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-
-                    FXMLLoader loader = new FXMLLoader();
-                    CustomerPageController controller = loader.getController();
-                    stage.show();
-                }
+                FXMLLoader loader = new FXMLLoader();
+                CustomerPageController controller = loader.getController();
+                stage.show();
             }
         }
     }
+
+    public Locale localeTracker() {
+        String lang = defaultLocale.getLanguage();
+        String country = defaultLocale.getCountry();
+
+        Locale locale = new Locale(lang, country);
+
+        return locale;
+    }
+//
+//    public String loadLocalization() {
+//        String lang = "sp";
+//        String country = "SP";
+//
+//        Locale l = new Locale(lang, country);
+//        ResourceBundle r = ResourceBundle.getBundle("schedulingapplication/Scheduler", l);
+//
+//        String ok = r.getString("LoginNotFound");
+//        return ok;
+//    }
 }
