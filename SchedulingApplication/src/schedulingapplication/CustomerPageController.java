@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -88,18 +89,25 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
-        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
-        Parent tableViewParent = loader.load();
-        Scene tableViewScene = new Scene(tableViewParent);
+        if (customerTableView.getSelectionModel().getSelectedItem() != null) {
+            selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
+            Parent tableViewParent = loader.load();
+            Scene tableViewScene = new Scene(tableViewParent);
 
-        AppointmentPageController controller = loader.getController();
-        controller.initialize(selectedCustomer);
+            AppointmentPageController controller = loader.getController();
+            controller.initialize(selectedCustomer);
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(tableViewScene);
-        window.show();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(tableViewScene);
+            window.show();
+        } else { //Does not work - fix
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Customer Selected");
+            alert.setHeaderText("Please Select a customer");
+            alert.setContentText("Select a Customer prior to checking their appointments");
+        }
     }
 
 //    @FXML

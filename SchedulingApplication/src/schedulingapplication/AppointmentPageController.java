@@ -1,7 +1,7 @@
 package schedulingapplication;
 
 import java.io.IOException;
-import java.time.*;
+import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,25 +46,18 @@ public class AppointmentPageController {
 
     public void initialize(Customer customer) {
         selectedCustomer = customer;
-
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
-                selectedCustomer.getCustomerId())));
+                                selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
-
         selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
-        // selectedAppointmentComboBox.getItems().clear();
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-
             updateAppointmentDetails();
-
             selectedAppointmentComboBox.getItems().add(titleText);
         }
-
         selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
-
-        updateAppointmentDate();
+        updateAppointmentDate(selectedAppointment.getStartDate());
     }
 
     private void changeSelectedAppointment() {
@@ -76,19 +69,33 @@ public class AppointmentPageController {
                 selectedAppointment = appointments;
             }
         });
-
     }
 
-    private void updateAppointmentDate() {
-        String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
+    private void updateAppointmentDate(LocalDate apptDate) {
+        datePicker = new DatePicker(apptDate);
+        datePicker.setValue(apptDate);
+//        String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
+//
+//        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 4));
+//        int month = Integer.parseInt(selectedAppointmentTime.substring(5, 7));
+//        int day = Integer.parseInt(selectedAppointmentTime.substring(8, 10));
 
-        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 4));
-        int month = Integer.parseInt(selectedAppointmentTime.substring(5, 7));
-        int day = Integer.parseInt(selectedAppointmentTime.substring(8, 10));
-
-        datePicker = new DatePicker();
-        datePicker.setValue(LocalDate.of(year, month, day));
+        //datePicker = new DatePicker(LocalDate.of(year, month, day));
     }
+//    private void changeListener(){
+//        ChangeListener<Integer> listener = (observable, oldValue, newValue) -> {
+//            int
+//
+//
+////        datePicker.editorProperty().addListener(new ChangeListener() {
+////            public void changedDate(ObservableValue<> observable, Date oldValue, Date new value) {
+////                if(newValue == Date.)
+////            }
+////        });
+//
+//        }
+//
+//    }
 
     private void updateAppointmentDetails() {
         apptTitleField.setText(selectedAppointment.getTitle());
@@ -100,15 +107,12 @@ public class AppointmentPageController {
     @FXML
     void datePickerButtonHandler(ActionEvent event) throws IOException {
         LocalDate date = datePicker.getValue();
-        System.err.println("Selected date: " + date);
-
-        //datePicker.setValue(selectedAppointment.getStartDate();
     }
 
     @FXML
     public void selectedAppointmentController() {
         changeSelectedAppointment();
-        updateAppointmentDate();
+        //updateAppointmentDate();
         updateAppointmentDetails();
     }
 
