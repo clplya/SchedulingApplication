@@ -1,5 +1,6 @@
 package schedulingapplication.Dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javafx.collections.ObservableList;
 import schedulingapplication.DomainObjects.Appointment;
@@ -19,4 +20,8 @@ public interface IAppointmentDao {
     public ObservableList getAppointmentsByCustomer(int customerId);
 
     public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle);
+
+    public void updateAppointment(int apptId, int customerId, String apptmentTitle,
+            String apptmentDesc, String apptLocation, String contact, String url,
+            LocalDate startDate, LocalDate endDate);
 }

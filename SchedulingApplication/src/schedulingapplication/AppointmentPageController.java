@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import schedulingapplication.Dao.DBAppointmentDao;
-import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 
@@ -21,7 +20,6 @@ public class AppointmentPageController {
 
     private Appointment selectedAppointment;
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
-    private final DBCustomerDao dbCustomer = new DBCustomerDao();
 
     @FXML
     private Button cancelButton;
@@ -47,7 +45,7 @@ public class AppointmentPageController {
     public void initialize(Customer customer) {
         selectedCustomer = customer;
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
-                                selectedCustomer.getCustomerId())));
+                selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
         selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
 
@@ -72,30 +70,9 @@ public class AppointmentPageController {
     }
 
     private void updateAppointmentDate(LocalDate apptDate) {
-        datePicker = new DatePicker(apptDate);
-        datePicker.setValue(apptDate);
-//        String selectedAppointmentTime = selectedAppointment.getStartDate().toString();
-//
-//        int year = Integer.parseInt(selectedAppointmentTime.substring(0, 4));
-//        int month = Integer.parseInt(selectedAppointmentTime.substring(5, 7));
-//        int day = Integer.parseInt(selectedAppointmentTime.substring(8, 10));
 
-        //datePicker = new DatePicker(LocalDate.of(year, month, day));
+        datePicker.setValue(apptDate);
     }
-//    private void changeListener(){
-//        ChangeListener<Integer> listener = (observable, oldValue, newValue) -> {
-//            int
-//
-//
-////        datePicker.editorProperty().addListener(new ChangeListener() {
-////            public void changedDate(ObservableValue<> observable, Date oldValue, Date new value) {
-////                if(newValue == Date.)
-////            }
-////        });
-//
-//        }
-//
-//    }
 
     private void updateAppointmentDetails() {
         apptTitleField.setText(selectedAppointment.getTitle());
@@ -112,17 +89,12 @@ public class AppointmentPageController {
     @FXML
     public void selectedAppointmentController() {
         changeSelectedAppointment();
-        //updateAppointmentDate();
+        updateAppointmentDate(selectedAppointment.getStartDate());
         updateAppointmentDetails();
     }
 
     @FXML
     public void saveButtonHandler(ActionEvent event) throws IOException {
-        //Appointment newAppointment = new Appointment(
-        //       10, 2, "Xray Procedure", "This is for an Xray", "Doctors Office", "Nurse", "none",
-        //       LocalDate.of(2019, 03, 12), LocalDate.of(2019, 03, 12));
-        // dbAppointment.addNewAppointment(newAppointment);
-
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Save");
         alert.setHeaderText("Any changes to the Appointment will overwrite existing info");
@@ -130,8 +102,9 @@ public class AppointmentPageController {
 
         Optional<ButtonType> window = alert.showAndWait();
         if (window.get() == ButtonType.OK) {
+            dbAppointment.updateAppointmentTitle(selectedAppointment.getAppointmentId(),
+                    selectedAppointment.getTitle());
             loadScene(event);
-
         } else if (window.get() == ButtonType.CANCEL) {
             alert.close();
         }

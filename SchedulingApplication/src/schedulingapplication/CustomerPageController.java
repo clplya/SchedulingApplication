@@ -109,24 +109,4 @@ public class CustomerPageController implements Initializable {
             alert.setContentText("Select a Customer prior to checking their appointments");
         }
     }
-
-//    @FXML
-//    public void customerSelectionFilter(ActionEvent event) throws IOException {
-//        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-//
-//        customerTableView.setItems();
-//
-//        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-//        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
-//        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-//
-//        //final int customerId = selectedCustomer.getCustomerId();
-//        final int addressId = selectedCustomer.getAddressId();
-//
-//        customerFiltered.add(selectedCustomer);
-//        addressFiltered.add(dbAddress.getAddress(addressId));
-//
-//        customerTableView.setItems(customerFiltered);
-//        addressTableView.setItems(addressFiltered);
-//    }
 }

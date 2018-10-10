@@ -30,7 +30,7 @@ public class DBAppointmentDao implements IAppointmentDao {
 
             stmt = conn.createStatement();
             String sql = "insert into appointment(appointmentId,customerId,title,description,location,contact,url,start,end,createDate,createdBy,lastUpdateBy) values ("
-                         + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + start + "','" + end + "','" + now() + "',1,1)";
+                    + appointmentId + "," + customerId + ",'" + title + "','" + description + "','" + location + "','" + contact + "','" + url + "','" + start + "','" + end + "','" + now() + "',1,1)";
             int result = stmt.executeUpdate(sql);
             System.out.println("Inserting number of records: " + result);
 
@@ -241,6 +241,56 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDate localEndDate = endDate.toLocalDate();
 
                 appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                System.out.println("Updated Appointment Title: " + appointment.getTitle());
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateAppointment(int apptmentId, int customerId, String apptmentTitle, String apptmentDesc,
+            String apptmentLocation, String contact, String apptmentUrl, LocalDate startDate, LocalDate endDate) {
+
+        Statement stmt = null;
+
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            // String updateBase = "update appointment set appointment.title =" + apptmentTitle + " where                         appointment.appointmentId =" + apptmentId;
+            String updateSql = "update appointment set appointment.title =" + apptmentTitle
+                    + ", description =" + apptmentDesc + ", location =" + apptmentLocation
+                    + ", contact =" + contact + ", url =" + apptmentUrl + ", start =" + startDate
+                    + ", end =" + endDate + "where apptmentId = " + apptmentId;
+
+            stmt.executeUpdate(updateSql);
+            String selectSql = "select appointmentId,customerId,title,description,location,contact,url,start,end                 from appointment where appointment.appointmentId=" + apptmentId;
+            ResultSet result = stmt.executeQuery(selectSql);
+
+            while (result.next()) {
+                int rappointmentId = result.getInt(1);
+                int rcustId = result.getInt(2);
+                String rtitle = result.getString(3);
+                String rdescription = result.getString(4);
+                String rlocation = result.getString(5);
+                String rcontact = result.getString(6);
+                String rurl = result.getString(7);
+                java.sql.Date rstartDate = result.getDate(8);
+                java.sql.Date rendDate = result.getDate(9);
+
+                LocalDate localStartDate = rstartDate.toLocalDate();
+                LocalDate localEndDate = rendDate.toLocalDate();
+
+                appointment = new Appointment(rappointmentId, rcustId, rtitle, rdescription, rlocation, rcontact, rurl, localStartDate, localEndDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());
             }
         } catch (SQLException ex) {
