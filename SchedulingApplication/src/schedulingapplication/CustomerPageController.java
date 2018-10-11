@@ -9,10 +9,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -25,11 +25,13 @@ import schedulingapplication.DomainObjects.Customer;
 public class CustomerPageController implements Initializable {
 
     @FXML
-    private javafx.scene.control.Button exitButton;
+    private Button exitButton;
     @FXML
-    private javafx.scene.control.Button addCustomerButton;
+    private Button addCustomerButton;
     @FXML
-    private javafx.scene.control.Button customerAppointmentButton;
+    private Button customerAppointmentButton;
+    @FXML
+    private Button viewReportsButton;
     @FXML
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
     @FXML
@@ -99,7 +101,7 @@ public class CustomerPageController implements Initializable {
             AppointmentPageController controller = loader.getController();
             controller.initialize(selectedCustomer);
 
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());
             window.setScene(tableViewScene);
             window.show();
         } else { //Does not work - fix
@@ -108,5 +110,11 @@ public class CustomerPageController implements Initializable {
             alert.setHeaderText("Please Select a customer");
             alert.setContentText("Select a Customer prior to checking their appointments");
         }
+    }
+
+    @FXML
+    public void viewReportButtonHandler(ActionEvent event) throws IOException {
+        stage = (Stage) viewReportsButton.getScene().getWindow();
+
     }
 }

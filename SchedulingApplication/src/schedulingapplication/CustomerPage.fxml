@@ -29,9 +29,9 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <Button fx:id="exitButton" layoutX="370.0" layoutY="495.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Exit" textAlignment="CENTER" />
-        <Button fx:id="customerAppointmentButton" layoutX="222.0" layoutY="483.0" mnemonicParsing="false" onAction="#customerAppointmentButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Customer Appointments" textAlignment="CENTER" wrapText="true" />
-        <Button fx:id="addCustomerButton" layoutX="73.0" layoutY="495.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="25.0" prefWidth="105.0" text="Add Customer" textAlignment="CENTER" />
+        <Button fx:id="exitButton" layoutX="301.0" layoutY="501.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="49.0" prefWidth="105.0" text="Exit" textAlignment="CENTER" />
+        <Button fx:id="customerAppointmentButton" layoutX="126.0" layoutY="435.0" mnemonicParsing="false" onAction="#customerAppointmentButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Customer Appointments" textAlignment="CENTER" wrapText="true" />
+        <Button fx:id="addCustomerButton" layoutX="301.0" layoutY="435.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="49.0" prefWidth="105.0" text="Add Customer" textAlignment="CENTER" />
         <TableView fx:id="addressTableView" layoutX="14.0" layoutY="330.0" prefHeight="81.0" prefWidth="483.0">
             <columns>
                 <TableColumn fx:id="PhoneNumberColumn" prefWidth="156.0" text="Phone Number">
@@ -46,5 +46,6 @@
                 </TableColumn>
             </columns>
         </TableView>
+      <Button fx:id="viewReportsButton" layoutX="126.0" layoutY="501.0" mnemonicParsing="false" onAction="#viewReportButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Reports" />
     </children>
 </AnchorPane>

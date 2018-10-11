@@ -53,7 +53,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-      <Button fx:id="calendarMonthButton" layoutX="32.0" layoutY="326.0" mnemonicParsing="false" text="View Calendar by Month" />
-      <Button fx:id="calendarWeekButton" layoutX="206.0" layoutY="326.0" mnemonicParsing="false" text="View Calendar by Week" />
+      <Button fx:id="calendarMonthButton" layoutX="32.0" layoutY="326.0" mnemonicParsing="false" onAction="#calendarMonthButtonHandler" text="View Calendar by Month" />
+      <Button fx:id="calendarWeekButton" layoutX="206.0" layoutY="326.0" mnemonicParsing="false" onAction="#calendarWeekButtonHandler" text="View Calendar by Week" />
     </children>
 </AnchorPane>

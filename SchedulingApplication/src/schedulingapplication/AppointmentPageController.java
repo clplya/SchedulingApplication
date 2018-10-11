@@ -63,7 +63,7 @@ public class AppointmentPageController {
         }
         selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
         updateAppointmentDate(selectedAppointment.getStartDate());
-        calendarDisablePastCells();
+        // calendarDisablePastCells();
     }
 
     private void changeSelectedAppointment() {
@@ -77,8 +77,26 @@ public class AppointmentPageController {
         });
     }
 
-    public void calendarWeekButtonHandler() {
-        //implement the hiding of weeks
+    public void calendarWeekButtonHandler() { //currently bugged - cannot go forward on calendar
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datepicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isAfter(selectedAppointment.getEndDate())) {
+                            this.setVisible(false);
+                        }
+//                        if (item.isBefore(
+//                                datePicker.getValue().plusDays(1))) {
+//                            setDisable(true);
+//                        }
+                    }
+                };
+            }
+        };
+        datePicker.setDayCellFactory(dayCellFactory);
     }
 
     public void calendarMonthButtonHandler() {
@@ -113,9 +131,6 @@ public class AppointmentPageController {
                         DayOfWeek day = DayOfWeek.from(item);
                         if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.DARKCYAN);
-                        }
-                        if (item.isAfter(selectedAppointment.getEndDate())) {
-                            this.setVisible(false);
                         }
 //                        if (item.isAfter(LocalDate.now())) {
 //                            this.setDisable(true);
