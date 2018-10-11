@@ -1,6 +1,7 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -11,7 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
@@ -25,6 +28,10 @@ public class AppointmentPageController {
     private Button cancelButton;
     @FXML
     private Button saveButton;
+    @FXML
+    private Button calendarMonthButton;
+    @FXML
+    private Button calendarWeekButton;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -56,6 +63,7 @@ public class AppointmentPageController {
         }
         selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
         updateAppointmentDate(selectedAppointment.getStartDate());
+        calendarDisablePastCells();
     }
 
     private void changeSelectedAppointment() {
@@ -67,6 +75,14 @@ public class AppointmentPageController {
                 selectedAppointment = appointments;
             }
         });
+    }
+
+    public void calendarWeekButtonHandler() {
+        //implement the hiding of weeks
+    }
+
+    public void calendarMonthButtonHandler() {
+
     }
 
     private void updateAppointmentDate(LocalDate apptDate) {
@@ -83,7 +99,36 @@ public class AppointmentPageController {
 
     @FXML
     void datePickerButtonHandler(ActionEvent event) throws IOException {
-        LocalDate date = datePicker.getValue();
+        //LocalDate date = datePicker.getValue();
+    }
+
+    private void calendarDisablePastCells() {
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datepicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
+                            this.setTextFill(Color.DARKCYAN);
+                        }
+                        if (item.isAfter(selectedAppointment.getEndDate())) {
+                            this.setVisible(false);
+                        }
+//                        if (item.isAfter(LocalDate.now())) {
+//                            this.setDisable(true);
+//                        }
+                        if (item.isBefore(
+                                datePicker.getValue().plusDays(1))) {
+                            setDisable(true);
+                        }
+                    }
+                };
+            }
+        };
+        datePicker.setDayCellFactory(dayCellFactory);
     }
 
     @FXML
