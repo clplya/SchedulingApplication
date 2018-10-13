@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ReportsPageController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ReportsPageController">
+   <children>
+      <Label layoutX="176.0" layoutY="14.0" prefHeight="40.0" prefWidth="278.0" text="Scheduling Reports" textAlignment="CENTER">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Button fx:id="generateReportsButton" layoutX="418.0" layoutY="175.0" mnemonicParsing="false" onAction="#generateReports" text="Generate Reports">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="reportComboBox" layoutX="26.0" layoutY="175.0" onAction="#chooseReport" prefHeight="39.0" prefWidth="278.0" promptText="Choose Which Report to Generate" />
+   </children>
 </AnchorPane>

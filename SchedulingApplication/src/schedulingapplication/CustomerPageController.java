@@ -115,6 +115,15 @@ public class CustomerPageController implements Initializable {
     @FXML
     public void viewReportButtonHandler(ActionEvent event) throws IOException {
         stage = (Stage) viewReportsButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ReportsPage.fxml"));
+        Parent tableViewParent = loader.load();
+        Scene tableViewScene = new Scene(tableViewParent);
 
+//        AppointmentPageController controller = loader.getController();
+//        controller.initialize(selectedCustomer);
+//        Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());
+        stage.setScene(tableViewScene);
+        stage.show();
     }
 }

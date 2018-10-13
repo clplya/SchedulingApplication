@@ -1,12 +1,11 @@
 package schedulingapplication.Reports;
 
+import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+
 public class Reports {
 
-    public void generateReports() {
-        //
-    }
+    @FXML
+    public BarChart apptTypesChart;
 
-    public void showReports() {
-        //
-    }
 }
