@@ -9,15 +9,13 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import schedulingapplication.Dao.DBUserDao;
 import schedulingapplication.DomainObjects.User;
+import schedulingapplication.Utilities.Navigator;
 
 public class LoginPageFXMLController implements Initializable {
 
@@ -41,8 +39,6 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginFailed = false;
     private Locale defaultLocale;
     private final DBUserDao dbUser = new DBUserDao();
-
-    private User loginUser;
 
     public void setApp(Main application) {
         this.application = application;
@@ -123,6 +119,7 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     private void loginResult() throws SQLException, IOException {
         Locale locale = localeTracker();
+        Navigator navigator = new Navigator();
 
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
@@ -132,19 +129,8 @@ public class LoginPageFXMLController implements Initializable {
             throwLoginError();
         } else if (loginSuccessful & !loginFailed) {
             System.out.println(rb.getString("LoginSuccessful"));
-            Stage stage;
-            Parent root;
 
-            stage = (Stage) loginButton.getScene().getWindow();
-            Stage currentStage = (Stage) loginButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-            FXMLLoader loader = new FXMLLoader();
-            CustomerPageController controller = loader.getController();
-            stage.show();
+            navigator.goToFXMLPage("CustomerPage.fxml", (Stage) loginButton.getScene().getWindow());
         }
     }
 
