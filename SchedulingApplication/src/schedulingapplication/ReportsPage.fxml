@@ -14,7 +14,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Button fx:id="generateReportsButton" layoutX="418.0" layoutY="175.0" mnemonicParsing="false" onAction="#generateReports" text="Generate Reports">
+      <Button fx:id="viewReportButton" layoutX="418.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewReport" text="View Report">
          <font>
             <Font size="18.0" />
          </font>
