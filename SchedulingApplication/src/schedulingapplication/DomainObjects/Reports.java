@@ -1,4 +1,4 @@
-package schedulingapplication.Reports;
+package schedulingapplication.DomainObjects;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;

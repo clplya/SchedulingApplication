@@ -1,4 +1,4 @@
-package schedulingapplication.Reports;
+package schedulingapplication;
 
 import java.net.URL;
 import java.util.ResourceBundle;
