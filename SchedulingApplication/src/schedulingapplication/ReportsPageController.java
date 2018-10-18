@@ -21,33 +21,32 @@ public class ReportsPageController implements Initializable {
     private Button viewReportButton;
     @FXML
     private ComboBox reportComboBox;
-    private ObservableList<String> reports = FXCollections.observableArrayList();
 
     @Override
-    @FXML
     public void initialize(URL url, ResourceBundle rb) {
+        ObservableList<String> reports = FXCollections.observableArrayList();
         if (reportComboBox.getItems().isEmpty()) {
             reports.addAll("Appointment Types Per Month",
                     "Consultants Schedule",
                     "Customer Appointments");
             reportComboBox.getItems().addAll(reports);
-        }
+    }
+    }
+    
+    public void chooseReport(ActionEvent event){
+        
     }
 
-    public void chooseReport(ActionEvent event) {
-    }
-
-    @FXML
-    public void viewReportButtonHandler(ActionEvent event) throws IOException {
-        if (reportComboBox.getValue().equals("Appointment Types Per Month")) {
-            FXMLLoader loader = new FXMLLoader();
+    public void viewReport(ActionEvent event) throws IOException {
+        if(reportComboBox.getValue().equals("Appointment Types Per Month")){
+             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ApptTypesPerMonthReport.fxml"));
             Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(tableViewParent);
-
-            Stage stage = (Stage) viewReportButton.getScene().getWindow();
-            stage.setScene(tableViewScene);
-            stage.show();
+            Stage window = (Stage) (viewReportButton.getScene().getWindow());
+            window.setScene(tableViewScene);
+            window.show();
         }
     }
+
 }

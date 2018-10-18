@@ -2,37 +2,30 @@ package schedulingapplication;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import schedulingapplication.DAO.DBReportsDao;
 
 public class ApptTypesPerMonthReportController implements Initializable {
 
     @FXML
-    private CategoryAxis xAxis;
+    final CategoryAxis xAxis = new CategoryAxis();
     @FXML
-    private NumberAxis yAxis;
+    final NumberAxis yAxis = new NumberAxis();
     @FXML
-    private BarChart apptMonthChart;
-    @FXML
-    private DBReportsDao dbReportsDao;
-
+    BarChart apptTypesBarChart;
+    DBReportsDao db;
+    ObservableList<String> monthsChart = FXCollections.observableArrayList();
+    
     @Override
-    @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        XYChart.Series monthChart = new XYChart.Series<>();
-        xAxis.setCategories(dbReportsDao.monthsOfAppointments());
-        //   monthChart.getData().add(new XYChart.Data(1, dbReportsDao.monthsOfAppointments()));
-
-        //apptMonthChart.getData().addAll(monthChart);
-    }
-
-    public void loadData() {
-
+        db.selectApptTypesPerMonth();
+        apptTypesBarChart.setData(monthsChart);
     }
 
 }
