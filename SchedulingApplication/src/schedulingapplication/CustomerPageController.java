@@ -36,10 +36,10 @@ public class CustomerPageController implements Initializable {
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
     @FXML
     private ObservableList<Address> addressList = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<Customer> customerFiltered = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<Address> addressFiltered = FXCollections.observableArrayList();
+//    @FXML
+//    private ObservableList<Customer> customerFiltered = FXCollections.observableArrayList();
+//    @FXML
+//    private ObservableList<Address> addressFiltered = FXCollections.observableArrayList();
     @FXML
     private TableView<Customer> customerTableView;
     @FXML
@@ -114,7 +114,7 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void viewReportButtonHandler(ActionEvent event) throws IOException {
-        stage = (Stage) viewReportsButton.getScene().getWindow();
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("ReportsPage.fxml"));
         Parent tableViewParent = loader.load();
@@ -122,7 +122,7 @@ public class CustomerPageController implements Initializable {
 
 //        AppointmentPageController controller = loader.getController();
 //        controller.initialize(selectedCustomer);
-//        Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());
+        Stage stage = (Stage) viewReportsButton.getScene().getWindow();
         stage.setScene(tableViewScene);
         stage.show();
     }

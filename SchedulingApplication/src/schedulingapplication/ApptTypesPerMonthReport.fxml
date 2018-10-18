@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ApptTypesPerMonthReportController">
+    <children>
+        <Label layoutX="34.0" layoutY="14.0" prefHeight="56.0" prefWidth="532.0" text="Appointment Types per Month">
+            <font>
+                <Font size="39.0" />
+            </font>
+        </Label>
+        <BarChart fx:id="apptMonthChart" layoutX="24.0" layoutY="78.0" prefHeight="423.0" prefWidth="609.0">
+            <xAxis>
+                <CategoryAxis label="Months" side="BOTTOM" fx:id="xAxis" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" label="Appointments" side="LEFT" upperBound="50.0" />
+            </yAxis>
+        </BarChart>
+    </children>
+</AnchorPane>

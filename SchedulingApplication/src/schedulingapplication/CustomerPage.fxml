@@ -46,6 +46,6 @@
                 </TableColumn>
             </columns>
         </TableView>
-      <Button fx:id="viewReportsButton" layoutX="126.0" layoutY="501.0" mnemonicParsing="false" onAction="#viewReportButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Reports" />
+        <Button fx:id="viewReportsButton" layoutX="126.0" layoutY="501.0" mnemonicParsing="false" onAction="#viewReportButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Reports" />
     </children>
 </AnchorPane>

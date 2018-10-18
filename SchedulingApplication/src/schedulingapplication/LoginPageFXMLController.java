@@ -9,13 +9,15 @@ import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import schedulingapplication.Dao.DBUserDao;
 import schedulingapplication.DomainObjects.User;
-import schedulingapplication.Utilities.Navigator;
 
 public class LoginPageFXMLController implements Initializable {
 
@@ -119,7 +121,7 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     private void loginResult() throws SQLException, IOException {
         Locale locale = localeTracker();
-        Navigator navigator = new Navigator();
+        // Navigator navigator = new Navigator();
 
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
@@ -130,7 +132,13 @@ public class LoginPageFXMLController implements Initializable {
         } else if (loginSuccessful & !loginFailed) {
             System.out.println(rb.getString("LoginSuccessful"));
 
-            navigator.goToFXMLPage("CustomerPage.fxml", (Stage) loginButton.getScene().getWindow());
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            //navigator.goToFXMLPage("CustomerPage.fxml", (Stage) loginButton.getScene().getWindow());
         }
     }
 
