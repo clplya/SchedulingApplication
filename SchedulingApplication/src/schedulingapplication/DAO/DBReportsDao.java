@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 
 public class DBReportsDao implements IReportsDao {
 
-    ObservableList<String> monthsOfAppts;
+    private ObservableList<String> monthsOfAppts;
 
     public DBReportsDao() {
     }
@@ -34,7 +34,7 @@ public class DBReportsDao implements IReportsDao {
                 monthsOfAppts.add(month);
 
                 for (int i = 0; i < monthsOfAppts.size(); i++) {
-                  // get number of months converted to month name 
+                    // get number of months converted to month name
                 }
             }
         } catch (SQLException ex) {
@@ -53,7 +53,7 @@ public class DBReportsDao implements IReportsDao {
 
     }
 
-    public String countNumberOfMonths(int numberOfMonths) {        
+    public String countNumberOfMonths(int numberOfMonths) {
         String monthString;
 
         switch (numberOfMonths) {

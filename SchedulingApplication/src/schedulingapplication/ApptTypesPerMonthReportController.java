@@ -14,14 +14,16 @@ import schedulingapplication.DAO.DBReportsDao;
 public class ApptTypesPerMonthReportController implements Initializable {
 
     @FXML
-    final CategoryAxis xAxis = new CategoryAxis();
+    CategoryAxis xAxis = new CategoryAxis();
     @FXML
-    final NumberAxis yAxis = new NumberAxis();
+    NumberAxis yAxis = new NumberAxis();
     @FXML
-    BarChart apptTypesBarChart;
-    DBReportsDao db;
-    ObservableList<String> monthsChart = FXCollections.observableArrayList();
-    
+    private BarChart apptTypesBarChart;
+    @FXML
+    private ObservableList<String> monthsChart = FXCollections.observableArrayList();
+
+    private DBReportsDao db;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         db.selectApptTypesPerMonth();
