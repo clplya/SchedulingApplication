@@ -15,7 +15,7 @@
                 <Font size="39.0" />
             </font>
         </Label>
-        <BarChart fx:id="apptMonthChart" layoutX="24.0" layoutY="78.0" prefHeight="423.0" prefWidth="609.0">
+        <BarChart fx:id="apptTypesBarChart" layoutX="24.0" layoutY="78.0" prefHeight="423.0" prefWidth="609.0">
             <xAxis>
                 <CategoryAxis label="Months" side="BOTTOM" fx:id="xAxis" />
             </xAxis>

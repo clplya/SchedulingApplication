@@ -33,16 +33,19 @@ public class ReportsPageController implements Initializable {
     }
     }
     
-    public void chooseReport(ActionEvent event){
-        
+    public void chooseReport(ActionEvent event){        
     }
-
+    
     public void viewReport(ActionEvent event) throws IOException {
         if(reportComboBox.getValue().equals("Appointment Types Per Month")){
              FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ApptTypesPerMonthReport.fxml"));
             Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(tableViewParent);
+            
+            ApptTypesPerMonthReportController apptTypesController = new ApptTypesPerMonthReportController();
+            apptTypesController.initialize();
+            
             Stage window = (Stage) (viewReportButton.getScene().getWindow());
             window.setScene(tableViewScene);
             window.show();

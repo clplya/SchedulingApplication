@@ -1,4 +1,4 @@
-package schedulingapplication.DAO;
+package schedulingapplication.Dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class DBReportsDao implements IReportsDao {
             Connection conn = schedulingapplication.Dao.DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "select first from appointment";
+            String sql = "select start from appointment";
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
@@ -50,7 +50,6 @@ public class DBReportsDao implements IReportsDao {
 
         }
         return monthsOfAppts;
-
     }
 
     public String countNumberOfMonths(int numberOfMonths) {
@@ -109,7 +108,7 @@ public class DBReportsDao implements IReportsDao {
             Connection conn = schedulingapplication.Dao.DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "select first from appointment";
+            String sql = "select start from appointment";
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
@@ -130,7 +129,6 @@ public class DBReportsDao implements IReportsDao {
                     System.out.println(ex);
                 }
             }
-
         }
         return monthsOfAppts;
     }
