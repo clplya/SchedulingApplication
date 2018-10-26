@@ -122,7 +122,6 @@ public class LoginPageFXMLController implements Initializable {
     private void loginResult() throws SQLException, IOException {
         Locale locale = localeTracker();
 
-
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
         if (!loginSuccessful) {
@@ -131,7 +130,9 @@ public class LoginPageFXMLController implements Initializable {
             throwLoginError();
         } else if (loginSuccessful & !loginFailed) {
             System.out.println(rb.getString("LoginSuccessful"));
- 
+            UserLoginTracker userLoginTracker = new UserLoginTracker();
+            userLoginTracker.userLoginTracker();
+
             //Navigation Code that works
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("CustomerPage.fxml"));

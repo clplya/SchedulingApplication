@@ -4,9 +4,8 @@ import javafx.collections.ObservableList;
 
 public interface IReportsDao {
 
-     public ObservableList<String> countApptTypesByMonths();
-    
-     public ObservableList selectApptTypesPerMonth();
-    
+    public ObservableList<String> countApptTypesByMonths();
+
+    public ObservableList<String> selectApptTypesPerMonth();
 
 }

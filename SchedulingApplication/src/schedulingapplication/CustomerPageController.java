@@ -122,7 +122,7 @@ public class CustomerPageController implements Initializable {
 
 //        AppointmentPageController controller = loader.getController();
 //        controller.initialize(selectedCustomer);
-        Stage stage = (Stage) viewReportsButton.getScene().getWindow();
+        stage = (Stage) viewReportsButton.getScene().getWindow();
         stage.setScene(tableViewScene);
         stage.show();
     }

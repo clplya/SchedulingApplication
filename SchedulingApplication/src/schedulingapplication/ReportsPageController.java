@@ -21,6 +21,8 @@ public class ReportsPageController implements Initializable {
     private Button viewReportButton;
     @FXML
     private ComboBox reportComboBox;
+    private Stage stage;
+    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -30,25 +32,23 @@ public class ReportsPageController implements Initializable {
                     "Consultants Schedule",
                     "Customer Appointments");
             reportComboBox.getItems().addAll(reports);
+        }
     }
+
+    @FXML
+    public void chooseReport() {
+
     }
-    
-    public void chooseReport(ActionEvent event){        
-    }
-    
+
+    @FXML
     public void viewReport(ActionEvent event) throws IOException {
-        if(reportComboBox.getValue().equals("Appointment Types Per Month")){
-             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ApptTypesPerMonthReport.fxml"));
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
-            
-            ApptTypesPerMonthReportController apptTypesController = new ApptTypesPerMonthReportController();
-            apptTypesController.initialize();
-            
-            Stage window = (Stage) (viewReportButton.getScene().getWindow());
-            window.setScene(tableViewScene);
-            window.show();
+        if (reportComboBox.getValue().equals("Appointment Types Per Month")) {
+
+            stage = (Stage) viewReportButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("ApptTypesPerMonthReport.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
     }
 

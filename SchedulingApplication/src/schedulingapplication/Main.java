@@ -17,7 +17,7 @@ public class Main extends Application {
 
     private Stage stage;
 
-    public static void main(String[] args) throws SQLException {
+    public static void Main(String[] args) throws SQLException {
         Locale us = new Locale("en", "US");
         Locale sp = new Locale("sp", "SP");
 

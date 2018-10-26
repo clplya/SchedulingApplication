@@ -18,13 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import schedulingapplication.DomainObjects.Customer;
 
-/**
- * FXML Controller class
- *
- * @author mpilkin1
- */
 public class AddCustomerController {
 
     @FXML
@@ -83,7 +77,7 @@ public class AddCustomerController {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        
+
         String customerID = Integer.toString(GENERATEDCUSTOMERID.incrementAndGet());
         String customerName = customerNameTextField.getText();
         String address = customerAddressTextField.getText();
@@ -92,15 +86,14 @@ public class AddCustomerController {
         int newCustomerID;
         newCustomerID = Integer.parseInt(customerID);
 
-       // customerManager.addCustomer(new Customer(newCustomerID, customerName, address, phone));
-        
-       // customerTableView.setItems(customerManager.getAllCustomers());
+        // customerManager.addCustomer(new Customer(newCustomerID, customerName, address, phone));
+        // customerTableView.setItems(customerManager.getAllCustomers());
     }
 
     public void exitButtonHandler(ActionEvent event) throws IOException {
         Stage stage;
         Parent root;
-        
+
         stage = (Stage) exitButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
 
