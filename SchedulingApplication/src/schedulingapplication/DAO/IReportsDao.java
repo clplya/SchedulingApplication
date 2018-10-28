@@ -1,11 +1,11 @@
 package schedulingapplication.Dao;
 
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
 
 public interface IReportsDao {
 
-    public ObservableList<String> countApptTypesByMonths();
+    public ArrayList<String> countApptTypesByMonths();
 
-    public ObservableList<String> selectApptTypesPerMonth();
+    public ArrayList<String> selectApptTypesPerMonth();
 
 }

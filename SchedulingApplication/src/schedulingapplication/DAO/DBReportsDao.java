@@ -4,18 +4,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
-import javafx.collections.ObservableList;
 
 public class DBReportsDao implements IReportsDao {
 
-    private ObservableList<String> monthsOfAppts;
+    private ArrayList<String> monthsOfAppts;
 
     public DBReportsDao() {
     }
 
     @Override
-    public ObservableList<String> countApptTypesByMonths() {
+    public ArrayList<String> countApptTypesByMonths() {
         Statement stmt = null;
 
         try {
@@ -101,7 +101,7 @@ public class DBReportsDao implements IReportsDao {
     }
 
     @Override
-    public ObservableList<String> selectApptTypesPerMonth() {
+    public ArrayList<String> selectApptTypesPerMonth() {
         Statement stmt = null;
 
         try {
