@@ -72,13 +72,10 @@ public class ApptTypesPerMonthReportController implements Initializable {
 
             System.out.println(ex);
         }
-//        for (String s : months) {
-//
-//            dataSet1.getData().add(new XYChart.Data(s, 1));
-//
-//        }
-        for (int i = 0; i <= months.size(); i++) {
-            dataSet1.getData().add(new XYChart.Data(i, 1));
+        for (String s : months) {
+
+            dataSet1.getData().add(new XYChart.Data(s, 1));
+
         }
         apptTypesBarChart.getData().add(dataSet1);
 
