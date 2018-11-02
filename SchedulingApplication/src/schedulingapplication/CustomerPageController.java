@@ -36,10 +36,6 @@ public class CustomerPageController implements Initializable {
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
     @FXML
     private ObservableList<Address> addressList = FXCollections.observableArrayList();
-//    @FXML
-//    private ObservableList<Customer> customerFiltered = FXCollections.observableArrayList();
-//    @FXML
-//    private ObservableList<Address> addressFiltered = FXCollections.observableArrayList();
     @FXML
     private TableView<Customer> customerTableView;
     @FXML
