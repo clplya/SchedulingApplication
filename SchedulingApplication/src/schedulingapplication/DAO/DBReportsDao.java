@@ -4,13 +4,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import schedulingapplication.DomainObjects.Appointment;
 
 public class DBReportsDao implements IReportsDao {
 
     private ArrayList<String> monthsOfAppts;
-    private ArrayList<String> consultants;
+    private ObservableList<String> consultants = FXCollections.observableArrayList();
+    private Appointment appointment;
+    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
     public DBReportsDao() {
     }
@@ -53,28 +59,6 @@ public class DBReportsDao implements IReportsDao {
         return monthsOfAppts;
     }
 
-    public ArrayList selectAllConsultantNames() {
-        Statement stmt = null;
-
-        try {
-            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
-
-            stmt = conn.createStatement();
-            String sql = "select userName from user";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                String Name = rs.getString(1);
-
-                consultants.add(Name);
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-
-        }
-        return consultants;
-    }
-
     @Override
     public ArrayList<String> selectApptTypesPerMonth() {
         Statement stmt = null;
@@ -106,5 +90,76 @@ public class DBReportsDao implements IReportsDao {
             }
         }
         return monthsOfAppts;
+    }
+
+    @Override
+    public ObservableList selectAllConsultantNames() {
+        Statement stmt = null;
+
+        try {
+            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+            String sql = "select * from appointment";
+            ResultSet result = stmt.executeQuery(sql);
+
+            while (result.next()) {
+                int appointmentId = result.getInt(1);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                java.sql.Date startDate = result.getDate(8);
+                java.sql.Date endDate = result.getDate(9);
+
+                LocalDate localStartDate = startDate.toLocalDate();
+                LocalDate localEndDate = endDate.toLocalDate();
+
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                appointmentList.add(appointment);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+
+        }
+        return appointmentList;
+    }
+
+    @Override
+    public ObservableList selectConsultantsAppointments(String consultant) {
+        Statement stmt = null;
+
+        try {
+            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
+
+            stmt = conn.createStatement();
+            String sql = "select * from appointment where contact = '" + consultant + "'";
+            ResultSet result = stmt.executeQuery(sql);
+
+            while (result.next()) {
+                int appointmentId = result.getInt(1);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                java.sql.Date startDate = result.getDate(8);
+                java.sql.Date endDate = result.getDate(9);
+
+                LocalDate localStartDate = startDate.toLocalDate();
+                LocalDate localEndDate = endDate.toLocalDate();
+
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                appointmentList.add(appointment);
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+
+        }
+        return appointmentList;
     }
 }

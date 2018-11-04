@@ -217,7 +217,7 @@ public class DBAppointmentDao implements IAppointmentDao {
 
         try {
             Connection conn = DataSource.getConnection();
-            stmt = conn.createStatement();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
             String updateSql = null;
             updateSql = "update appointment set appointment.title =" + upAppointmentTitle + " where appointment.appointmentId =" + upAppointmentId;
@@ -266,7 +266,6 @@ public class DBAppointmentDao implements IAppointmentDao {
             Connection conn = DataSource.getConnection();
             stmt = conn.createStatement();
 
-            // String updateBase = "update appointment set appointment.title =" + apptmentTitle + " where                         appointment.appointmentId =" + apptmentId;
             String updateSql = "update appointment set appointment.title =" + apptmentTitle
                     + ", description =" + apptmentDesc + ", location =" + apptmentLocation
                     + ", contact =" + contact + ", url =" + apptmentUrl + ", start =" + startDate

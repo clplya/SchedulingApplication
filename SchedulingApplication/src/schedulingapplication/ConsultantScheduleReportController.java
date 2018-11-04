@@ -1,9 +1,11 @@
 package schedulingapplication;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -11,39 +13,41 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import schedulingapplication.Dao.DBReportsDao;
-
+import schedulingapplication.DomainObjects.Appointment;
 
 public class ConsultantScheduleReportController implements Initializable {
 
     @FXML
-    public TableView apptTable;
+    private TableView<Appointment> apptTable;
     @FXML
-    public TableColumn customerColumn;
+    private TableColumn<Appointment, String> descriptionColumn;
     @FXML
-    public TableColumn apptStartTimeColumn;
+    private TableColumn<Appointment, Date> apptStartTimeColumn;
     @FXML
-    public TableColumn apptStopTimeColumn;
+    private TableColumn<Appointment, Date> apptStopTimeColumn;
     @FXML
-    public TableColumn LocationColumn;
+    private TableColumn<Appointment, String> locationColumn;
     @FXML
-    public ComboBox consultantComboBox;
+    private ComboBox consultantComboBox;
     @FXML
-    ObservableList consultantList = FXCollections.observableArrayList();
-    DBReportsDao dbReports;
+    private ObservableList<Appointment> consultantList = FXCollections.observableArrayList();
+    private DBReportsDao dbReports;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        customerColumn.setCellValueFactory(new PropertyValueFactory<>("customer"));
-        apptStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("aptStartTime"));
-        apptStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("aptStopTime"));
-                LocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("descriptionColumn"));
+        apptStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStartTimeColumn"));
+        apptStopTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStopTimeColumn"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("locationColumn"));
 
         System.out.println("Setting & Adding all Customers");
 
-        apptTable.setItems(null);
-        apptTable.setItems(loadAllConsultants());
+        consultantComboBox.setItems(null);
+        consultantList.addAll(loadAllConsultants());
+        consultantComboBox.setItems(consultantList);
+        //  consultantList = consultantComboBox.getItems();
 
-        consultantList = apptTable.getItems();
+        apptTable.setItems(null);
     }
 
     @FXML
@@ -54,8 +58,9 @@ public class ConsultantScheduleReportController implements Initializable {
     }
 
     @FXML
-    public void comboBoxEventHandler() {
+    public void comboBoxEventHandler(ActionEvent event) {
 
+        apptTable.setItems(dbReports.selectConsultantsAppointments((String) consultantComboBox.getValue()));
     }
 
 }

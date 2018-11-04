@@ -49,7 +49,13 @@ public class ReportsPageController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+        } else if (reportComboBox.getValue().equals("Consultants Schedule")) {
+
+            stage = (Stage) viewReportButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("ConsultantScheduleReport.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         }
     }
-
 }
