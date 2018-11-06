@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ConsultantScheduleReportController">
+<AnchorPane id="AnchorPane" prefHeight="476.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ConsultantScheduleReportController">
     <children>
-        <TableView fx:id="apptTable" layoutX="14.0" layoutY="91.0" prefHeight="251.0" prefWidth="565.0">
+        <TableView fx:id="apptTable" layoutX="16.0" layoutY="211.0" prefHeight="251.0" prefWidth="683.0">
             <columns>
-                <TableColumn fx:id="descriptionColumn" prefWidth="154.0" text="Appointment Description" />
-                <TableColumn fx:id="apptStartTimeColumn" minWidth="0.0" prefWidth="153.0" text="Appointment Start Time" />
-                <TableColumn fx:id="apptStopTimeColumn" prefWidth="146.0" text="Appointment Stop Time" />
-                <TableColumn fx:id="locationColumn" editable="false" prefWidth="111.0" text="Location" />
+                <TableColumn fx:id="descriptionColumn" prefWidth="215.0" text="Appointment Description">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="description" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="apptStartTimeColumn" minWidth="0.0" prefWidth="148.0" text="Appointment Start Time">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="apptStartTime" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="apptStopTimeColumn" prefWidth="143.0" text="Appointment Stop Time">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="apptStopTime" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="locationColumn" prefWidth="176.0" text="Location">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="location" />
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
         </TableView>
-        <ComboBox fx:id="consultantComboBox" layoutX="362.0" layoutY="26.0" onAction="#comboBoxEventHandler" prefHeight="24.0" prefWidth="209.0" />
-        <Label layoutX="254.0" layoutY="25.0" text="Consultant">
+        <Label layoutX="14.0" layoutY="20.0" text="Consultant Schedule">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
+        <TableView fx:id="consultantTableView" layoutX="192.0" layoutY="11.0" prefHeight="193.0" prefWidth="194.0">
+            <columns>
+                <TableColumn fx:id="consultantColumn" prefWidth="191.0" text="Consultant">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="consultant" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
     </children>
 </AnchorPane>

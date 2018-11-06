@@ -9,11 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import schedulingapplication.Dao.DBReportsDao;
 
 public class ReportsPageController implements Initializable {
 
@@ -23,6 +25,7 @@ public class ReportsPageController implements Initializable {
     private ComboBox reportComboBox;
     private Stage stage;
     private Parent root;
+    private DBReportsDao dbReports;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -43,19 +46,19 @@ public class ReportsPageController implements Initializable {
     @FXML
     public void viewReport(ActionEvent event) throws IOException {
         if (reportComboBox.getValue().equals("Appointment Types Per Month")) {
-
             stage = (Stage) viewReportButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("ApptTypesPerMonthReport.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } else if (reportComboBox.getValue().equals("Consultants Schedule")) {
-
-            stage = (Stage) viewReportButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("ConsultantScheduleReport.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ConsultantScheduleReport.fxml"));
+            Parent tableViewParent = loader.load();
+            Scene tableViewScene = new Scene(tableViewParent);
+            Stage window = (Stage) (viewReportButton.getScene().getWindow());
+            window.setScene(tableViewScene);
+            window.show();
         }
     }
 }
