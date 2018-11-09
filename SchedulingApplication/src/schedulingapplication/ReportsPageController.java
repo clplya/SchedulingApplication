@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -44,7 +43,7 @@ public class ReportsPageController implements Initializable {
     }
 
     @FXML
-    public void viewReport(ActionEvent event) throws IOException {
+    private void viewReport(ActionEvent event) throws IOException {
         if (reportComboBox.getValue().equals("Appointment Types Per Month")) {
             stage = (Stage) viewReportButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("ApptTypesPerMonthReport.fxml"));
@@ -52,13 +51,20 @@ public class ReportsPageController implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else if (reportComboBox.getValue().equals("Consultants Schedule")) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ConsultantScheduleReport.fxml"));
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
-            Stage window = (Stage) (viewReportButton.getScene().getWindow());
-            window.setScene(tableViewScene);
-            window.show();
+            stage = (Stage) viewReportButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("ConsultantScheduleReport.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("ConsultantScheduleReport.fxml"));
+//            Parent tableViewParent = loader.load();
+//            Scene tableViewScene = new Scene(tableViewParent);
+//            //ConsultantScheduleReportController controller = loader.getController();
+//            Stage window = (Stage) (viewReportButton.getScene().getWindow());
+//            window.setScene(tableViewScene);
+//            window.show();
         }
     }
 }

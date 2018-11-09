@@ -1,8 +1,16 @@
 package schedulingapplication;
 
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -10,49 +18,77 @@ import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.Dao.DBReportsDao;
 import schedulingapplication.DomainObjects.Appointment;
 
-public class ConsultantScheduleReportController {
+public class ConsultantScheduleReportController implements Initializable {
 
     @FXML
-    private TableView<Appointment> apptTable;
+    private TableView<Appointment> appointmentTableView;
     @FXML
-    private TableColumn<Appointment, String> descriptionColumn;
+    private TableColumn<Appointment, String> DescriptionColumn;
     @FXML
-    private TableColumn<Appointment, String> apptStartTimeColumn;
+    private TableColumn<Appointment, LocalDate> ApptStartTimeColumn;
     @FXML
-    private TableColumn<Appointment, String> apptStopTimeColumn;
+    private TableColumn<Appointment, LocalDate> ApptStopTimeColumn;
     @FXML
-    private TableColumn<Appointment, String> locationColumn;
+    private TableColumn<Appointment, String> LocationColumn;
     @FXML
-    private TableColumn<Appointment, String> consultantColumn;
+    private TableColumn<Appointment, String> ContactColumn;
     @FXML
-    private TableView<String> consultantTableView;
+    private TableView<Appointment> contactTableView;
     @FXML
-    private ObservableList<String> consultantList = FXCollections.observableArrayList();
+    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<String> contactList = FXCollections.observableArrayList();
+    @FXML
+    private Button showContactsBtn;
+    @FXML
+    private ComboBox contactBox = new ComboBox();
 
     private DBReportsDao dbReports;
     private DBAppointmentDao dbAppointments;
+    private String contactName;
 
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
 
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        apptStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStartTime"));
-        apptStopTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStopTime"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        consultantColumn.setCellValueFactory(new PropertyValueFactory<>("consultant"));
+        DescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        ApptStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStartTime"));
+        ApptStopTimeColumn.setCellValueFactory(new PropertyValueFactory<>("apptStopTime"));
+        LocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        ContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
 
-        // consultantTableView.getItems().add(null);
-        //consultantList.addAll(dbReports.selectAllConsultantNames());
-        //   System.out.println(dbReports.selectAllConsultantNames());
-        consultantTableView.setItems(dbReports.selectAllConsultantNames());
+        //appointmentTableView.setItems(null);
+        appointmentList.addAll(dbAppointments.getAllAppointments());
+        appointmentTableView.setItems(appointmentList);
     }
 
-//    @FXML
-//    public void comboBoxEventHandler(ActionEvent event) {
-//        consultantComboBox.setItems(null);
+//    public void showConsultantsBtnHandler(){
+//        //ConsultantTableView.getItems().add(null);
+//      //  ConsultantTableView.getItems().add(dbReports.selectAllConsultantNames());
 //
-//        consultantList.addAll(dbReports.selectAllConsultantNames());
-//        consultantComboBox.getItems().addAll(consultantList);
+////        appointmentList.addAll(dbReports.selectAllConsultantNames());
+//        for (int i = 0; i < appointmentList.size(); i++) {
+//            consultantName = appointmentList.get(i).getContact();
+//            ConsultantTableView.getItems().add(consultantName);
+//        }
 //
-//        apptTable.setItems(dbReports.selectConsultantsAppointments((String) consultantComboBox.getValue()));
 //    }
+    @FXML
+    public void showContactsBtnHandler(ActionEvent event) throws IOException {
+        contactTableView.setItems(appointmentList);
+        appointmentList.addAll(getContacts());
+
+        //contactList = contactTableView.getItems();
+        // apptTable.setItems(dbReports.selectConsultantsAppointments((String) consultantComboBox.getValue()));
+    }
+
+    @FXML
+    public ObservableList<Appointment> getContacts() throws IOException {
+        ObservableList<Appointment> contact = FXCollections.observableArrayList();
+        for (int i = 1; i <= dbAppointments.getAllAppointments().size(); i++) {
+
+            contact.addAll(dbAppointments.getAppointment(i));
+        }
+        return contact;
+    }
+
 }

@@ -19,8 +19,8 @@ public class DBReportsDao implements IReportsDao {
     private ObservableList<Appointment> appointmentList;
 
     public DBReportsDao() {
-        this.consultants = FXCollections.observableArrayList();
-        this.appointmentList = FXCollections.observableArrayList();
+        appointmentList = FXCollections.observableArrayList();
+        appointment = null;
     }
 
     @Override
@@ -94,20 +94,42 @@ public class DBReportsDao implements IReportsDao {
         return monthsOfAppts;
     }
 
+//    @Override
+//    public ObservableList<String> selectAllConsultantNames() {
+//        Statement stmt = null;
+//
+//        try {
+//            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
+//
+//            stmt = conn.createStatement();
+//            String sql = "select contact from appointment";
+//            ResultSet result = stmt.executeQuery(sql);
+//
+//            while (result.next()) {
+//                String contact = result.getString(6);
+//
+//                consultants.add(contact);
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//
+//        }
+//        return consultants;
+//    }
     @Override
     public ObservableList<String> selectAllConsultantNames() {
         Statement stmt = null;
 
         try {
-            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
-            
+            Connection conn = DataSource.getConnection();
+
             stmt = conn.createStatement();
             String sql = "select contact from appointment";
             ResultSet result = stmt.executeQuery(sql);
 
             while (result.next()) {
-                String contact = result.getString(6);
-    
+                String contact = result.getString(1);
+
                 consultants.add(contact);
             }
         } catch (SQLException ex) {

@@ -127,17 +127,17 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public Appointment getAppointment(int appointmentId) {
+    public Appointment getAppointment(int apptId) {
         Statement stmt = null;
 
         try {
             Connection conn = DataSource.getConnection();
             stmt = conn.createStatement();
 
-            ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointmentId =" + appointmentId);
+            ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointmentId =" + apptId);
 
             while (result.next()) {
-                int apptId = result.getInt(1);
+                int appointmentId = result.getInt(1);
                 int customerId = result.getInt(2);
                 String title = result.getString(3);
                 String description = result.getString(4);
@@ -150,7 +150,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDate localStartDate = startDate.toLocalDate();
                 LocalDate localEndDate = endDate.toLocalDate();
 
-                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
