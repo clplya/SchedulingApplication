@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.AppointmentPageController">
+   <children>
+      <DatePicker fx:id="datePicker" layoutX="32.0" layoutY="102.0" onAction="#datePickerButtonHandler" prefHeight="25.0" prefWidth="200.0" showWeekNumbers="true" />
+      <Label layoutX="32.0" layoutY="14.0" text="New Appointment">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="appointmentTitleLabel" layoutX="246.0" layoutY="101.0" text="Appointment Title">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="255.0" layoutY="152.0" text="Appt Description">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="278.0" layoutY="202.0" text="Appt Location">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="284.0" layoutY="253.0" text="Appt Contact">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="apptTitleField" layoutX="445.0" layoutY="101.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptDescriptionField" layoutX="445.0" layoutY="152.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptLocationField" layoutX="445.0" layoutY="202.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptContactField" layoutX="445.0" layoutY="253.0" prefHeight="27.0" prefWidth="240.0" />
+      <ComboBox fx:id="selectedCustomerComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedCustomerController" prefHeight="25.0" prefWidth="240.0" />
+      <Button fx:id="saveButton" layoutX="445.0" layoutY="326.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save Changes" />
+      <Button fx:id="cancelButton" layoutX="633.0" layoutY="326.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel" />
+      <Label fx:id="appointmentTitleLabel1" layoutX="313.0" layoutY="48.0" text="Customer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

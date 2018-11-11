@@ -26,23 +26,40 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <Button fx:id="exitButton" layoutX="301.0" layoutY="501.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="49.0" prefWidth="105.0" text="Exit" textAlignment="CENTER" />
-        <Button fx:id="customerAppointmentButton" layoutX="126.0" layoutY="435.0" mnemonicParsing="false" onAction="#customerAppointmentButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Customer Appointments" textAlignment="CENTER" wrapText="true" />
-        <Button fx:id="addCustomerButton" layoutX="301.0" layoutY="435.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="49.0" prefWidth="105.0" text="Add Customer" textAlignment="CENTER" />
-        <TableView fx:id="addressTableView" layoutX="14.0" layoutY="330.0" prefHeight="81.0" prefWidth="483.0">
+        <Button fx:id="exitButton" layoutX="190.0" layoutY="477.0" mnemonicParsing="false" onAction="#exitButtonHandler" prefHeight="49.0" prefWidth="146.0" text="Exit" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+        <Button fx:id="customerAppointmentButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#customerAppointmentButtonHandler" prefHeight="49.0" prefWidth="146.0" text="View Customer Appointments" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+        <Button fx:id="addCustomerButton" layoutX="366.0" layoutY="436.0" mnemonicParsing="false" onAction="#addCustomerButtonHandler" prefHeight="49.0" prefWidth="146.0" text="Add Customer" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+        <TableView fx:id="addressTableView" layoutX="14.0" layoutY="330.0" prefHeight="81.0" prefWidth="498.0">
             <columns>
                 <TableColumn fx:id="PhoneNumberColumn" prefWidth="156.0" text="Phone Number">
                     <cellValueFactory>
                         <PropertyValueFactory property="phone" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="AddressColumn" prefWidth="325.0" text="Address">
+                <TableColumn fx:id="AddressColumn" prefWidth="340.0" text="Address">
                     <cellValueFactory>
                         <PropertyValueFactory property="address1" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>
         </TableView>
-        <Button fx:id="viewReportsButton" layoutX="126.0" layoutY="501.0" mnemonicParsing="false" onAction="#viewReportButtonHandler" prefHeight="49.0" prefWidth="105.0" text="View Reports" />
+        <Button fx:id="viewReportsButton" layoutX="14.0" layoutY="501.0" mnemonicParsing="false" onAction="#viewReportButtonHandler" prefHeight="49.0" prefWidth="146.0" text="View Reports">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+      <Button fx:id="addAppointmentButton" layoutX="366.0" layoutY="501.0" mnemonicParsing="false" onAction="#addAppointmentButtonHandler" prefHeight="49.0" prefWidth="146.0" text="Add Appointment" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

@@ -33,6 +33,8 @@ public class CustomerPageController implements Initializable {
     @FXML
     private Button viewReportsButton;
     @FXML
+    private Button addAppointmentButton;
+    @FXML
     private ObservableList<Customer> customerList = FXCollections.observableArrayList();
     @FXML
     private ObservableList<Address> addressList = FXCollections.observableArrayList();
@@ -73,6 +75,16 @@ public class CustomerPageController implements Initializable {
 
         stage = (Stage) addCustomerButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void addAppointmentButtonHandler(ActionEvent event) throws IOException {
+        stage = (Stage) addCustomerButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("AddAppointmentPage.fxml"));
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

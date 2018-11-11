@@ -86,19 +86,10 @@ public class AddCustomerController {
         int newCustomerID;
         newCustomerID = Integer.parseInt(customerID);
 
-        // customerManager.addCustomer(new Customer(newCustomerID, customerName, address, phone));
-        // customerTableView.setItems(customerManager.getAllCustomers());
     }
 
     public void exitButtonHandler(ActionEvent event) throws IOException {
-        Stage stage;
-        Parent root;
-
-        stage = (Stage) exitButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("CustomerPage.fxml"));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 }
