@@ -3,6 +3,7 @@ package schedulingapplication;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -82,9 +83,8 @@ public class AppointmentPageController {
             @Override
             public DateCell call(final DatePicker datepicker) {
                 return new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
+                    public void updateItem(LocalDateTime item, boolean empty) {
+                        super.updateItem(item.toLocalDate(), empty);
                         if (item.isAfter(selectedAppointment.getEndDate())) {
                             this.setVisible(false);
                         }
@@ -103,9 +103,9 @@ public class AppointmentPageController {
 
     }
 
-    private void updateAppointmentDate(LocalDate apptDate) {
+    private void updateAppointmentDate(LocalDateTime apptDate) {
 
-        datePicker.setValue(apptDate);
+        datePicker.setValue(apptDate.toLocalDate());
     }
 
     private void updateAppointmentDetails() {
@@ -120,6 +120,8 @@ public class AppointmentPageController {
         //LocalDate date = datePicker.getValue();
     }
 
+    //Take off @FXML tag if this breaks
+    @FXML
     private void calendarDisablePastCells() {
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
             @Override

@@ -163,4 +163,6 @@ public class LoginPageFXMLController implements Initializable {
 
         return locale;
     }
+    //Create country in DB: INSERT INTO U03xBv.country (countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy)
+    //VALUES (2, 'Mexico', CURRENT_TIMESTAMP, 'Admin', DEFAULT, 'Admin')
 }

@@ -4,7 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javafx.collections.FXCollections;
@@ -14,12 +15,15 @@ import schedulingapplication.DomainObjects.Appointment;
 public class DBReportsDao implements IReportsDao {
 
     private ArrayList<String> monthsOfAppts;
-    private ObservableList<String> consultants;
+    private ObservableList<String> contacts;
+    private ObservableList<String> users;
     private Appointment appointment;
     private ObservableList<Appointment> appointmentList;
 
     public DBReportsDao() {
         appointmentList = FXCollections.observableArrayList();
+        contacts = FXCollections.observableArrayList();
+        users = FXCollections.observableArrayList();
         appointment = null;
     }
 
@@ -94,30 +98,30 @@ public class DBReportsDao implements IReportsDao {
         return monthsOfAppts;
     }
 
-//    @Override
-//    public ObservableList<String> selectAllConsultantNames() {
-//        Statement stmt = null;
-//
-//        try {
-//            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
-//
-//            stmt = conn.createStatement();
-//            String sql = "select contact from appointment";
-//            ResultSet result = stmt.executeQuery(sql);
-//
-//            while (result.next()) {
-//                String contact = result.getString(6);
-//
-//                consultants.add(contact);
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex);
-//
-//        }
-//        return consultants;
-//    }
+    public ObservableList<String> selectAllUsersNames() {
+        Statement stmt = null;
+
+        try {
+            Connection conn = schedulingapplication.Dao.DataSource.getConnection();
+
+            stmt = conn.createStatement();
+            String sql = "select userName from user";
+            ResultSet result = stmt.executeQuery(sql);
+
+            while (result.next()) {
+                String user = result.getString(1);
+
+                users.add(user);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+
+        }
+        return users;
+    }
+
     @Override
-    public ObservableList<String> selectAllConsultantNames() {
+    public ObservableList<String> selectAllContactsNames() {
         Statement stmt = null;
 
         try {
@@ -130,24 +134,24 @@ public class DBReportsDao implements IReportsDao {
             while (result.next()) {
                 String contact = result.getString(1);
 
-                consultants.add(contact);
+                contacts.add(contact);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
 
         }
-        return consultants;
+        return contacts;
     }
 
     @Override
-    public ObservableList selectConsultantsAppointments(String consultant) {
+    public ObservableList selectContactsAppointments(String contactInput) {
         Statement stmt = null;
 
         try {
             Connection conn = schedulingapplication.Dao.DataSource.getConnection();
 
             stmt = conn.createStatement();
-            String sql = "select * from appointment where contact = '" + consultant + "'";
+            String sql = "select * from appointment where contact = '" + contactInput + "'";
             ResultSet result = stmt.executeQuery(sql);
 
             while (result.next()) {
@@ -158,11 +162,11 @@ public class DBReportsDao implements IReportsDao {
                 String location = result.getString(5);
                 String contact = result.getString(6);
                 String url = result.getString(7);
-                java.sql.Date startDate = result.getDate(8);
-                java.sql.Date endDate = result.getDate(9);
+                Timestamp startDate = result.getTimestamp(8);
+                Timestamp endDate = result.getTimestamp(9);
 
-                LocalDate localStartDate = startDate.toLocalDate();
-                LocalDate localEndDate = endDate.toLocalDate();
+                LocalDateTime localStartDate = startDate.toLocalDateTime();
+                LocalDateTime localEndDate = endDate.toLocalDateTime();
 
                 appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 appointmentList.add(appointment);

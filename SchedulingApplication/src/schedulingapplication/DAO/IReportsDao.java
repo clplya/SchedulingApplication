@@ -9,8 +9,8 @@ public interface IReportsDao {
 
     public ArrayList<String> selectApptTypesPerMonth();
 
-    public ObservableList selectAllConsultantNames();
+    public ObservableList selectAllContactsNames();
 
-    public ObservableList selectConsultantsAppointments(String consultant);
+    public ObservableList selectContactsAppointments(String contact);
 
 }

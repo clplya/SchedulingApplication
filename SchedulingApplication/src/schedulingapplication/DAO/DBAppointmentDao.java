@@ -15,10 +15,11 @@ import schedulingapplication.DomainObjects.Appointment;
 public class DBAppointmentDao implements IAppointmentDao {
 
     private Appointment appointment;
-    private ObservableList appointmentList = FXCollections.observableArrayList();
+    private ObservableList<Appointment> appointmentList;
 
     public DBAppointmentDao() {
-
+        appointmentList = FXCollections.observableArrayList();
+        appointment = null;
     }
 
     @Override
@@ -49,8 +50,8 @@ public class DBAppointmentDao implements IAppointmentDao {
         String location = appointment.getLocation();
         String contact = appointment.getContact();
         String url = appointment.getURL();
-        LocalDate startDate = appointment.getStartDate();
-        LocalDate endDate = appointment.getEndDate();
+        LocalDateTime startDate = appointment.getStartDate();
+        LocalDateTime endDate = appointment.getEndDate();
 
         try {
             Connection conn = DataSource.getConnection();
@@ -83,32 +84,32 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public ObservableList getAllAppointments() {
+    public ObservableList<Appointment> getAllAppointments() {
         Statement stmt = null;
-        Timestamp ts;
+        appointmentList.clear();
 
         try {
             Connection conn = DataSource.getConnection();
 
             stmt = conn.createStatement();
             String sql = "select appointmentId,customerId,title,description,location,contact,url,start,end from appointment";
-            ResultSet result = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(sql);
 
-            while (result.next()) {
-                int appointmentId = result.getInt(1);
-                int customerId = result.getInt(2);
-                String title = result.getString(3);
-                String description = result.getString(4);
-                String location = result.getString(5);
-                String contact = result.getString(6);
-                String url = result.getString(7);
-                java.sql.Date startDate = result.getDate(8);
-                java.sql.Date endDate = result.getDate(9);
+            while (rs.next()) {
+                int appointmentId = rs.getInt(1);
+                int customerId = rs.getInt(2);
+                String title = rs.getString(3);
+                String description = rs.getString(4);
+                String location = rs.getString(5);
+                String contact = rs.getString(6);
+                String url = rs.getString(7);
+                Timestamp startDate = rs.getTimestamp(8);
+                Timestamp endDate = rs.getTimestamp(9);
 
-                LocalDate localStartDate = startDate.toLocalDate();
-                LocalDate localEndDate = endDate.toLocalDate();
+                LocalDateTime localStartDateTime = startDate.toLocalDateTime();
+                LocalDateTime localEndDateTime = endDate.toLocalDateTime();
 
-                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDateTime, localEndDateTime);
                 appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
@@ -144,11 +145,11 @@ public class DBAppointmentDao implements IAppointmentDao {
                 String location = result.getString(5);
                 String contact = result.getString(6);
                 String url = result.getString(7);
-                java.sql.Date startDate = result.getDate(8);
-                java.sql.Date endDate = result.getDate(9);
+                Timestamp startDate = result.getTimestamp(8);
+                Timestamp endDate = result.getTimestamp(9);
 
-                LocalDate localStartDate = startDate.toLocalDate();
-                LocalDate localEndDate = endDate.toLocalDate();
+                LocalDateTime localStartDate = startDate.toLocalDateTime();
+                LocalDateTime localEndDate = endDate.toLocalDateTime();
 
                 appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
             }
@@ -188,11 +189,11 @@ public class DBAppointmentDao implements IAppointmentDao {
                 String location = result.getString(5);
                 String contact = result.getString(6);
                 String url = result.getString(7);
-                java.sql.Date startDate = result.getDate(8);
-                java.sql.Date endDate = result.getDate(9);
+                Timestamp startDate = result.getTimestamp(8);
+                Timestamp endDate = result.getTimestamp(9);
 
-                LocalDate localStartDate = startDate.toLocalDate();
-                LocalDate localEndDate = endDate.toLocalDate();
+                LocalDateTime localStartDate = startDate.toLocalDateTime();
+                LocalDateTime localEndDate = endDate.toLocalDateTime();
 
                 appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 appointmentList.add(appointment);
@@ -211,8 +212,52 @@ public class DBAppointmentDao implements IAppointmentDao {
         return appointmentList;
     }
 
+    public ObservableList<Appointment> getAppointmentsByContact(String inputContact) {
+        Statement stmt = null;
+        if (appointmentList.size() > 0) {
+            appointmentList.clear();
+        }
+        try {
+            Connection conn = DataSource.getConnection();
+            stmt = conn.createStatement();
+
+            String sql = "select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where contact ='";
+            ResultSet result = stmt.executeQuery(sql + inputContact + "'");
+
+            while (result.next()) {
+                int apptId = result.getInt(1);
+                int customerId = result.getInt(2);
+                String title = result.getString(3);
+                String description = result.getString(4);
+                String location = result.getString(5);
+                String contact = result.getString(6);
+                String url = result.getString(7);
+                Timestamp startDate = result.getTimestamp(8);
+                Timestamp endDate = result.getTimestamp(9);
+
+                LocalDateTime localStartDate = startDate.toLocalDateTime();
+                LocalDateTime localEndDate = endDate.toLocalDateTime();
+
+                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                appointmentList.add(appointment);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
+            return appointmentList;
+        }
+    }
+
     @Override
-    public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle) {
+    public void updateAppointmentTitle(int upAppointmentId, String upAppointmentTitle
+    ) {
         Statement stmt = null;
 
         try {
@@ -234,11 +279,11 @@ public class DBAppointmentDao implements IAppointmentDao {
                 String location = result.getString(5);
                 String contact = result.getString(6);
                 String url = result.getString(7);
-                java.sql.Date startDate = result.getDate(8);
-                java.sql.Date endDate = result.getDate(9);
+                Timestamp startDate = result.getTimestamp(8);
+                Timestamp endDate = result.getTimestamp(9);
 
-                LocalDate localStartDate = startDate.toLocalDate();
-                LocalDate localEndDate = endDate.toLocalDate();
+                LocalDateTime localStartDate = startDate.toLocalDateTime();
+                LocalDateTime localEndDate = endDate.toLocalDateTime();
 
                 appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());
@@ -257,8 +302,12 @@ public class DBAppointmentDao implements IAppointmentDao {
     }
 
     @Override
-    public void updateAppointment(int apptmentId, int customerId, String apptmentTitle, String apptmentDesc,
-            String apptmentLocation, String contact, String apptmentUrl, LocalDate startDate, LocalDate endDate) {
+    public void updateAppointment(int apptmentId, int customerId, String apptmentTitle,
+            String apptmentDesc,
+            String apptmentLocation,
+            String contact, String apptmentUrl,
+            LocalDate startDate, LocalDate endDate
+    ) {
 
         Statement stmt = null;
 
@@ -283,11 +332,11 @@ public class DBAppointmentDao implements IAppointmentDao {
                 String rlocation = result.getString(5);
                 String rcontact = result.getString(6);
                 String rurl = result.getString(7);
-                java.sql.Date rstartDate = result.getDate(8);
-                java.sql.Date rendDate = result.getDate(9);
+                Timestamp rstartDate = result.getTimestamp(8);
+                Timestamp rendDate = result.getTimestamp(9);
 
-                LocalDate localStartDate = rstartDate.toLocalDate();
-                LocalDate localEndDate = rendDate.toLocalDate();
+                LocalDateTime localStartDate = rstartDate.toLocalDateTime();
+                LocalDateTime localEndDate = rendDate.toLocalDateTime();
 
                 appointment = new Appointment(rappointmentId, rcustId, rtitle, rdescription, rlocation, rcontact, rurl, localStartDate, localEndDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());

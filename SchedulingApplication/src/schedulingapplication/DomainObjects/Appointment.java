@@ -1,102 +1,100 @@
 package schedulingapplication.DomainObjects;
 
-import java.time.LocalDate;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+import java.time.LocalDateTime;
 
 public class Appointment {
 
-    private final SimpleIntegerProperty appointmentId;
-    private final SimpleIntegerProperty customerId;
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty description;
-    private final SimpleStringProperty location;
-    private final SimpleStringProperty contact;
-    private final SimpleStringProperty URL;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private int appointmentId;
+    private int customerId;
+    private String title;
+    private String description;
+    private String location;
+    private String contact;
+    private String URL;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public Appointment(int appointmentId, int customerId, String title, String description, String location, String contact, String URL, LocalDate startDate, LocalDate endDate) {
-        this.appointmentId = new SimpleIntegerProperty(appointmentId);
-        this.customerId = new SimpleIntegerProperty(customerId);
-        this.title = new SimpleStringProperty(title);
-        this.description = new SimpleStringProperty(description);
-        this.location = new SimpleStringProperty(location);
-        this.contact = new SimpleStringProperty(contact);
-        this.URL = new SimpleStringProperty(URL);
+    public Appointment(int appointmentId, int customerId, String title, String description, String location, String contact, String URL, LocalDateTime startDate, LocalDateTime endDate) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.contact = contact;
+        this.URL = URL;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
     public int getAppointmentId() {
-        return appointmentId.get();
+        return appointmentId;
     }
 
     public void setAppointmentId(int appointmentId) {
-        this.appointmentId.set(appointmentId);
+        this.appointmentId = appointmentId;
     }
 
     public int getCustomerId() {
-        return customerId.get();
+        return customerId;
     }
 
     public void setCustomerId(int customerId) {
-        this.customerId.set(customerId);
+        this.customerId = customerId;
     }
 
     public String getTitle() {
-        return title.get();
+        return title;
     }
 
     public void setTitle(String title) {
-        this.title.set(title);
+        this.title = title;
     }
 
     public String getDescription() {
-        return description.get();
+        return description;
     }
 
     public void setDescription(String description) {
-        this.description.set(description);
+        this.description = description;
     }
 
     public String getLocation() {
-        return location.get();
+        return location;
     }
 
     public void setLocation(String location) {
-        this.location.set(location);
+        this.location = location;
     }
 
     public String getContact() {
-        return contact.get();
+        return contact;
     }
 
     public void setContact(String contact) {
-        this.contact.set(contact);
+        this.contact = contact;
     }
 
     public String getURL() {
-        return URL.get();
+        return URL;
     }
 
     public void setURL(String URL) {
-        this.URL.set(URL);
+        this.URL = URL;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

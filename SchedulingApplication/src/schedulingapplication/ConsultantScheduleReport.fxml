@@ -9,25 +9,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.*?>
-<?import fxmltableview.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="476.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ConsultantScheduleReportController">
     <children>
         <TableView fx:id="appointmentTableView" layoutX="16.0" layoutY="211.0" prefHeight="251.0" prefWidth="683.0">
             <columns>
-                <TableColumn fx:id="DescriptionColumn" prefWidth="215.0" text="Appointment Description">
+                <TableColumn fx:id="AppointmentDescriptionColumn" prefWidth="215.0" text="Appointment Description">
                     <cellValueFactory>
                         <PropertyValueFactory property="description" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="ApptStartTimeColumn" minWidth="0.0" prefWidth="148.0" text="Appointment Start Time">
+                <TableColumn fx:id="AppointmentStartTimeColumn" minWidth="0.0" prefWidth="148.0" text="Appointment Start Time">
                     <cellValueFactory>
-                        <PropertyValueFactory property="apptStartTime" />
+                        <PropertyValueFactory property="startDate" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="ApptStopTimeColumn" prefWidth="143.0" text="Appointment Stop Time">
+                <TableColumn fx:id="AppointmentStopTimeColumn" prefWidth="143.0" text="Appointment Stop Time">
                     <cellValueFactory>
-                        <PropertyValueFactory property="apptStopTime" />
+                        <PropertyValueFactory property="endDate" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="LocationColumn" prefWidth="176.0" text="Location">
@@ -42,16 +41,12 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <TableView fx:id="contactTableView" layoutX="192.0" layoutY="11.0" prefHeight="193.0" prefWidth="194.0">
-            <columns>
-                <TableColumn fx:id="ContactColumn" prefWidth="191.0" text="Contact">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="contact" />
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
-        <Button fx:id="showContactsBtn" layoutX="29.0" layoutY="81.0" mnemonicParsing="false" onAction="#showContactsBtnHandler" prefHeight="27.0" prefWidth="117.0" text="Show Consultants" />
-        <ComboBox fx:id="contactBox" layoutX="440.0" layoutY="82.0" prefWidth="150.0" />
+        <ComboBox fx:id="contactBox" layoutX="212.0" layoutY="65.0" onAction="#contactBoxEventHandler" prefHeight="27.0" prefWidth="283.0" />
+        <Label layoutX="247.0" layoutY="107.0" prefHeight="41.0" prefWidth="227.0" text="Choose a Consultant Above:">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Button fx:id="cancelButton" layoutX="548.0" layoutY="35.0" mnemonicParsing="false" onAction="#cancelButtonHandler" prefHeight="34.0" prefWidth="153.0" text="Return to Customer Page" />
     </children>
 </AnchorPane>

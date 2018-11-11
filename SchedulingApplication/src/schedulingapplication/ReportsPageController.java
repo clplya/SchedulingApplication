@@ -22,8 +22,8 @@ public class ReportsPageController implements Initializable {
     private Button viewReportButton;
     @FXML
     private ComboBox reportComboBox;
-    private Stage stage;
-    private Parent root;
+    // private Stage stage;
+    //  private Parent root;
     private DBReportsDao dbReports;
 
     @Override
@@ -43,16 +43,28 @@ public class ReportsPageController implements Initializable {
     }
 
     @FXML
-    private void viewReport(ActionEvent event) throws IOException {
+    public void viewReportButtonHandler(ActionEvent event) throws IOException {
         if (reportComboBox.getValue().equals("Appointment Types Per Month")) {
+            Stage stage;
+            Parent root;
             stage = (Stage) viewReportButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("ApptTypesPerMonthReport.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } else if (reportComboBox.getValue().equals("Consultants Schedule")) {
+            Stage stage;
+            Parent root;
             stage = (Stage) viewReportButton.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("ConsultantScheduleReport.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (reportComboBox.getValue().equals("Customer Appointments")) {
+            Stage stage;
+            Parent root;
+            stage = (Stage) viewReportButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("CustomerApptReport.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -61,7 +73,8 @@ public class ReportsPageController implements Initializable {
 //            loader.setLocation(getClass().getResource("ConsultantScheduleReport.fxml"));
 //            Parent tableViewParent = loader.load();
 //            Scene tableViewScene = new Scene(tableViewParent);
-//            //ConsultantScheduleReportController controller = loader.getController();
+//            //    ConsultantScheduleReportController controller = loader.getController();
+//            //controller.initialize();
 //            Stage window = (Stage) (viewReportButton.getScene().getWindow());
 //            window.setScene(tableViewScene);
 //            window.show();
