@@ -12,17 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DAO/DBCustomerDao.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPageController.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/ConsultantScheduleReportController.java</file>
             <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AppointmentPageController.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Customer.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DAO/DBAppointmentDao.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/ReportsPageController.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerPage.fxml</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/ConsultantScheduleReport.fxml</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/CustomerApptReportController.java</file>
-            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DAO/DBReportsDao.java</file>
+            <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/AddAppointmentPageController.java</file>
             <file>file:/C:/Users/clply/Documents/GitHub/SchedulingApplication/SchedulingApplication/src/schedulingapplication/DomainObjects/Appointment.java</file>
         </group>
     </open-files>

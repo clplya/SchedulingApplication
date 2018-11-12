@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.AppointmentPageController">
+<AnchorPane id="AnchorPane" prefHeight="506.0" prefWidth="759.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.AppointmentPageController">
    <children>
       <DatePicker fx:id="datePicker" layoutX="32.0" layoutY="102.0" onAction="#datePickerButtonHandler" prefHeight="25.0" prefWidth="200.0" showWeekNumbers="true" />
       <Label layoutX="32.0" layoutY="14.0" text="New Appointment">
@@ -37,13 +37,31 @@
       <TextField fx:id="apptDescriptionField" layoutX="445.0" layoutY="152.0" prefHeight="27.0" prefWidth="240.0" />
       <TextField fx:id="apptLocationField" layoutX="445.0" layoutY="202.0" prefHeight="27.0" prefWidth="240.0" />
       <TextField fx:id="apptContactField" layoutX="445.0" layoutY="253.0" prefHeight="27.0" prefWidth="240.0" />
-      <ComboBox fx:id="selectedCustomerComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedCustomerController" prefHeight="25.0" prefWidth="240.0" />
-      <Button fx:id="saveButton" layoutX="445.0" layoutY="326.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save Changes" />
-      <Button fx:id="cancelButton" layoutX="633.0" layoutY="326.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel" />
+      <ComboBox fx:id="selectedCustomerComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedCustomerController" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: white;" />
+      <Button fx:id="saveButton" layoutX="445.0" layoutY="455.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save Changes" />
+      <Button fx:id="cancelButton" layoutX="633.0" layoutY="455.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel" />
       <Label fx:id="appointmentTitleLabel1" layoutX="313.0" layoutY="48.0" text="Customer">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="314.0" layoutY="297.0" text="Appt URL">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="279.0" layoutY="392.0" text="Appt End Time">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="275.0" layoutY="348.0" text="Appt Start Time">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="apptURLField" layoutX="445.0" layoutY="297.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptEndField" layoutX="445.0" layoutY="392.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptStartTimeField" layoutX="445.0" layoutY="348.0" prefHeight="27.0" prefWidth="240.0" />
    </children>
 </AnchorPane>

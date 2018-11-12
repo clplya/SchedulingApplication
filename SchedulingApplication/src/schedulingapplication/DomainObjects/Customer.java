@@ -14,6 +14,10 @@ public class Customer {
         this.active = active;
     }
 
+    public Customer() {
+
+    }
+
     public int getCustomerId() {
         return customerId;
     }

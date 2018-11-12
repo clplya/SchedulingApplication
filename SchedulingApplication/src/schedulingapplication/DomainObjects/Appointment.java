@@ -26,6 +26,10 @@ public class Appointment {
         this.endDate = endDate;
     }
 
+    public Appointment() {
+
+    }
+
     public int getAppointmentId() {
         return appointmentId;
     }
