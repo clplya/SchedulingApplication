@@ -45,7 +45,7 @@
         <TextField fx:id="apptDescriptionField" layoutX="445.0" layoutY="152.0" prefHeight="27.0" prefWidth="240.0" />
         <TextField fx:id="apptLocationField" layoutX="445.0" layoutY="202.0" prefHeight="27.0" prefWidth="240.0" />
         <TextField fx:id="apptContactField" layoutX="445.0" layoutY="253.0" prefHeight="27.0" prefWidth="240.0" />
-        <ComboBox fx:id="selectedAppointmentComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedAppointmentController" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: white;" />
+        <ComboBox fx:id="selectedCustomerComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedCustomerHandler" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: white;" />
         <Button fx:id="saveButton" layoutX="445.0" layoutY="453.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save Changes">
          <font>
             <Font name="System Bold" size="13.0" />

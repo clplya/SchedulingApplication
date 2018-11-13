@@ -1,6 +1,7 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.collections.FXCollections;
@@ -29,7 +30,7 @@ public class AddAppointmentPageController {
     @FXML
     private Button cancelButton;
     @FXML
-    private ComboBox selectedCustomerComboBox;
+    private ComboBox selectedCustomerComboBox = new ComboBox();;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -54,6 +55,7 @@ public class AddAppointmentPageController {
     private Appointment newAppointment = new Appointment();
     private static final AtomicInteger GENERATEDAPPOINTMENTID = new AtomicInteger(11);
     ObservableList customerList = FXCollections.observableArrayList();
+    String customerString;
 
     @FXML
     void initialize() {
@@ -75,8 +77,7 @@ public class AddAppointmentPageController {
         if (window.get() == ButtonType.OK) {
             setNewAppointment();
             dbAppointment.addAppointment(newAppointment.getAppointmentId(), newAppointment.getCustomerId(), newAppointment.getTitle(), newAppointment.getDescription(), newAppointment.getLocation(), newAppointment.getContact(), newAppointment.getURL(), newAppointment.getStartDate(), newAppointment.getEndDate());
-//            createAppointment(newAppointment.getAppointmentId(),
-//                    newAppointment.getTitle());
+
             loadScene(event);
         } else if (window.get() == ButtonType.CANCEL) {
             alert.close();
@@ -84,21 +85,26 @@ public class AddAppointmentPageController {
     }
 
     void setNewAppointment() {
-//        String customer = selectedCustomerComboBox.getValue().toString();
-//        Customer loopCustomer = new Customer();
-//        for (int i = 0; i < customerList.size(); i++) {
-//            loopCustomer = (Customer) customerList.get(i);
-//        }
-//        LocalDateTime apptStartTime = (LocalDate)apptStartTimeField.getText();
-//
-//        newAppointment.setAppointmentId(GENERATEDAPPOINTMENTID.incrementAndGet());
-//        newAppointment.setCustomerId(loopCustomer.getCustomerId());
-//        newAppointment.setTitle(apptTitleField.getText());
-//        newAppointment.setDescription(apptDescriptionField.getText());
-//        newAppointment.setLocation(apptLocationField.getText());
-//        newAppointment.setContact(apptContactField.getText());
-//        newAppointment.setURL(apptUrlField.getText());
-//        newAppointment.setStartDate();
+        customerString = selectedCustomerComboBox.getValue().toString();
+        Customer loopCustomer = new Customer();
+        for (int i = 0; i < customerList.size(); i++) {
+            loopCustomer = (Customer) customerList.get(i);
+        }
+        //Set start and End Appointment Times
+        String apptStartTime = apptStartTimeField.getText();
+         LocalDateTime apptStartDateTime = LocalDateTime.parse(apptStartTime);
+         String apptStopTime = apptEndTimeField.getText();
+          LocalDateTime apptStopDateTime = LocalDateTime.parse(apptStopTime);
+
+        newAppointment.setAppointmentId(GENERATEDAPPOINTMENTID.incrementAndGet());
+        newAppointment.setCustomerId(loopCustomer.getCustomerId());
+        newAppointment.setTitle(apptTitleField.getText());
+        newAppointment.setDescription(apptDescriptionField.getText());
+        newAppointment.setLocation(apptLocationField.getText());
+        newAppointment.setContact(apptContactField.getText());
+        newAppointment.setURL(apptUrlField.getText());
+        newAppointment.setStartDate(apptStartDateTime);
+        newAppointment.setEndDate(apptStopDateTime);
     }
 
     @FXML
@@ -118,8 +124,8 @@ public class AddAppointmentPageController {
     }
 
     @FXML
-    private void selectedCustomerController(ActionEvent event) {
-        //
+    void selectedCustomerHandler(ActionEvent event) throws IOException{
+        
     }
 
     @FXML

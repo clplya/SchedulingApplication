@@ -71,8 +71,7 @@ public class CustomerPageController implements Initializable {
     }
 
     @FXML
-    public void addCustomerButtonHandler() throws IOException {
-
+    public void addCustomerButtonHandler(ActionEvent event) throws IOException {
         stage = (Stage) addCustomerButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
 
@@ -83,7 +82,7 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void addAppointmentButtonHandler(ActionEvent event) throws IOException {
-        stage = (Stage) addCustomerButton.getScene().getWindow();
+        stage = (Stage) addAppointmentButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("AddAppointmentPage.fxml"));
 
         Scene scene = new Scene(root);

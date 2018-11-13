@@ -44,7 +44,7 @@ public class AppointmentPageController {
     @FXML
     private TextField apptContactField;
     @FXML
-    private ComboBox selectedAppointmentComboBox = new ComboBox();
+    private ComboBox selectedCustomerComboBox = new ComboBox();
     @FXML
     private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private Customer selectedCustomer;
@@ -55,22 +55,22 @@ public class AppointmentPageController {
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
-        selectedAppointmentComboBox.getItems().add(selectedAppointment.getTitle());
+        selectedCustomerComboBox.getItems().add(selectedAppointment.getTitle());
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
             updateAppointmentDetails();
-            selectedAppointmentComboBox.getItems().add(titleText);
+            selectedCustomerComboBox.getItems().add(titleText);
         }
-        selectedAppointmentComboBox.setValue(selectedAppointmentComboBox.getItems().get(0));
+        selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
         updateAppointmentDate(selectedAppointment.getStartDate());
         // calendarDisablePastCells();
     }
 
     private void changeSelectedAppointment() {
         ObservableList newAppointment = FXCollections.observableArrayList();
-        newAppointment.addAll(selectedAppointmentComboBox.getItems());
-        String title = (String) selectedAppointmentComboBox.getValue();
+        newAppointment.addAll(selectedCustomerComboBox.getItems());
+        String title = (String) selectedCustomerComboBox.getValue();
         appointmentList.forEach((appointments) -> {
             if (title.equals(appointments.getTitle())) {
                 selectedAppointment = appointments;
@@ -149,7 +149,7 @@ public class AppointmentPageController {
     }
 
     @FXML
-    public void selectedAppointmentController() {
+    public void selectedCustomerHandler() {
         changeSelectedAppointment();
         updateAppointmentDate(selectedAppointment.getStartDate());
         updateAppointmentDetails();
