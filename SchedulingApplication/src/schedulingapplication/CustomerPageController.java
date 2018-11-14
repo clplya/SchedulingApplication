@@ -82,8 +82,13 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void addAppointmentButtonHandler(ActionEvent event) throws IOException {
+        //needs work- Invocation exception
         stage = (Stage) addAppointmentButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("AddAppointmentPage.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("AddAppointmentPage.fxml"));
+        
+        AddAppointmentPageController controller = loader.getController();
+        controller.initialize();
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

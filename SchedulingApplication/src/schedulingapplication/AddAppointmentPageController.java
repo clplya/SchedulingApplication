@@ -48,21 +48,25 @@ public class AddAppointmentPageController {
     @FXML
     private TextField apptEndTimeField;
     @FXML
-    private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    //private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
     private DBCustomerDao dbCustomer = new DBCustomerDao();
     @FXML
     private Appointment newAppointment = new Appointment();
     private static final AtomicInteger GENERATEDAPPOINTMENTID = new AtomicInteger(11);
-    ObservableList customerList = FXCollections.observableArrayList();
+    ObservableList<Customer> customerList = FXCollections.observableArrayList();
+    ObservableList<String> customerNamesList = FXCollections.observableArrayList();
+
     String customerString;
+    String customerName;
 
     @FXML
     void initialize() {
         customerList.addAll(dbCustomer.getAllCustomers());
         for (int i = 0; i < customerList.size(); i++) {
-            Customer customer = (Customer) customerList.get(i);
-            selectedCustomerComboBox.getItems().add(customer.getCustomerName());
+            customerNamesList.add(customerList.get(i).getCustomerName());
+
+            selectedCustomerComboBox.getItems().add(customerNamesList);
         }
     }
 
@@ -76,7 +80,8 @@ public class AddAppointmentPageController {
         Optional<ButtonType> window = alert.showAndWait();
         if (window.get() == ButtonType.OK) {
             setNewAppointment();
-            dbAppointment.addAppointment(newAppointment.getAppointmentId(), newAppointment.getCustomerId(), newAppointment.getTitle(), newAppointment.getDescription(), newAppointment.getLocation(), newAppointment.getContact(), newAppointment.getURL(), newAppointment.getStartDate(), newAppointment.getEndDate());
+            dbAppointment.addAppointment(newAppointment.getAppointmentId(), newAppointment.getCustomerId(), newAppointment.getTitle(), newAppointment.getDescription(),
+                    newAppointment.getLocation(), newAppointment.getContact(), newAppointment.getURL(), newAppointment.getStartDate(), newAppointment.getEndDate());
 
             loadScene(event);
         } else if (window.get() == ButtonType.CANCEL) {

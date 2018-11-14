@@ -61,14 +61,15 @@ public class AppointmentPageController {
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
+        
         selectedCustomerComboBox.getItems().add(selectedAppointment.getTitle());
-
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
             updateAppointmentDetails();
             selectedCustomerComboBox.getItems().add(titleText);
         }
         selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
+
         updateAppointmentDate(selectedAppointment.getStartDate());
         // calendarDisablePastCells();
     }
