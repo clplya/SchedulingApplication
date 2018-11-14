@@ -44,6 +44,12 @@ public class AppointmentPageController {
     @FXML
     private TextField apptContactField;
     @FXML
+    private TextField apptUrlField;
+    @FXML
+    private TextField apptStartTimeField;
+    @FXML
+    private TextField apptEndTimeField;
+    @FXML
     private ComboBox selectedCustomerComboBox = new ComboBox();
     @FXML
     private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();

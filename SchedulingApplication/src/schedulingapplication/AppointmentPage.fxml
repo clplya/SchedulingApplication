@@ -77,8 +77,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="apptStartTimeField" layoutX="445.0" layoutY="353.0" prefHeight="27.0" prefWidth="240.0" />
-      <TextField fx:id="apptEndField" layoutX="445.0" layoutY="410.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptStartTimeField" layoutX="439.0" layoutY="353.0" prefHeight="27.0" prefWidth="240.0" />
+      <TextField fx:id="apptEndTimeField" layoutX="445.0" layoutY="410.0" prefHeight="27.0" prefWidth="240.0" />
       <TextField fx:id="apptURLField" layoutX="445.0" layoutY="306.0" prefHeight="27.0" prefWidth="240.0" />
       <Label layoutX="314.0" layoutY="306.0" text="Appt URL">
          <font>
