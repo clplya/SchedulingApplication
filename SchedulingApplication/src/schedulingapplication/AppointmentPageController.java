@@ -1,15 +1,18 @@
 package schedulingapplication;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,7 +24,7 @@ import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.User;
 
-public class AppointmentPageController {
+public class AppointmentPageController implements Initializable {
 
     private Appointment selectedAppointment = new Appointment();
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
@@ -76,12 +79,16 @@ public class AppointmentPageController {
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-            //updateAppointmentDetails();
             selectedCustomerComboBox.getItems().add(titleText);
         }
         selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
         updateAppointmentDate(selectedAppointment.getStartDate());
         // calendarDisablePastCells();
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //empty
     }
 
     private void changeSelectedAppointment() {
@@ -125,10 +132,6 @@ public class AppointmentPageController {
         datePicker.setValue(apptDate.toLocalDate());
     }
 
-    private void updateAppointmentDetails() {
-       
-    }
-
     @FXML
     void datePickerButtonHandler(ActionEvent event) throws IOException {
         //LocalDate date = datePicker.getValue();
@@ -166,7 +169,7 @@ public class AppointmentPageController {
     public void selectedCustomerHandler() {
         changeSelectedAppointment();
         updateAppointmentDate(selectedAppointment.getStartDate());
-        updateAppointmentDetails();
+      //  updateAppointmentDetails();
     }
 
     @FXML

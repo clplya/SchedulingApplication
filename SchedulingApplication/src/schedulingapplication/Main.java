@@ -12,14 +12,14 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.User;
-
 
 public class Main extends Application {
 
     private Stage stage;
     private User loggedUser;
-
+    private Customer selectedCustomer;
 
     public static void Main(String[] args) throws SQLException {
         Locale us = new Locale("en", "US");
@@ -39,11 +39,6 @@ public class Main extends Application {
             Logger.getLogger(com.sun.javaws.Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public boolean userLogin() {
-        goToCustomer();
-        return true;
-    }
 
     private void goToLogin() {
         try {
@@ -53,7 +48,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void goToCustomer() {
         try {
             CustomerPageController customer = (CustomerPageController) replaceSceneContent("CustomerPage.fxml");
@@ -62,9 +57,23 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public void goToAppointment() {
+        try {
+            AppointmentPageController appointment = (AppointmentPageController) replaceSceneContent("AppointmentPage.fxml");
+            appointment.setApp(this);
+            appointment.initialize(selectedCustomer);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public User getLoggedUser() {
         return loggedUser;
+    }
+
+    public Customer getSelectedCustomer() {
+        return selectedCustomer;
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {
@@ -83,5 +92,9 @@ public class Main extends Application {
         stage.sizeToScene();
         return (Initializable) loader.getController();
     }
-
+    
+    public boolean userLogin() {
+        goToCustomer();
+        return true;
+    }
 }

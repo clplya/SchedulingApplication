@@ -119,17 +119,9 @@ public class CustomerPageController implements Initializable {
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
         if (customerTableView.getSelectionModel().getSelectedItem() != null) {
             selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-            //FXMLLoader loader = new FXMLLoader();
-            root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
-            //Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(root);
+            application.goToAppointment();
+            //application.getSelectedCustomer();
 
-//            AppointmentPageController controller = new AppointmentPageController();
-//            controller.initialize(selectedCustomer);
-
-            Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());
-            window.setScene(tableViewScene);
-            window.show();
         } else { //Does not work - fix
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No Customer Selected");

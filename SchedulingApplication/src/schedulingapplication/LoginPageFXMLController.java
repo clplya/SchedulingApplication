@@ -135,15 +135,6 @@ public class LoginPageFXMLController implements Initializable {
             UserLoginTracker userLoginTracker = new UserLoginTracker();
             userLoginTracker.userLoginTracker();
             application.userLogin();
-
-            //Navigation Code that works
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
-//            Parent tableViewParent = loader.load();
-//            Scene tableViewScene = new Scene(tableViewParent);
-//            Stage window = (Stage) (loginButton.getScene().getWindow());
-//            window.setScene(tableViewScene);
-//            window.show();
         }
     }
 
