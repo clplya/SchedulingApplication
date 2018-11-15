@@ -83,16 +83,8 @@ public class CustomerPageController implements Initializable {
 
     @FXML
     public void addAppointmentButtonHandler(ActionEvent event) throws IOException {
-        //needs work- Invocation exception
         stage = (Stage) addAppointmentButton.getScene().getWindow();
-//        FXMLLoader loader = new FXMLLoader();
-//        loader.setLocation(getClass().getResource("AddAppointmentPage.fxml"));
-//
-//        AddAppointmentPageController controller = new AddAppointmentPageController();
-//        controller = loader.getController();
-//        controller.initialize();
-//
-//        Scene scene = new Scene(root);
+
         root = FXMLLoader.load(getClass().getResource("AddAppointmentPage.fxml"));
         AddAppointmentPageController controller = new AddAppointmentPageController();
         controller.initialize();
@@ -111,7 +103,7 @@ public class CustomerPageController implements Initializable {
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
         if (customerTableView.getSelectionModel().getSelectedItem() != null) {
             selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader();
+            //FXMLLoader loader = new FXMLLoader();
             root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
             //Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(root);
@@ -144,4 +136,5 @@ public class CustomerPageController implements Initializable {
         stage.setScene(tableViewScene);
         stage.show();
     }
+    
 }

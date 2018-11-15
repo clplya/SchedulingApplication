@@ -11,12 +11,7 @@ import schedulingapplication.DomainObjects.Customer;
 public class DBCustomerDao implements ICustomerDao {
 
     private Customer customer;
-    private ObservableList<Customer> customerList;
-
-    public DBCustomerDao() {
-        customerList = FXCollections.observableArrayList();
-        customer = null;
-    }
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
     @Override
     public void addCustomer(int customerId, String customerName, int addressId, int active) {
