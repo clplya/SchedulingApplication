@@ -10,17 +10,13 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import schedulingapplication.DomainObjects.Appointment;
 
 public class DBAppointmentDao implements IAppointmentDao {
 
-    private Appointment appointment;
-    private ObservableList<Appointment> appointmentList;
-
-    public DBAppointmentDao() {
-        appointmentList = FXCollections.observableArrayList();
-        appointment = null;
-    }
+    @FXML
+    private ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
     @Override
     public void addAppointment(int appointmentId, int customerId, String title, String description, String location, String contact, String url, LocalDateTime start, LocalDateTime end) {
@@ -109,7 +105,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDateTime localStartDateTime = startDate.toLocalDateTime();
                 LocalDateTime localEndDateTime = endDate.toLocalDateTime();
 
-                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDateTime, localEndDateTime);
+                Appointment appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDateTime, localEndDateTime);
                 appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
@@ -130,6 +126,15 @@ public class DBAppointmentDao implements IAppointmentDao {
     @Override
     public Appointment getAppointment(int apptId) {
         Statement stmt = null;
+        int appointmentId = 0;
+        int customerId = 0;
+        String title = "";
+        String description = "";
+        String location = "";
+        String contact = "";
+        String url = "";
+        LocalDateTime localStartDate = LocalDateTime.now();
+        LocalDateTime localEndDate = LocalDateTime.now();
 
         try {
             Connection conn = DataSource.getConnection();
@@ -138,20 +143,19 @@ public class DBAppointmentDao implements IAppointmentDao {
             ResultSet result = stmt.executeQuery("select appointmentId,customerId,title,description,location,contact,url,start,end from appointment where appointmentId =" + apptId);
 
             while (result.next()) {
-                int appointmentId = result.getInt(1);
-                int customerId = result.getInt(2);
-                String title = result.getString(3);
-                String description = result.getString(4);
-                String location = result.getString(5);
-                String contact = result.getString(6);
-                String url = result.getString(7);
+                appointmentId = result.getInt(1);
+                customerId = result.getInt(2);
+                title = result.getString(3);
+                description = result.getString(4);
+                location = result.getString(5);
+                contact = result.getString(6);
+                url = result.getString(7);
                 Timestamp startDate = result.getTimestamp(8);
                 Timestamp endDate = result.getTimestamp(9);
 
-                LocalDateTime localStartDate = startDate.toLocalDateTime();
-                LocalDateTime localEndDate = endDate.toLocalDateTime();
+                localStartDate = startDate.toLocalDateTime();
+                localEndDate = endDate.toLocalDateTime();
 
-                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -164,6 +168,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 }
             }
         }
+        Appointment appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
         return appointment;
     }
 
@@ -195,7 +200,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDateTime localStartDate = startDate.toLocalDateTime();
                 LocalDateTime localEndDate = endDate.toLocalDateTime();
 
-                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                Appointment appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
@@ -238,7 +243,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDateTime localStartDate = startDate.toLocalDateTime();
                 LocalDateTime localEndDate = endDate.toLocalDateTime();
 
-                appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                Appointment appointment = new Appointment(apptId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 appointmentList.add(appointment);
             }
         } catch (SQLException ex) {
@@ -285,7 +290,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDateTime localStartDate = startDate.toLocalDateTime();
                 LocalDateTime localEndDate = endDate.toLocalDateTime();
 
-                appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
+                Appointment appointment = new Appointment(appointmentId, customerId, title, description, location, contact, url, localStartDate, localEndDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());
             }
         } catch (SQLException ex) {
@@ -338,7 +343,7 @@ public class DBAppointmentDao implements IAppointmentDao {
                 LocalDateTime localStartDate = rstartDate.toLocalDateTime();
                 LocalDateTime localEndDate = rendDate.toLocalDateTime();
 
-                appointment = new Appointment(rappointmentId, rcustId, rtitle, rdescription, rlocation, rcontact, rurl, localStartDate, localEndDate);
+                Appointment appointment = new Appointment(rappointmentId, rcustId, rtitle, rdescription, rlocation, rcontact, rurl, localStartDate, localEndDate);
                 System.out.println("Updated Appointment Title: " + appointment.getTitle());
             }
         } catch (SQLException ex) {

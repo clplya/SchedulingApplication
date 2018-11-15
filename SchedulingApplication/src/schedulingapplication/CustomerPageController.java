@@ -49,7 +49,7 @@ public class CustomerPageController implements Initializable {
     @FXML
     private TableColumn<Address, String> PhoneNumberColumn;
 
-    private static Customer selectedCustomer;
+    private Customer selectedCustomer;
     private DBCustomerDao dbCustomer = new DBCustomerDao();
     private DBAddressDao dbAddress = new DBAddressDao();
     private Stage stage;
@@ -73,6 +73,7 @@ public class CustomerPageController implements Initializable {
     @FXML
     public void addCustomerButtonHandler(ActionEvent event) throws IOException {
         stage = (Stage) addCustomerButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
         root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
 
         Scene scene = new Scene(root);
@@ -84,12 +85,17 @@ public class CustomerPageController implements Initializable {
     public void addAppointmentButtonHandler(ActionEvent event) throws IOException {
         //needs work- Invocation exception
         stage = (Stage) addAppointmentButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("AddAppointmentPage.fxml"));
-        
-        AddAppointmentPageController controller = loader.getController();
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("AddAppointmentPage.fxml"));
+//
+//        AddAppointmentPageController controller = new AddAppointmentPageController();
+//        controller = loader.getController();
+//        controller.initialize();
+//
+//        Scene scene = new Scene(root);
+        root = FXMLLoader.load(getClass().getResource("AddAppointmentPage.fxml"));
+        AddAppointmentPageController controller = new AddAppointmentPageController();
         controller.initialize();
-
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -106,11 +112,11 @@ public class CustomerPageController implements Initializable {
         if (customerTableView.getSelectionModel().getSelectedItem() != null) {
             selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("AppointmentPage.fxml"));
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
+            root = FXMLLoader.load(getClass().getResource("AppointmentPage.fxml"));
+            //Parent tableViewParent = loader.load();
+            Scene tableViewScene = new Scene(root);
 
-            AppointmentPageController controller = loader.getController();
+            AppointmentPageController controller = new AppointmentPageController();
             controller.initialize(selectedCustomer);
 
             Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());

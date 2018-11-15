@@ -1,10 +1,10 @@
 package schedulingapplication;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +18,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import schedulingapplication.Dao.DBCustomerDao;
+import schedulingapplication.DomainObjects.Customer;
 
 public class AddCustomerController {
 
@@ -30,23 +32,31 @@ public class AddCustomerController {
     @FXML
     private TextField customerNameTextField;
     @FXML
-    private TextField customerAddressTextField;
-    @FXML
-    private TextField customerPhoneNumberTextField;
-    @FXML
-    private TableView customerTableView;
+    private TableView<Customer> customerTableView;
     @FXML
     private TableColumn CustomerIDColumn;
     @FXML
     private TableColumn NameColumn;
-    @FXML
-    private TableColumn AddressColumn;
-    @FXML
-    private TableColumn PhoneNumberColumn;
-    private static final AtomicInteger GENERATEDCUSTOMERID = new AtomicInteger(2);
+//    @FXML
+//    private TableColumn AddressColumn;
+//    @FXML
+//    private TableColumn PhoneNumberColumn;
+    private final AtomicInteger GENERATEDCUSTOMERID = new AtomicInteger(2);
+    private final AtomicInteger GENERATEDADDRESSID = new AtomicInteger(3);
 
-    public void initialize(URL url, ResourceBundle rb) {
+    private DBCustomerDao dbCustomer = new DBCustomerDao();
+    @FXML
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
+    @FXML
+    public void initialize() {
+        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        //   AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address1"));
+        //  PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        customerList.addAll(dbCustomer.getAllCustomers());
+        customerTableView.getItems().addAll(customerList);
     }
 
     @FXML
@@ -73,19 +83,16 @@ public class AddCustomerController {
     }
 
     public void addCustomerButtonHandler(ActionEvent event) throws IOException {
-        CustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        AddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        PhoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-        String customerID = Integer.toString(GENERATEDCUSTOMERID.incrementAndGet());
+        int customerID = GENERATEDCUSTOMERID.incrementAndGet();
         String customerName = customerNameTextField.getText();
-        String address = customerAddressTextField.getText();
-        String phone = customerPhoneNumberTextField.getText();
-
-        int newCustomerID;
-        newCustomerID = Integer.parseInt(customerID);
-
+        int addressID = GENERATEDADDRESSID.incrementAndGet();
+        int active = 1;
+//        String address = customerAddressTextField.getText();
+//        String phone = customerPhoneNumberTextField.getText();
+//
+//        int newCustomerID = Integer.parseInt(customerID);
+//        int addressID = Integer.parseInt(addressId);
+        dbCustomer.addCustomer(customerID, customerName, addressID, active);
     }
 
     public void exitButtonHandler(ActionEvent event) throws IOException {

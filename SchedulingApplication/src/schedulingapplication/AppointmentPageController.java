@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,7 @@ import schedulingapplication.DomainObjects.Customer;
 
 public class AppointmentPageController {
 
-    private Appointment selectedAppointment;
+    private Appointment selectedAppointment = new Appointment();
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
 
     @FXML
@@ -61,17 +62,16 @@ public class AppointmentPageController {
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
-        
+
         selectedCustomerComboBox.getItems().add(selectedAppointment.getTitle());
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-            updateAppointmentDetails();
+
             selectedCustomerComboBox.getItems().add(titleText);
         }
         selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
-
+        updateAppointmentDetails();
         updateAppointmentDate(selectedAppointment.getStartDate());
-        // calendarDisablePastCells();
     }
 
     private void changeSelectedAppointment() {
@@ -115,11 +115,15 @@ public class AppointmentPageController {
         datePicker.setValue(apptDate.toLocalDate());
     }
 
+    @FXML
     private void updateAppointmentDetails() {
         apptTitleField.setText(selectedAppointment.getTitle());
         apptDescriptionField.setText(selectedAppointment.getDescription());
         apptLocationField.setText(selectedAppointment.getLocation());
         apptContactField.setText(selectedAppointment.getContact());
+        apptUrlField.setText(selectedAppointment.getURL());
+        apptStartTimeField.setText(selectedAppointment.getStartDate().format(DateTimeFormatter.ISO_DATE));
+        apptEndTimeField.setText(selectedAppointment.getEndDate().format(DateTimeFormatter.ISO_DATE));
     }
 
     @FXML

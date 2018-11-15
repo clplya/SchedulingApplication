@@ -126,6 +126,10 @@ public class DBCustomerDao implements ICustomerDao {
 //        return null;
     }
 
+    public void getCustomersWithAddressPhone() {
+
+    }
+
     @Override
     public void updateCustomer(int upCustomerId, String upCustomerName) {
         Statement stmt = null;

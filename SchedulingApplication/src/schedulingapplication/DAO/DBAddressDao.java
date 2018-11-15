@@ -10,12 +10,10 @@ import schedulingapplication.DomainObjects.Address;
 
 public class DBAddressDao implements IAddressDao {
 
-    private Address address;
-    private final ObservableList<Address> addressList;
+    //private Address address = new Address();
+    private ObservableList<Address> addressList = FXCollections.observableArrayList();
 
     public DBAddressDao() {
-        addressList = FXCollections.observableArrayList();
-        address = null;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class DBAddressDao implements IAddressDao {
                 String postalCode = rs.getString(5);
                 String phone = rs.getString(6);
 
-                address = new Address(addressId, address1, address2, cityId, postalCode, phone);
+                Address address = new Address(addressId, address1, address2, cityId, postalCode, phone);
                 addressList.add(address);
             }
         } catch (SQLException ex) {
@@ -90,8 +88,14 @@ public class DBAddressDao implements IAddressDao {
     }
 
     @Override
-    public Address getAddress(int addressId) {
+    public Address getAddressByID(int addressId) {
         Statement stmt = null;
+        int addressID = 0;
+        String address1 = "";
+        String address2 = "";
+        int cityId = 0;
+        String postalCode = "";
+        String phone = "";
 
         try {
             Connection conn = DataSource.getConnection();
@@ -100,14 +104,13 @@ public class DBAddressDao implements IAddressDao {
             ResultSet rs = stmt.executeQuery("select addressId,address,address2,cityId,postalCode,phone from address where addressId =" + addressId);
 
             while (rs.next()) {
-                int addressID = rs.getInt(1);
-                String address1 = rs.getString(2);
-                String address2 = rs.getString(3);
-                int cityId = rs.getInt(4);
-                String postalCode = rs.getString(5);
-                String phone = rs.getString(6);
+                addressID = rs.getInt(1);
+                address1 = rs.getString(2);
+                address2 = rs.getString(3);
+                cityId = rs.getInt(4);
+                postalCode = rs.getString(5);
+                phone = rs.getString(6);
 
-                address = new Address(addressID, address1, address2, cityId, postalCode, phone);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -120,6 +123,7 @@ public class DBAddressDao implements IAddressDao {
                 }
             }
         }
+        Address address = new Address(addressID, address1, address2, cityId, postalCode, phone);
         return address;
     }
 
@@ -146,7 +150,7 @@ public class DBAddressDao implements IAddressDao {
                 String postalCode = rs.getString(5);
                 String phone = rs.getString(6);
 
-                address = new Address(addressID, address1, address2, cityId, postalCode, phone);
+                Address address = new Address(addressID, address1, address2, cityId, postalCode, phone);
                 System.out.println("Updated Address Name: " + address.getAddress1());
             }
         } catch (SQLException ex) {

@@ -45,45 +45,50 @@
         <TextField fx:id="apptDescriptionField" layoutX="445.0" layoutY="152.0" prefHeight="27.0" prefWidth="240.0" />
         <TextField fx:id="apptLocationField" layoutX="445.0" layoutY="202.0" prefHeight="27.0" prefWidth="240.0" />
         <TextField fx:id="apptContactField" layoutX="445.0" layoutY="253.0" prefHeight="27.0" prefWidth="240.0" />
+        <TextField fx:id="apptStartTimeField" layoutX="445.0" layoutY="353.0" prefHeight="27.0" prefWidth="240.0" />
+        <TextField fx:id="apptEndTimeField" layoutX="445.0" layoutY="410.0" prefHeight="27.0" prefWidth="240.0" />
+        <TextField fx:id="apptUrlField" layoutX="445.0" layoutY="306.0" prefHeight="27.0" prefWidth="240.0" />
+
         <ComboBox fx:id="selectedCustomerComboBox" layoutX="445.0" layoutY="49.0" onAction="#selectedCustomerHandler" prefHeight="25.0" prefWidth="240.0" style="-fx-background-color: white;" />
         <Button fx:id="saveButton" layoutX="445.0" layoutY="453.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save Changes">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
         <Button fx:id="cancelButton" layoutX="627.0" layoutY="453.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
         <Label fx:id="appointmentTitleLabel1" layoutX="313.0" layoutY="48.0" text="Customer">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-      <Button fx:id="calendarMonthButton" layoutX="35.0" layoutY="254.0" mnemonicParsing="false" onAction="#calendarMonthButtonHandler" text="View Calendar by Month">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
-      <Button fx:id="calendarWeekButton" layoutX="35.0" layoutY="190.0" mnemonicParsing="false" onAction="#calendarWeekButtonHandler" text="View Calendar by Week">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font></Button>
-      <Label layoutX="261.0" layoutY="353.0" text="Appt Start Time">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="264.0" layoutY="410.0" text="Appt End Time">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="apptStartTimeField" layoutX="439.0" layoutY="353.0" prefHeight="27.0" prefWidth="240.0" />
-      <TextField fx:id="apptEndTimeField" layoutX="445.0" layoutY="410.0" prefHeight="27.0" prefWidth="240.0" />
-      <TextField fx:id="apptURLField" layoutX="445.0" layoutY="306.0" prefHeight="27.0" prefWidth="240.0" />
-      <Label layoutX="314.0" layoutY="306.0" text="Appt URL">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+        <Button fx:id="calendarMonthButton" layoutX="35.0" layoutY="254.0" mnemonicParsing="false" onAction="#calendarMonthButtonHandler" text="View Calendar by Month">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+        <Button fx:id="calendarWeekButton" layoutX="35.0" layoutY="190.0" mnemonicParsing="false" onAction="#calendarWeekButtonHandler" text="View Calendar by Week">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+        <Label layoutX="261.0" layoutY="353.0" text="Appt Start Time">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="264.0" layoutY="410.0" text="Appt End Time">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="314.0" layoutY="306.0" text="Appt URL">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

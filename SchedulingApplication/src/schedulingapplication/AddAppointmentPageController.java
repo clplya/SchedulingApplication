@@ -30,7 +30,7 @@ public class AddAppointmentPageController {
     @FXML
     private Button cancelButton;
     @FXML
-    private ComboBox selectedCustomerComboBox = new ComboBox();;
+    private final ComboBox selectedCustomerComboBox = new ComboBox();
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -47,27 +47,28 @@ public class AddAppointmentPageController {
     private TextField apptStartTimeField;
     @FXML
     private TextField apptEndTimeField;
-    @FXML
-    //private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
     private DBCustomerDao dbCustomer = new DBCustomerDao();
     @FXML
     private Appointment newAppointment = new Appointment();
     private static final AtomicInteger GENERATEDAPPOINTMENTID = new AtomicInteger(11);
-    ObservableList<Customer> customerList = FXCollections.observableArrayList();
-    ObservableList<String> customerNamesList = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Customer> customerList = FXCollections.observableArrayList();
+    @FXML
+    private String customerName = "";
 
     String customerString;
-    String customerName;
 
     @FXML
     void initialize() {
         customerList.addAll(dbCustomer.getAllCustomers());
+        //selectedCustomerComboBox.getItems().addAll(customerList);
         for (int i = 0; i < customerList.size(); i++) {
-            customerNamesList.add(customerList.get(i).getCustomerName());
+            customerName = customerList.get(i).getCustomerName();
 
-            selectedCustomerComboBox.getItems().add(customerNamesList);
+            selectedCustomerComboBox.getItems().add(customerName);
         }
+        selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
     }
 
     @FXML
@@ -97,9 +98,9 @@ public class AddAppointmentPageController {
         }
         //Set start and End Appointment Times
         String apptStartTime = apptStartTimeField.getText();
-         LocalDateTime apptStartDateTime = LocalDateTime.parse(apptStartTime);
-         String apptStopTime = apptEndTimeField.getText();
-          LocalDateTime apptStopDateTime = LocalDateTime.parse(apptStopTime);
+        LocalDateTime apptStartDateTime = LocalDateTime.parse(apptStartTime);
+        String apptStopTime = apptEndTimeField.getText();
+        LocalDateTime apptStopDateTime = LocalDateTime.parse(apptStopTime);
 
         newAppointment.setAppointmentId(GENERATEDAPPOINTMENTID.incrementAndGet());
         newAppointment.setCustomerId(loopCustomer.getCustomerId());
@@ -129,8 +130,8 @@ public class AddAppointmentPageController {
     }
 
     @FXML
-    void selectedCustomerHandler(ActionEvent event) throws IOException{
-        
+    void selectedCustomerHandler(ActionEvent event) throws IOException {
+
     }
 
     @FXML

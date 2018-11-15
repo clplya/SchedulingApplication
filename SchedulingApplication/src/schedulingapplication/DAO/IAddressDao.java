@@ -11,7 +11,7 @@ public interface IAddressDao {
 
     public ObservableList<Address> getAllAddresses();
 
-    public Address getAddress(int addressId);
+    public Address getAddressByID(int addressId);
 
     public void updateAddress(int upAddressId, String upAddress);
 }
