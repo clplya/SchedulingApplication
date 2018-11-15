@@ -21,7 +21,6 @@ import schedulingapplication.DomainObjects.User;
 
 public class LoginPageFXMLController implements Initializable {
 
-    private Application application;
     @FXML
     private TextField username;
     @FXML
@@ -41,7 +40,9 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginFailed = false;
     private Locale defaultLocale;
     private final DBUserDao dbUser = new DBUserDao();
-
+    
+    private Main application;
+    
     public void setApp(Main application) {
         this.application = application;
     }
@@ -119,8 +120,9 @@ public class LoginPageFXMLController implements Initializable {
     }
 
     @FXML
-    private void loginResult() throws SQLException, IOException {
+    public void loginResult() throws SQLException, IOException {
         Locale locale = localeTracker();
+        
 
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
@@ -132,15 +134,16 @@ public class LoginPageFXMLController implements Initializable {
             System.out.println(rb.getString("LoginSuccessful"));
             UserLoginTracker userLoginTracker = new UserLoginTracker();
             userLoginTracker.userLoginTracker();
+            application.userLogin();
 
             //Navigation Code that works
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
-            Parent tableViewParent = loader.load();
-            Scene tableViewScene = new Scene(tableViewParent);
-            Stage window = (Stage) (loginButton.getScene().getWindow());
-            window.setScene(tableViewScene);
-            window.show();
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("CustomerPage.fxml"));
+//            Parent tableViewParent = loader.load();
+//            Scene tableViewScene = new Scene(tableViewParent);
+//            Stage window = (Stage) (loginButton.getScene().getWindow());
+//            window.setScene(tableViewScene);
+//            window.show();
         }
     }
 

@@ -12,10 +12,14 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import schedulingapplication.DomainObjects.User;
+
 
 public class Main extends Application {
 
     private Stage stage;
+    private User loggedUser;
+
 
     public static void Main(String[] args) throws SQLException {
         Locale us = new Locale("en", "US");
@@ -35,6 +39,11 @@ public class Main extends Application {
             Logger.getLogger(com.sun.javaws.Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public boolean userLogin() {
+        goToCustomer();
+        return true;
+    }
 
     private void goToLogin() {
         try {
@@ -45,13 +54,17 @@ public class Main extends Application {
         }
     }
     
-    private void goToCustomer() {
+    public void goToCustomer() {
         try {
-            LoginPageFXMLController login = (LoginPageFXMLController) replaceSceneContent("CustomerPage.fxml");
-            login.setApp(this);
+            CustomerPageController customer = (CustomerPageController) replaceSceneContent("CustomerPage.fxml");
+            customer.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public User getLoggedUser() {
+        return loggedUser;
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {

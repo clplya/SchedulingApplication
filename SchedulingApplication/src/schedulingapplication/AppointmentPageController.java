@@ -19,10 +19,11 @@ import javafx.util.Callback;
 import schedulingapplication.Dao.DBAppointmentDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
+import schedulingapplication.DomainObjects.User;
 
 public class AppointmentPageController {
 
-    private Appointment selectedAppointment;
+    private Appointment selectedAppointment = new Appointment();
     private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
 
     @FXML
@@ -55,6 +56,16 @@ public class AppointmentPageController {
     private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
     private Customer selectedCustomer;
     private String titleText;// = FXCollections.observableArrayList();
+    private Main application;
+    
+    public void setApp(Main application){
+        this.application = application;
+        User loggedUser = application.getLoggedUser();
+         apptTitleField.setText(selectedAppointment.getTitle());
+        apptDescriptionField.setText(selectedAppointment.getDescription());
+        apptLocationField.setText(selectedAppointment.getLocation());
+        apptContactField.setText(selectedAppointment.getContact());
+    }
 
     public void initialize(Customer customer) {
         selectedCustomer = customer;
@@ -65,7 +76,7 @@ public class AppointmentPageController {
 
         for (int i = 0; i < appointmentList.size(); i++) {
             titleText = appointmentList.get(i).getTitle();
-            updateAppointmentDetails();
+            //updateAppointmentDetails();
             selectedCustomerComboBox.getItems().add(titleText);
         }
         selectedCustomerComboBox.setValue(selectedCustomerComboBox.getItems().get(0));
@@ -115,10 +126,7 @@ public class AppointmentPageController {
     }
 
     private void updateAppointmentDetails() {
-        apptTitleField.setText(selectedAppointment.getTitle());
-        apptDescriptionField.setText(selectedAppointment.getDescription());
-        apptLocationField.setText(selectedAppointment.getLocation());
-        apptContactField.setText(selectedAppointment.getContact());
+       
     }
 
     @FXML

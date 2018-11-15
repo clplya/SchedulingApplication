@@ -21,6 +21,8 @@ import schedulingapplication.Dao.DBAddressDao;
 import schedulingapplication.Dao.DBCustomerDao;
 import schedulingapplication.DomainObjects.Address;
 import schedulingapplication.DomainObjects.Customer;
+import schedulingapplication.DomainObjects.User;
+
 
 public class CustomerPageController implements Initializable {
 
@@ -54,7 +56,21 @@ public class CustomerPageController implements Initializable {
     private DBAddressDao dbAddress = new DBAddressDao();
     private Stage stage;
     private Parent root;
+    private Main application;
 
+    public void setApp(Main application){
+        this.application = application;
+        User loggedUser = application.getLoggedUser();
+//        user.setText(loggedUser.getId());
+//        email.setText(loggedUser.getEmail());
+//        phone.setText(loggedUser.getPhone());
+//        if (loggedUser.getAddress() != null) {
+//            address.setText(loggedUser.getAddress());
+//        }
+//        subscribed.setSelected(loggedUser.isSubscribed());
+//        success.setOpacity(0);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -108,8 +124,8 @@ public class CustomerPageController implements Initializable {
             //Parent tableViewParent = loader.load();
             Scene tableViewScene = new Scene(root);
 
-            AppointmentPageController controller = new AppointmentPageController();
-            controller.initialize(selectedCustomer);
+//            AppointmentPageController controller = new AppointmentPageController();
+//            controller.initialize(selectedCustomer);
 
             Stage window = (Stage) (customerAppointmentButton.getScene().getWindow());
             window.setScene(tableViewScene);
