@@ -6,13 +6,9 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,16 +36,15 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginFailed = false;
     private Locale defaultLocale;
     private final DBUserDao dbUser = new DBUserDao();
-    
+
     private Main application;
-    
+
     public void setApp(Main application) {
         this.application = application;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //remove
         username.setText("Edgar");
         password.setText("password");
 
@@ -122,7 +117,6 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     public void loginResult() throws SQLException, IOException {
         Locale locale = localeTracker();
-        
 
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
@@ -133,15 +127,18 @@ public class LoginPageFXMLController implements Initializable {
         } else if (loginSuccessful & !loginFailed) {
             System.out.println(rb.getString("LoginSuccessful"));
             UserLoginTracker userLoginTracker = new UserLoginTracker();
-            userLoginTracker.userLoginTracker();
+            userLoginTracker.userLoginTracker(rb.getString("LoginSuccessful"));
             application.userLogin();
         }
     }
 
-    private void throwLoginError() {
+    @FXML
+    public void throwLoginError() throws IOException {
         Locale locale = localeTracker();
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
+//        UserLoginTracker userLoginTracker = new UserLoginTracker();
+//        userLoginTracker.userLoginTracker(rb.getString("Login Unsuccessful"));
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(rb.getString("LoginUnsuccessful"));
         alert.setHeaderText(rb.getString("PasswordIsIncorrect"));

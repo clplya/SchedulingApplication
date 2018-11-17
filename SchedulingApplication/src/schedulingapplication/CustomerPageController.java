@@ -23,7 +23,6 @@ import schedulingapplication.DomainObjects.Address;
 import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.User;
 
-
 public class CustomerPageController implements Initializable {
 
     @FXML
@@ -58,7 +57,7 @@ public class CustomerPageController implements Initializable {
     private Parent root;
     private Main application;
 
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
         User loggedUser = application.getLoggedUser();
 //        user.setText(loggedUser.getId());
@@ -70,7 +69,7 @@ public class CustomerPageController implements Initializable {
 //        subscribed.setSelected(loggedUser.isSubscribed());
 //        success.setOpacity(0);
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -119,10 +118,8 @@ public class CustomerPageController implements Initializable {
     public void customerAppointmentButtonHandler(ActionEvent event) throws IOException {
         if (customerTableView.getSelectionModel().getSelectedItem() != null) {
             selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-            application.goToAppointment();
-            //application.getSelectedCustomer();
-
-        } else { //Does not work - fix
+            application.goToAppointment(selectedCustomer);
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("No Customer Selected");
             alert.setHeaderText("Please Select a customer");
@@ -138,11 +135,9 @@ public class CustomerPageController implements Initializable {
         Parent tableViewParent = loader.load();
         Scene tableViewScene = new Scene(tableViewParent);
 
-//        AppointmentPageController controller = loader.getController();
-//        controller.initialize(selectedCustomer);
         stage = (Stage) viewReportsButton.getScene().getWindow();
         stage.setScene(tableViewScene);
         stage.show();
     }
-    
+
 }

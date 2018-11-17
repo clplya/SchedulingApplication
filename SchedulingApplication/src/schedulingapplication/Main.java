@@ -12,6 +12,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.User;
 
@@ -20,6 +21,7 @@ public class Main extends Application {
     private Stage stage;
     private User loggedUser;
     private Customer selectedCustomer;
+    private Appointment selectedAppointment;
 
     public static void Main(String[] args) throws SQLException {
         Locale us = new Locale("en", "US");
@@ -58,7 +60,7 @@ public class Main extends Application {
         }
     }
 
-    public void goToAppointment() {
+    public void goToAppointment(Customer selectedCustomer) {
         try {
             AppointmentPageController appointment = (AppointmentPageController) replaceSceneContent("AppointmentPage.fxml");
             appointment.setApp(this);
@@ -74,6 +76,10 @@ public class Main extends Application {
 
     public Customer getSelectedCustomer() {
         return selectedCustomer;
+    }
+
+    public Appointment getSelectedAppointment() {
+        return selectedAppointment;
     }
 
     private Initializable replaceSceneContent(String fxml) throws Exception {
@@ -92,7 +98,7 @@ public class Main extends Application {
         stage.sizeToScene();
         return (Initializable) loader.getController();
     }
-    
+
     public boolean userLogin() {
         goToCustomer();
         return true;

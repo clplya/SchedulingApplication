@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -25,9 +26,6 @@ import schedulingapplication.DomainObjects.Customer;
 import schedulingapplication.DomainObjects.User;
 
 public class AppointmentPageController implements Initializable {
-
-    private Appointment selectedAppointment = new Appointment();
-    private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
 
     @FXML
     private Button cancelButton;
@@ -50,28 +48,44 @@ public class AppointmentPageController implements Initializable {
     @FXML
     private TextField apptUrlField;
     @FXML
-    private TextField apptStartDateField;
+    private TextField apptStartTimeField;
     @FXML
-    private TextField apptEndDateField;
+    private TextField apptEndTimeField;
     @FXML
     private ComboBox selectedCustomerComboBox = new ComboBox();
     @FXML
     private final ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+    private final DBAppointmentDao dbAppointment = new DBAppointmentDao();
+
     private Customer selectedCustomer;
+    private Appointment selectedAppointment;
     private String titleText;// = FXCollections.observableArrayList();
     private Main application;
-    
-    public void setApp(Main application){
+    private User loggedUser;
+
+    public void setApp(Main application) {
         this.application = application;
-        User loggedUser = application.getLoggedUser();
-         apptTitleField.setText(selectedAppointment.getTitle());
-        apptDescriptionField.setText(selectedAppointment.getDescription());
-        apptLocationField.setText(selectedAppointment.getLocation());
-        apptContactField.setText(selectedAppointment.getContact());
     }
 
     public void initialize(Customer customer) {
         selectedCustomer = customer;
+        appointmentList.addAll(dbAppointment.getAppointmentsByCustomer(selectedCustomer.getCustomerId()));
+        selectedAppointment = appointmentList.get(0);
+        LocalDateTime startDateTime = selectedAppointment.getStartDate();
+        LocalTime startTime = startDateTime.toLocalTime();
+        LocalDate startDate = startDateTime.toLocalDate();
+        LocalDateTime endDateTime = selectedAppointment.getEndDate();
+        System.out.println(endDateTime.toString());
+
+        apptTitleField.setText(selectedAppointment.getTitle());
+        apptDescriptionField.setText(selectedAppointment.getDescription());
+        apptLocationField.setText(selectedAppointment.getLocation());
+        apptContactField.setText(selectedAppointment.getContact());
+        apptUrlField.setText(selectedAppointment.getURL());
+        apptStartTimeField.setText(startDate.toString());
+        apptEndTimeField.setText(endDateTime.toString());
+        datePicker.setValue(startDate);
+
         appointmentList.addAll((dbAppointment.getAppointmentsByCustomer(
                 selectedCustomer.getCustomerId())));
         selectedAppointment = appointmentList.get(1);
@@ -85,7 +99,7 @@ public class AppointmentPageController implements Initializable {
         updateAppointmentDate(selectedAppointment.getStartDate());
         // calendarDisablePastCells();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //empty
@@ -169,7 +183,7 @@ public class AppointmentPageController implements Initializable {
     public void selectedCustomerHandler() {
         changeSelectedAppointment();
         updateAppointmentDate(selectedAppointment.getStartDate());
-      //  updateAppointmentDetails();
+        //  updateAppointmentDetails();
     }
 
     @FXML
