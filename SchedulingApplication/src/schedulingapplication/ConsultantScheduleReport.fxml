@@ -10,7 +10,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="476.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ConsultantScheduleReportController">
+<AnchorPane id="AnchorPane" prefHeight="476.0" prefWidth="715.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.ConsultantScheduleReportController">
     <children>
         <TableView fx:id="appointmentTableView" layoutX="16.0" layoutY="211.0" prefHeight="251.0" prefWidth="683.0">
             <columns>

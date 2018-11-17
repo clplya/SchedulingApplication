@@ -93,7 +93,7 @@ public class Main extends Application {
         } finally {
             in.close();
         }
-        Scene scene = new Scene(page, 700, 500);
+        Scene scene = new Scene(page, 800, 600);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

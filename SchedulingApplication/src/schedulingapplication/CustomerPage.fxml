@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.CustomerPageController">
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="531.0" style="-fx-background-color: light gray;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="schedulingapplication.CustomerPageController">
     <children>
         <Label layoutX="14.0" layoutY="14.0" text="Customer Records">
             <font>
