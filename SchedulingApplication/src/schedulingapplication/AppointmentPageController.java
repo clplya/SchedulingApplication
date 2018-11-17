@@ -126,10 +126,6 @@ public class AppointmentPageController implements Initializable {
                         if (item.isAfter(selectedAppointment.getEndDate())) {
                             this.setVisible(false);
                         }
-//                        if (item.isBefore(
-//                                datePicker.getValue().plusDays(1))) {
-//                            setDisable(true);
-//                        }
                     }
                 };
             }
@@ -148,10 +144,9 @@ public class AppointmentPageController implements Initializable {
 
     @FXML
     void datePickerButtonHandler(ActionEvent event) throws IOException {
-        //LocalDate date = datePicker.getValue();
+        //Not implemented
     }
 
-    //Take off @FXML tag if this breaks
     @FXML
     private void calendarDisablePastCells() {
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
@@ -165,9 +160,6 @@ public class AppointmentPageController implements Initializable {
                         if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY) {
                             this.setTextFill(Color.DARKCYAN);
                         }
-//                        if (item.isAfter(LocalDate.now())) {
-//                            this.setDisable(true);
-//                        }
                         if (item.isBefore(
                                 datePicker.getValue().plusDays(1))) {
                             setDisable(true);

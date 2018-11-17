@@ -4,15 +4,26 @@ import java.io.IOException;
 import java.lang.*;
 import java.net.URL;
 import java.sql.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import schedulingapplication.Dao.DBAppointmentDao;
+import schedulingapplication.Dao.DBReminderDao;
 import schedulingapplication.Dao.DBUserDao;
+import schedulingapplication.DomainObjects.Appointment;
+import schedulingapplication.DomainObjects.Reminder;
 import schedulingapplication.DomainObjects.User;
 
 public class LoginPageFXMLController implements Initializable {
@@ -36,6 +47,11 @@ public class LoginPageFXMLController implements Initializable {
     private boolean loginFailed = false;
     private Locale defaultLocale;
     private final DBUserDao dbUser = new DBUserDao();
+    private DBAppointmentDao dbAppointment = new DBAppointmentDao();
+    private final DBReminderDao dbReminder = new DBReminderDao();
+    @FXML
+    private ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
+    private ArrayList<Reminder> appointmentReminders = new ArrayList();
 
     private Main application;
 
@@ -128,6 +144,7 @@ public class LoginPageFXMLController implements Initializable {
             System.out.println(rb.getString("LoginSuccessful"));
             UserLoginTracker userLoginTracker = new UserLoginTracker();
             userLoginTracker.userLoginTracker(rb.getString("LoginSuccessful"));
+            alertForAppointment();
             application.userLogin();
         }
     }
@@ -154,6 +171,46 @@ public class LoginPageFXMLController implements Initializable {
 
         return locale;
     }
-    //Create country in DB: INSERT INTO U03xBv.country (countryId, country, createDate, createdBy, lastUpdate, lastUpdateBy)
-    //VALUES (2, 'Mexico', CURRENT_TIMESTAMP, 'Admin', DEFAULT, 'Admin')
+
+    private ArrayList<Reminder> getAppointmentReminder() {
+        Reminder reminder;
+        try {
+            if (loginSuccessful) {
+                User loggedUser = application.getLoggedUser();
+                String userName = loggedUser.getUserName();
+
+                userAppointments.addAll(dbAppointment.getAppointmentsByContact(userName));
+                for (int i = 0; i < userAppointments.size(); i++) {
+                    Appointment appointment = userAppointments.get(i);
+                    reminder = dbReminder.getReminderPerAppointment(appointment);
+                    appointmentReminders.add(reminder);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception");
+        }
+        return appointmentReminders;
+    }
+
+    private void alertForAppointment() {
+        getAppointmentReminder();
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.ofMinutes(15);
+        for (int i = 0; i < appointmentReminders.size(); i++) {
+            Reminder reminder = appointmentReminders.get(i);
+            if (reminder.getReminderDateTime().plus(duration).equals(now)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Appointment starting soon");
+                alert.setHeaderText("Appointment begins in the next 15 minutes");
+                alert.setContentText("Appointment Begins Soon");
+
+                Optional<ButtonType> window = alert.showAndWait();
+                if (window.get() == ButtonType.OK) {
+                    alert.close();
+                } else if (window.get() == ButtonType.CANCEL) {
+                    alert.close();
+                }
+            }
+        }
+    }
 }
