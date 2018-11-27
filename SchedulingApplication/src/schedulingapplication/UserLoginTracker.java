@@ -2,14 +2,14 @@ package schedulingapplication;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import static java.time.LocalDateTime.now;
 
 public class UserLoginTracker {
 
@@ -17,20 +17,24 @@ public class UserLoginTracker {
     private File fileDestination;
 
     public void userLoginTracker(String input) throws IOException {
-        file = new File("C:\\Users\\clply\\Documents\\GitHub\\SchedulingApplication\\SchedulingApplication\\logintracker.txt");
-        //fileDestination = new File("");
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
-            if (file.exists()) {
-                System.out.println("file exists");
-                out.print(input);
-                //setupTracker(file, fileDestination);
-            } else {
-                file.listFiles();
-            }
+        File path = new File("logintracker.txt");
+        
+        try (OutputStream outputStream = new FileOutputStream(path)) {
+            
+            outputStream.write((input + LocalDateTime.now().toString()).getBytes());
+        }
+    }
+    
+    public void userLoginFailed(String input) throws IOException {
+        File path = new File("logintracker.txt");
+        
+        try (OutputStream outputStream = new FileOutputStream(path)) {
+            
+            outputStream.write((input + LocalDateTime.now().toString()).getBytes());
         }
     }
 
-    public void setupTracker(File source, File Destination) throws IOException {
+    private void setupTracker(File source, File Destination) throws IOException {
         try (
                 BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
                 OutputStream out = new BufferedOutputStream(new FileOutputStream(fileDestination))) {

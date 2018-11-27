@@ -25,6 +25,7 @@ import schedulingapplication.Dao.DBUserDao;
 import schedulingapplication.DomainObjects.Appointment;
 import schedulingapplication.DomainObjects.Reminder;
 import schedulingapplication.DomainObjects.User;
+import java.util.PropertyResourceBundle;
 
 public class LoginPageFXMLController implements Initializable {
 
@@ -52,6 +53,8 @@ public class LoginPageFXMLController implements Initializable {
     @FXML
     private ObservableList<Appointment> userAppointments = FXCollections.observableArrayList();
     private ArrayList<Reminder> appointmentReminders = new ArrayList();
+    private UserLoginTracker userLoginTracker = new UserLoginTracker();
+
 
     private Main application;
 
@@ -138,12 +141,14 @@ public class LoginPageFXMLController implements Initializable {
 
         if (!loginSuccessful) {
             throwLoginError();
+          userLoginTracker.userLoginFailed(rb.getString("LoginFailed"));
         } else if (loginSuccessful & loginFailed) {
             throwLoginError();
         } else if (loginSuccessful & !loginFailed) {
-            System.out.println(rb.getString("LoginSuccessful"));
-            UserLoginTracker userLoginTracker = new UserLoginTracker();
-            userLoginTracker.userLoginTracker(rb.getString("LoginSuccessful"));
+            System.out.println(rb.getString("Login Successful"));
+
+          userLoginTracker.userLoginTracker(rb.getString("Login 2"
+                  + "Successful"));
             alertForAppointment();
             application.userLogin();
         }
@@ -154,8 +159,6 @@ public class LoginPageFXMLController implements Initializable {
         Locale locale = localeTracker();
         ResourceBundle rb = ResourceBundle.getBundle("schedulingapplication/Scheduler", locale);
 
-//        UserLoginTracker userLoginTracker = new UserLoginTracker();
-//        userLoginTracker.userLoginTracker(rb.getString("Login Unsuccessful"));
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(rb.getString("LoginUnsuccessful"));
         alert.setHeaderText(rb.getString("PasswordIsIncorrect"));
