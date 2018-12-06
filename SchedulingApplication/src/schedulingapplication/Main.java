@@ -1,5 +1,6 @@
 package schedulingapplication;
 
+import java.io.File;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -28,6 +29,7 @@ public class Main extends Application {
         Locale sp = new Locale("sp", "SP");
 
         Application.launch(Main.class, (java.lang.String[]) null);
+        System.out.println(new File(".").getAbsolutePath());
     }
 
     @Override
